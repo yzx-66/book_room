@@ -1,0 +1,7 @@
+com\yzx\model\admin\User.class
+com\yzx\model\admin\Authority.class
+com\yzx\App.class
+com\yzx\model\admin\Role.class
+com\yzx\model\admin\Log.class
+com\yzx\model\admin\Page.class
+com\yzx\model\admin\Menu.class

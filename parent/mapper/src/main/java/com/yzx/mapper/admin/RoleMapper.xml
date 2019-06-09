@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yzx.mapper.admin.RoleMapper">
+    <insert id="addRole" parameterType="role">
+       insert into role(name,remark) values(#{name},#{remark})
+   </insert>
+
+    <select id="findList" parameterType="map" resultType="role">
+        select * from role where 1=1
+        <if test="name!=null">and name like '%${name}%' </if>
+        <if test="pageSize!=null">limit #{pageSize} </if>
+        <if test="offset!=null">offset #{offset}</if>
+    </select>
+
+    <select id="getTotalNum" resultType="int">
+        select count(*) from role where 1=1
+        <if test="name!=null">and name like '%${name}%' </if>
+    </select>
+
+    <update id="update">
+        update role set name=#{name},remark=#{remark}where id=#{id}
+    </update>
+
+    <delete id="delete" parameterType="int">7
+        delete from role where id=#{id}
+    </delete>
+
+</mapper>

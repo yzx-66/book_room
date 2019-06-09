@@ -1,0 +1,6 @@
+com\yzx\mapper\admin\LogMapper.class
+com\yzx\mapper\admin\MenuMapper.class
+com\yzx\mapper\admin\AuthorityMapper.class
+com\yzx\App.class
+com\yzx\mapper\admin\RoleMapper.class
+com\yzx\mapper\admin\UserMapper.class

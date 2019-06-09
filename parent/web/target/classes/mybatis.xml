@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <!--
+        1.注意扫描所有模型为其生成别名的包名
+        2.注意扫描所有mapper接口生成其包装类的包名
+    -->
+
+    <typeAliases>
+        <package name="com.yzx.model"/>
+    </typeAliases>
+
+    <mappers>
+        <package name="com.yzx.mapper"/>
+    </mappers>
+
+</configuration>

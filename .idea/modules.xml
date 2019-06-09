@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/parent/mapper/mapper.iml" filepath="$PROJECT_DIR$/parent/mapper/mapper.iml" />
+      <module fileurl="file://$PROJECT_DIR$/parent/model/model.iml" filepath="$PROJECT_DIR$/parent/model/model.iml" />
+      <module fileurl="file://$PROJECT_DIR$/parent/parent.iml" filepath="$PROJECT_DIR$/parent/parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/parent/service/service.iml" filepath="$PROJECT_DIR$/parent/service/service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/parent/util/util.iml" filepath="$PROJECT_DIR$/parent/util/util.iml" />
+      <module fileurl="file://$PROJECT_DIR$/parent/web/web.iml" filepath="$PROJECT_DIR$/parent/web/web.iml" />
+    </modules>
+  </component>
+</project>

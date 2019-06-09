@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yzx.mapper.admin.MenuMapper">
+   <insert id="addMenu" parameterType="menu">
+       insert into menu(name,parentId,url,icon) values(#{name},#{parentId},#{url},#{icon})
+   </insert>
+
+    <select id="findList" parameterType="map" resultType="menu">
+        select * from menu where
+        <if test="name!=null">name like '%${name}%' </if>
+        <if test="pageSize!=null">limit #{pageSize} </if>
+        <if test="offset!=null">offset #{offset}</if>
+    </select>
+
+    <select id="findTopList" resultType="menu">
+        select * from menu where parentId=0
+    </select>
+
+    <select id="getTotalNum" resultType="int">
+        select count(*) from menu where
+        <if test="name!=null">name like '%${name}%' </if>
+    </select>
+
+    <update id="update" parameterType="menu">
+        update menu set name=#{name},parentId=#{parentId},url=#{url},icon=#{icon} where id=#{id}
+    </update>
+
+    <delete id="delete" parameterType="string">
+        delete from menu where id=#{id}
+    </delete>
+
+    <select id="chridNums" parameterType="string" resultType="int">
+        SELECT
+            count(*)
+        FROM
+            menu
+        JOIN (
+            SELECT
+                id
+            FROM
+                menu
+            WHERE
+                id=#{id}
+        ) u ON parentId = u.id;
+    </select>
+
+    <select id="findChildListByParentId" parameterType="int" resultType="menu">
+        select * from menu where parentId=#{parentId};
+    </select>
+
+</mapper>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/parent/mapper" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/parent/model" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/parent/service" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/parent/util" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/parent/util/src/main/java/com/yzx/util/CpachaUtil.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/parent/web" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/parent/web/src/main/webapp/WEB-INF/errors" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/parent/web/src/main/webapp/errors" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/parent/web/src/main/webapp/resource/admin" charset="GBK" />
+  </component>
+</project>

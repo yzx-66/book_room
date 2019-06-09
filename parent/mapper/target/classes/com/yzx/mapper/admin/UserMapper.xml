@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yzx.mapper.admin.UserMapper">
+    <select id="findUesrByUserame" parameterType="string" resultType="user">
+        select * from user where name=#{name};
+    </select>
+
+    <insert id="addUser" parameterType="user">
+        insert into user(name,password,roleId,photo,sex,age,address) values(#{name},#{password},#{roleId},#{photo},#{sex},#{age},#{address});
+    </insert>
+
+    <delete id="delete" parameterType="int">
+        delete from user where id=#{id};
+    </delete>
+
+    <update id="update">
+       update user set name=#{name}, roleId=#{roleId}, photo=#{photo}, sex=#{sex}, age=#{age}, address=#{address} where id=#{id}
+    </update>
+
+    <select id="findList" parameterType="map" resultType="user">
+        select * from user where
+        <if test="name!=null">name like '%${name}%' </if>
+        <if test="pageSize!=null">limit #{pageSize} </if>
+        <if test="offset!=null">offset #{offset}</if>
+    </select>
+
+    <select id="getTotalNum" resultType="int">
+        select count(*) from user where
+        <if test="name!=null">name like '%${name}%' </if>
+    </select>
+
+    <select id="findRoleId" parameterType="long" resultType="int">
+        select roleId from user where id=#{id};
+    </select>
+
+    <update id="edit_password">
+        update user set password=#{password} where id=#{id};
+    </update>
+
+</mapper>
