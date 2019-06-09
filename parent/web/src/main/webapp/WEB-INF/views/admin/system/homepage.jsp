@@ -63,7 +63,7 @@
 <!-- end of main -->
 <!-- begin of footer -->
 <div class="wu-footer" data-options="region:'south',border:true,split:true">
-    &copy; 2013 Wu All Rights Reserved
+    &copy; 2019 Wu All Rights Reserved
 </div>
 <!-- end of footer -->
 <script type="text/javascript">

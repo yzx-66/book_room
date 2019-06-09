@@ -382,25 +382,26 @@
     * Name 载入数据
     */
     $('#wu-datagrid-2').datagrid({
-    url:'/admin/role/list',
-    rownumbers:true,
-    singleSelect:true,
-    loadFilter:pagerFilter,
-    pageSize:20,
-    pagination:true,
-    multiSort:true,
-    fit:true,
-    fitColumns:true,
-    idField:'id',
-    treeField:'name',
-    columns:[[
-    { field:'name',title:'角色名',width:439,sortable:true},
-    { field:'remark',title:'备注',width:439},
-    { field:'icon',title:'编辑',width:441,formatter:function(value,row,index){
-    var img = "&nbsp;&nbsp;&nbsp;<img src=http://localhost:8080/resource/admin/easyui/css/icons/edit.gif onclick=selectAuthority("+row.id+")>&nbsp;&nbsp;&nbsp;<a href='#' onclick=selectAuthority("+row.id+")>编辑权限</a></img>";
-    return img;
-    }},
-    ]]
+        url:'/admin/role/list',
+        rownumbers:true,
+        singleSelect:true,
+        loadFilter:pagerFilter,
+        pageSize:100,
+        pageList:[10,20,30,50,100],
+        pagination:true,
+        multiSort:true,
+        fit:true,
+        fitColumns:true,
+        idField:'id',
+        treeField:'name',
+        columns:[[
+        { field:'name',title:'角色名',width:439,sortable:true},
+        { field:'remark',title:'备注',width:439},
+        { field:'icon',title:'编辑',width:441,formatter:function(value,row,index){
+        var img = "&nbsp;&nbsp;&nbsp;<img src=http://localhost:8080/resource/admin/easyui/css/icons/edit.gif onclick=selectAuthority("+row.id+")>&nbsp;&nbsp;&nbsp;<a href='#' onclick=selectAuthority("+row.id+")>编辑权限</a></img>";
+        return img;
+        }},
+        ]]
     });
     </script>
 </html>

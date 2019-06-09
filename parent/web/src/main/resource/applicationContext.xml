@@ -35,6 +35,12 @@
         <!--连接池中保留的最大连接数。Default: 15 -->
         <property name="maxPoolSize" value="${datasource.connection.maxPoolSize}"/>
 
+        <property name="maxIdleTime" value="${datasource.connection.maxIdleTime}"/>
+        <property name="acquireIncrement" value="${datasource.connection.acquireIncrement}"/>
+        <property name="initialPoolSize" value="${datasource.connection.initialPoolSize}"/>
+        <property name="idleConnectionTestPeriod" value="${datasource.connection.idleConnectionTestPeriod}"/>
+        <property name="acquireRetryAttempts" value="${datasource.connection.acquireRetryAttempts}"/>
+        <property name="acquireRetryDelay" value="${datasource.connection.acquireRetryDelay}"/>
     </bean>
 
     <!-- 配置sessionFactory -->

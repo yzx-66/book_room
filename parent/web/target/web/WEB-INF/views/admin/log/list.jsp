@@ -98,21 +98,22 @@
     * Name 载入数据
     */
     $('#wu-datagrid').datagrid({
-    url:'/admin/log/list',
-    rownumbers:true,
-    singleSelect:false,
-    loadFilter:pagerFilter,
-    pageSize:20,
-    pagination:true,
-    multiSort:true,
-    fit:true,
-    fitColumns:true,
-    columns:[[
-    { field:'content',title:'内容',width:100},
-    { field:'creatTime',title:'创建时间',width:100,sortable:true,formatter:function (value) {
-            return new Date(value).toLocaleString();
-        }},
-    ]]
+        url:'/admin/log/list',
+        rownumbers:true,
+        singleSelect:false,
+        loadFilter:pagerFilter,
+        pageSize:1000,
+        pageList:[10,20,30,50,100,200,400,1000],
+        pagination:true,
+        multiSort:true,
+        fit:true,
+        fitColumns:true,
+        columns:[[
+        { field:'content',title:'内容',width:100},
+        { field:'creatTime',title:'创建时间',width:100,sortable:true,formatter:function (value) {
+                return new Date(value).toLocaleString();
+            }},
+        ]]
     });
     </script>
 </html>
