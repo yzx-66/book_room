@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yzx.mapper.admin.FloorMapper">
+     <insert id="addFloor" parameterType="floor">
+         insert  into floor(hight,name,remark) values(#{hight},#{name},#{remark});
+     </insert>
+
+    <delete id="deleteFloor" parameterType="int">
+        delete from floor where id=#{id}
+    </delete>
+
+    <update id="eidtFloor" parameterType="floor">
+        update floor set hight=#{hight},name=#{name},remark=#{remark} where id=#{id}
+    </update>
+
+    <select id="getTotal" parameterType="map" resultType="int">
+       select count(*) from floor where 1=1
+       <if test="name != null">and name like '%${name}%'</if>
+       <if test="pageSize != null">limit #{pageSize}</if>
+       <if test="offset != null">offset #{offset}</if>
+    </select>
+
+    <select id="findList" parameterType="map" resultType="floor">
+        select * from floor where 1=1
+        <if test="name != null">and name like '%${name}%'</if>
+        <if test="pageSize != null">limit #{pageSize}</if>
+        <if test="offset != null">offset #{offset}</if>
+    </select>
+
+    <select id="findAllFloors" resultType="floor">
+        select * from floor
+    </select>
+
+    <select id="findAllFloorIds" resultType="integer">
+        select id from floor
+    </select>
+
+    <select id="findFloorById" parameterType="int" resultType="floor">
+        select * from floor where id=#{id}
+    </select>
+
+    <select id="findFloorByRoomTypeId" parameterType="int" resultType="floor">
+        SELECT * FROM floor f
+        JOIN
+        (SELECT floorId FROM room_type WHERE id=#{id}) r
+        ON r.floorId=f.id
+    </select>
+
+    <select id="findFloorsByRoomTypeName" parameterType="string" resultType="floor">
+        SELECT * FROM floor f
+        JOIN
+        (SELECT floorId FROM room_type WHERE name=#{name}) r
+        ON r.floorId=f.id
+    </select>
+</mapper>

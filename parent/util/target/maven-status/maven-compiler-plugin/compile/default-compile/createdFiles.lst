@@ -1,2 +1,4 @@
 com\yzx\util\CpachaUtil.class
 com\yzx\App.class
+com\yzx\util\model\SendBack.class
+com\yzx\util\SendMsg.class

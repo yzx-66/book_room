@@ -5,8 +5,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>服务端错误</title>
-<link href="/resource/admin/h-ui/css/H-ui.min.css" rel="stylesheet" type="text/css" />
-<link href="/resource/admin/h-ui/lib/Hui-iconfont/1.0.1/iconfont.css" rel="stylesheet" type="text/css" />
+<link href="/hotel/resource/admin/h-ui/css/H-ui.min.css" rel="stylesheet" type="text/css" />
+<link href="/hotel/resource/admin/h-ui/lib/Hui-iconfont/1.0.1/iconfont.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 	<div class="page-404 text-c">

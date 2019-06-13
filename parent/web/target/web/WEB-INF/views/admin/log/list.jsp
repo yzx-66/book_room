@@ -41,7 +41,7 @@
     }
 
     $.ajax({
-    url:'/admin/log/delete',
+    url:'/hotel/admin/log/delete',
     data:ids,
     success:function(data){
     if(data.type=='success'){
@@ -98,7 +98,7 @@
     * Name 载入数据
     */
     $('#wu-datagrid').datagrid({
-        url:'/admin/log/list',
+        url:'/hotel/admin/log/list',
         rownumbers:true,
         singleSelect:false,
         loadFilter:pagerFilter,

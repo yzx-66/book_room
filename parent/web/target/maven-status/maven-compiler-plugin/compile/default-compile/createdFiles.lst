@@ -1,7 +1,1 @@
-com\yzx\web\controller\admin\LogController.class
-com\yzx\web\test.class
-com\yzx\web\controller\admin\systemController.class
-com\yzx\web\controller\admin\RoleController.class
-com\yzx\web\interceptor\admin\loginInterceptor.class
-com\yzx\web\controller\admin\UserController.class
-com\yzx\web\controller\admin\menuController.class
+com\yzx\web\controller\RoomTypeController.class

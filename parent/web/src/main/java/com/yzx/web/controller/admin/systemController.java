@@ -8,6 +8,8 @@ import com.yzx.service.admin.MenuService;
 import com.yzx.service.admin.RoleService;
 import com.yzx.service.admin.UserService;
 import com.yzx.util.CpachaUtil;
+import com.yzx.util.SendMsg;
+import com.yzx.util.model.SendBack;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -58,6 +60,7 @@ public class systemController {
         String generatorVCode = util.generatorVCode();
         HttpSession session = request.getSession();
         session.setAttribute("generatorVCode",generatorVCode);
+
         BufferedImage generatorRotateVCodeImage = util.generatorRotateVCodeImage(generatorVCode, true);
         try {
             ImageIO.write(generatorRotateVCodeImage,"gif",response.getOutputStream());
@@ -77,12 +80,12 @@ public class systemController {
             logService.addLog("用户名为："+username+" 输入验证码失效");
             return ret;
         }
-        if(!cpacha.toUpperCase().equals(trueCpacha.toUpperCase())){
-            ret.put("type","error");
-            ret.put("msg","验证码错误");
-            logService.addLog("用户名为："+username+" 输入验证码错误");
-            return ret;
-        }
+//        if(!cpacha.toUpperCase().equals(trueCpacha.toUpperCase())){
+//            ret.put("type","error");
+//            ret.put("msg","验证码错误");
+//            logService.addLog("用户名为："+username+" 输入验证码错误");
+//            return ret;
+//        }
 
         User user=userService.findUserByUsername(username);
         if(user==null){
@@ -98,7 +101,6 @@ public class systemController {
             ret.put("type","success");
             logService.addLog("用户名为："+username+" 登陆成功");
         }
-
         setSupperControllerId(request,ret,username);
         return ret;
     }
@@ -123,7 +125,7 @@ public class systemController {
         session.setAttribute("user",null);
         session.setAttribute("menu",null);
         session.setAttribute("button",null);
-        return "redirect:/admin/system/index";
+        return "redirect:/hotel/admin/system/index";
     }
 
     @RequestMapping(value = "edit-password",method = RequestMethod.GET)

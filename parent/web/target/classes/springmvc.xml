@@ -56,6 +56,7 @@
     
     <mvc:resources mapping="/resource/**" location="/resource/"/>
     <mvc:resources mapping="/upload/**" location="/upload/"/>
+    <mvc:resources mapping="/upload_room/**" location="/upload_room/"/>
     
     <mvc:interceptors>
         <mvc:interceptor>

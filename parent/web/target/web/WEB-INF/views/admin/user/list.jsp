@@ -9,7 +9,7 @@
         <div id="userRoleId" style="display:none;">${user.roleId}</div>
     <div class="wu-toolbar-button">
         <c:forEach items="${button }" var="b">
-            <c:if test="${b.key== '用户管理'}">
+            <c:if test="${b.key== '管理员列表'}">
                 <c:forEach items="${b.value }" var="m">
                     <a href="#" class="easyui-linkbutton" iconCls="icon-${m.icon}"  onclick="${m.url}" plain="true">${m.name}</a>
                 </c:forEach>
@@ -29,7 +29,7 @@
     <table>
         <tr>
             <td>头像预览</td>
-            <td><img src="/resource/admin/easyui/images/user_photo.jpg" id="img_id" style="width: 100px;height:100px;">
+            <td><img src="/hotel/resource/admin/easyui/images/user_photo.jpg" id="img_id" style="width: 100px;height:100px;">
                 <input type="file" name="tempPhoto" style="width: 90px" onchange="subpic()"/>
                 <input type="hidden" name="photo" id="photo_id">
             </td>
@@ -79,7 +79,7 @@
 <%@include file="/WEB-INF/views/admin/commen/footer.jsp" %>
 
     <!-- End of easyui-dialog -->
-    <script src="/resource/admin/easyui/js/jquery-form.js"></script>
+    <script src="/hotel/resource/admin/easyui/js/jquery-form.js"></script>
     <script type="text/javascript">
 
         function checkAuthory() {
@@ -99,7 +99,7 @@
         }
         var data=$('#wu-form-2').serialize();
         $.ajax({
-            url:'/admin/user/add',
+            url:'/hotel/admin/user/add',
             type:'post',
             dataType:'json',
             data:data,
@@ -124,7 +124,7 @@
         }
         var data=$('#wu-form-2').serialize()+"&id="+id;
         $.ajax({
-            url:'/admin/user/update',
+            url:'/hotel/admin/user/update',
             type:'post',
             dataType:'json',
             data:data,
@@ -163,7 +163,7 @@
                 }
 
                 $.ajax({
-                    url:'/admin/user/delete',
+                    url:'/hotel/admin/user/delete',
                     data:ids,
                     success:function(data){
                         if(data.type=='success'){
@@ -186,7 +186,7 @@
 
     function subpic() {
         var options={
-            url:'/admin/user/subpic',
+            url:'/hotel/admin/user/subpic',
             type:'post',
             dataType:'json',
             success:function (data) {
@@ -209,7 +209,7 @@
     function openAdd(){
     $('#wu-form-2').form('clear');
     $('#edit-hide').show();
-    $('#img_id').attr('src','/resource/admin/easyui/images/user_photo.jpg');
+    $('#img_id').attr('src','/hotel/resource/admin/easyui/images/user_photo.jpg');
     $('#wu-dialog-2').dialog({
     closed: false,
     modal:true,
@@ -306,7 +306,7 @@
     * Name 载入数据
     */
     $('#wu-datagrid-2').datagrid({
-        url:'/admin/user/list',
+        url:'/hotel/admin/user/list',
         rownumbers:true,
         singleSelect:false,
         loadFilter:pagerFilter,

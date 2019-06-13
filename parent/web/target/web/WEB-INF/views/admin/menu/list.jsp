@@ -109,7 +109,7 @@
     */
     function add(data){
     $.ajax({
-    url:'/admin/menu/add',
+    url:'/hotel/admin/menu/add',
     type:'post',
     dataType:'json',
     data:data,
@@ -144,7 +144,7 @@
         data=$('#wu-form-addChildButton').serialize()+"&id="+item.id;
     }
     $.ajax({
-    url:'/admin/menu/update',
+    url:'/hotel/admin/menu/update',
     type:'post',
     dataType:'json',
     data:data,
@@ -178,7 +178,7 @@
     }
 
     $.ajax({
-    url:'/admin/menu/delete',
+    url:'/hotel/admin/menu/delete',
     data:ids,
     success:function(data){
     if(data.type=='success'){
@@ -198,12 +198,12 @@
 
     function selectIcons(chose) {
     $.ajax({
-    url:'/admin/menu/showIcons',
+    url:'/hotel/admin/menu/showIcons',
        dataType:'json',
        success:function(data) {
            var table='<tr>';
            for(var i=0;i<data.length;i++){
-               var link="http://localhost:8080/resource/admin/easyui/css/icons/"+data[i];
+               var link="/hotel/resource/admin/easyui/css/icons/"+data[i];
                //console.log(link);
                 if(i%12==0){
                    table=table+'</tr><tr>'
@@ -412,7 +412,7 @@
     * Name 载入数据
     */
     $('#wu-datagrid').treegrid({
-    url:'/admin/menu/list',
+    url:'/hotel/admin/menu/list',
     rownumbers:true,
     singleSelect:false,
     pageSize:100,
@@ -427,7 +427,7 @@
     { field:'name',title:'name',width:433,sortable:true},
     { field:'url',title:'url',width:433},
     { field:'icon',title:'icon',width:433,formatter:function(value,index,row){
-    var img = "&nbsp;&nbsp;&nbsp;<img src=http://localhost:8080/resource/admin/easyui/css/icons/"+ value + ".png>&nbsp;&nbsp;&nbsp;</img>";
+    var img = "&nbsp;&nbsp;&nbsp;<img src=/hotel/resource/admin/easyui/css/icons/"+ value + ".png>&nbsp;&nbsp;&nbsp;</img>";
     return img + value;
     }},
     ]]

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yzx.mapper.admin.RoomMapper">
+    <insert id="addRoom" parameterType="room">
+         insert  into room(photo, name,sn, roomTypeId, status, remark) values(#{photo},#{name},#{sn},#{roomTypeId},#{status},#{remark});
+     </insert>
+
+    <delete id="deleteRoom" parameterType="int">
+        delete from room where id=#{id}
+    </delete>
+
+    <update id="eidtRoom" parameterType="room">
+        update room set name=#{name},sn=#{sn}, photo=#{photo},roomTypeId=#{roomTypeId}, status=#{status},remark =#{remark} where id=#{id}
+    </update>
+
+    <select id="getTotal" parameterType="map" resultType="int">
+        select count(*) from room where 1=1
+        <if test="name != null">and name like '%${name}%'</if>
+        <if test="sn != null">and name like sn=#{sn}</if>
+        <if test="status != null">and status=#{status}</if>
+        <if test="roomTypeId != null">and roomTypeId=#{roomTypeId}</if>
+        <if test="pageSize != null">limit #{pageSize}</if>
+        <if test="offset != null">offset #{offset}</if>
+    </select>
+
+    <select id="findList" parameterType="map" resultType="room">
+        SELECT * FROM room r
+        JOIN
+        (SELECT rt.id rtId from room_type rt
+        JOIN
+        (SELECT id FROM floor WHERE 1=1
+        <if test="hight != null">and hight=#{hight}</if>) f
+        on f.id=rt.floorId
+        WHERE 1=1
+        <if test="roomTypeName != null">and name=#{roomTypeName}</if>) ret
+        on r.roomTypeId=ret.rtId
+         where 1=1
+        <if test="name != null">and name like '%${name}%'</if>
+        <if test="sn != null">and sn=#{sn}</if>
+        <if test="status != null">and status=#{status}</if>
+        <if test="pageSize != null">limit #{pageSize}</if>
+        <if test="offset != null">offset #{offset}</if>
+    </select>
+
+    <select id="findRoomById" parameterType="int" resultType="room">
+        select * from room where id=#{id}
+    </select>
+
+    <select id="findRoomByTypeNameOrHight" parameterType="map" resultType="room">
+        SELECT * FROM room r
+        JOIN
+        (SELECT rt.id rtId from room_type rt
+        JOIN
+        (SELECT id FROM floor WHERE 1=1
+        <if test="hight != null">and hight=#{hight}</if>) f
+        on f.id=rt.floorId
+        WHERE 1=1
+        <if test="roomTypeName != null">and name=#{roomTypeName}</if>) ret
+        on r.roomTypeId=ret.rtId
+    </select>
+</mapper>

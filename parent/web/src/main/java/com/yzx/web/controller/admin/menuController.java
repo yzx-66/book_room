@@ -56,7 +56,6 @@ public class menuController {
     @RequestMapping("update")
     @ResponseBody
     public Map<String,String> update(Menu menu){
-        System.out.println(menu);
         Map<String,String> ret=new HashMap<>();
         if(menuService.update(menu)>0){
             ret.put("type","success");

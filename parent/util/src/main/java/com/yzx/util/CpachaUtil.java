@@ -5,14 +5,14 @@ import java.awt.image.BufferedImage;
 import java.util.Random;
 
 /**
- * ÑéÖ¤ÂëÉú³ÉÆ÷
+ * éªŒè¯ç ç”Ÿæˆå™¨
  * 
  * @author llq
  */
 public class CpachaUtil {
 	
 	/**
-	 * ÑéÖ¤ÂëÀ´Ô´
+	 * éªŒè¯ç æ¥æº
 	 */
 	final private char[] code = {
 		'2', '3', '4', '5', '6', '7', '8', '9',
@@ -23,39 +23,39 @@ public class CpachaUtil {
 		'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'
 	};
 	/**
-	 * ×ÖÌå
+	 * å­—ä½“
 	 */
 	final private String[] fontNames = new String[]{
-			"ºÚÌå", "ËÎÌå", "Courier", "Arial", 
+			"é»‘ä½“", "å®‹ä½“", "Courier", "Arial", 
 			"Verdana", "Times", "Tahoma", "Georgia"};
 	/**
-	 * ×ÖÌåÑùÊ½
+	 * å­—ä½“æ ·å¼
 	 */
 	final private int[] fontStyles = new int[]{
 			Font.BOLD, Font.ITALIC|Font.BOLD
 	};
 	
 	/**
-	 * ÑéÖ¤Âë³¤¶È
-	 * Ä¬ÈÏ4¸ö×Ö·û
+	 * éªŒè¯ç é•¿åº¦
+	 * é»˜è®¤4ä¸ªå­—ç¬¦
 	 */
 	private int vcodeLen = 4;
 	/**
-	 * ÑéÖ¤ÂëÍ¼Æ¬×ÖÌå´óĞ¡
-	 * Ä¬ÈÏ17
+	 * éªŒè¯ç å›¾ç‰‡å­—ä½“å¤§å°
+	 * é»˜è®¤17
 	 */
 	private int fontsize = 21;
 	/**
-	 * ÑéÖ¤ÂëÍ¼Æ¬¿í¶È
+	 * éªŒè¯ç å›¾ç‰‡å®½åº¦
 	 */
 	private int width = (fontsize+1)*vcodeLen+10;
 	/**
-	 * ÑéÖ¤ÂëÍ¼Æ¬¸ß¶È
+	 * éªŒè¯ç å›¾ç‰‡é«˜åº¦
 	 */
 	private int height = fontsize+12;
 	/**
-	 * ¸ÉÈÅÏßÌõÊı
-	 * Ä¬ÈÏ3Ìõ
+	 * å¹²æ‰°çº¿æ¡æ•°
+	 * é»˜è®¤3æ¡
 	 */
 	private int disturbline = 3;
 	
@@ -63,8 +63,8 @@ public class CpachaUtil {
 	public CpachaUtil(){}
 	
 	/**
-	 * Ö¸¶¨ÑéÖ¤Âë³¤¶È
-	 * @param vcodeLen ÑéÖ¤Âë³¤¶È
+	 * æŒ‡å®šéªŒè¯ç é•¿åº¦
+	 * @param vcodeLen éªŒè¯ç é•¿åº¦
 	 */
 	public CpachaUtil(int vcodeLen) {
 		this.vcodeLen = vcodeLen;
@@ -72,7 +72,7 @@ public class CpachaUtil {
 	}
 	
 	/**
-	 * Ö¸¶¨ÑéÖ¤Âë³¤¶È¡¢Í¼Æ¬¿í¶È¡¢¸ß¶È
+	 * æŒ‡å®šéªŒè¯ç é•¿åº¦ã€å›¾ç‰‡å®½åº¦ã€é«˜åº¦
 	 * @param vcodeLen
 	 * @param width
 	 * @param height
@@ -84,54 +84,54 @@ public class CpachaUtil {
 	}
 	
 	/**
-	 * Éú³ÉÑéÖ¤ÂëÍ¼Æ¬
-	 * @param vcode Òª»­µÄÑéÖ¤Âë
-	 * @param drawline ÊÇ·ñ»­¸ÉÈÅÏß
+	 * ç”ŸæˆéªŒè¯ç å›¾ç‰‡
+	 * @param vcode è¦ç”»çš„éªŒè¯ç 
+	 * @param drawline æ˜¯å¦ç”»å¹²æ‰°çº¿
 	 * @return
 	 */
 	public BufferedImage generatorVCodeImage(String vcode, boolean drawline){
-		//´´½¨ÑéÖ¤ÂëÍ¼Æ¬
+		//åˆ›å»ºéªŒè¯ç å›¾ç‰‡
 		BufferedImage vcodeImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 		Graphics g = vcodeImage.getGraphics();
-		//Ìî³ä±³¾°É«
+		//å¡«å……èƒŒæ™¯è‰²
 		g.setColor(new Color(246, 240, 250));
 		g.fillRect(0, 0, width, height);
 		if(drawline){
 			drawDisturbLine(g);
 		}
-		//ÓÃÓÚÉú³ÉÎ±Ëæ»úÊı
+		//ç”¨äºç”Ÿæˆä¼ªéšæœºæ•°
 		Random ran = new Random();
-		//ÔÚÍ¼Æ¬ÉÏ»­ÑéÖ¤Âë
+		//åœ¨å›¾ç‰‡ä¸Šç”»éªŒè¯ç 
 		for(int i = 0;i < vcode.length();i++){
-			//ÉèÖÃ×ÖÌå
+			//è®¾ç½®å­—ä½“
 			g.setFont(new Font(fontNames[ran.nextInt(fontNames.length)], fontStyles[ran.nextInt(fontStyles.length)], fontsize));
-			//Ëæ»úÉú³ÉÑÕÉ«
+			//éšæœºç”Ÿæˆé¢œè‰²
 			g.setColor(getRandomColor());
-			//»­ÑéÖ¤Âë
+			//ç”»éªŒè¯ç 
 			g.drawString(vcode.charAt(i)+"", i*fontsize+10, fontsize+5);
 		}
-		//ÊÍ·Å´ËÍ¼ĞÎµÄÉÏÏÂÎÄÒÔ¼°ËüÊ¹ÓÃµÄËùÓĞÏµÍ³×ÊÔ´
+		//é‡Šæ”¾æ­¤å›¾å½¢çš„ä¸Šä¸‹æ–‡ä»¥åŠå®ƒä½¿ç”¨çš„æ‰€æœ‰ç³»ç»Ÿèµ„æº
 		g.dispose();
 		
 		return vcodeImage;
 	}
 	/**
-	 * »ñµÃĞı×ª×ÖÌåµÄÑéÖ¤ÂëÍ¼Æ¬
+	 * è·å¾—æ—‹è½¬å­—ä½“çš„éªŒè¯ç å›¾ç‰‡
 	 * @param vcode
-	 * @param drawline ÊÇ·ñ»­¸ÉÈÅÏß
+	 * @param drawline æ˜¯å¦ç”»å¹²æ‰°çº¿
 	 * @return
 	 */
 	public BufferedImage generatorRotateVCodeImage(String vcode, boolean drawline){
-		//´´½¨ÑéÖ¤ÂëÍ¼Æ¬
+		//åˆ›å»ºéªŒè¯ç å›¾ç‰‡
 		BufferedImage rotateVcodeImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 		Graphics2D g2d = rotateVcodeImage.createGraphics();
-		//Ìî³ä±³¾°É«
+		//å¡«å……èƒŒæ™¯è‰²
 		g2d.setColor(new Color(246, 240, 250));
 		g2d.fillRect(0, 0, width, height);
 		if(drawline){
 			drawDisturbLine(g2d);
 		}
-		//ÔÚÍ¼Æ¬ÉÏ»­ÑéÖ¤Âë
+		//åœ¨å›¾ç‰‡ä¸Šç”»éªŒè¯ç 
 		for(int i = 0;i < vcode.length();i++){
 			BufferedImage rotateImage = getRotateImage(vcode.charAt(i));
 			g2d.drawImage(rotateImage, null, (int) (this.height * 0.7) * i, 0);
@@ -140,8 +140,8 @@ public class CpachaUtil {
 		return rotateVcodeImage;
 	}
 	/**
-	 * Éú³ÉÑéÖ¤Âë
-	 * @return ÑéÖ¤Âë
+	 * ç”ŸæˆéªŒè¯ç 
+	 * @return éªŒè¯ç 
 	 */
 	public String generatorVCode(){
 		int len = code.length;
@@ -154,7 +154,7 @@ public class CpachaUtil {
 		return sb.toString();
 	}
 	/**
-	 * ÎªÑéÖ¤ÂëÍ¼Æ¬»­Ò»Ğ©¸ÉÈÅÏß
+	 * ä¸ºéªŒè¯ç å›¾ç‰‡ç”»ä¸€äº›å¹²æ‰°çº¿
 	 * @param g 
 	 */
 	private void drawDisturbLine(Graphics g){
@@ -165,26 +165,26 @@ public class CpachaUtil {
 			int x2 = ran.nextInt(width);
 			int y2 = ran.nextInt(height);
 			g.setColor(getRandomColor());
-			//»­¸ÉÈÅÏß
+			//ç”»å¹²æ‰°çº¿
 			g.drawLine(x1, y1, x2, y2);
 		}
 	}
 	/**
-	 * »ñÈ¡Ò»ÕÅĞı×ªµÄÍ¼Æ¬
-	 * @param c Òª»­µÄ×Ö·û
+	 * è·å–ä¸€å¼ æ—‹è½¬çš„å›¾ç‰‡
+	 * @param c è¦ç”»çš„å­—ç¬¦
 	 * @return
 	 */
 	private BufferedImage getRotateImage(char c){
 		BufferedImage rotateImage = new BufferedImage(height, height, BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g2d = rotateImage.createGraphics();
-		//ÉèÖÃÍ¸Ã÷¶ÈÎª0
+		//è®¾ç½®é€æ˜åº¦ä¸º0
 		g2d.setColor(new Color(255, 255, 255, 0));
 		g2d.fillRect(0, 0, height, height);
 		Random ran = new Random();
 		g2d.setFont(new Font(fontNames[ran.nextInt(fontNames.length)], fontStyles[ran.nextInt(fontStyles.length)], fontsize));
 		g2d.setColor(getRandomColor());
 		double theta = getTheta();
-		//Ğı×ªÍ¼Æ¬
+		//æ—‹è½¬å›¾ç‰‡
 		g2d.rotate(theta, height/2, height/2);
 		g2d.drawString(Character.toString(c), (height-fontsize)/2, fontsize+5);
 		g2d.dispose();
@@ -192,27 +192,27 @@ public class CpachaUtil {
 		return rotateImage;
 	}
 	/**
-	 * @return ·µ»ØÒ»¸öËæ»úÑÕÉ«
+	 * @return è¿”å›ä¸€ä¸ªéšæœºé¢œè‰²
 	 */
 	private Color getRandomColor(){
 		Random ran = new Random();
 		return new Color(ran.nextInt(220), ran.nextInt(220), ran.nextInt(220)); 
 	}
 	/**
-	 * @return ½Ç¶È
+	 * @return è§’åº¦
 	 */
 	private double getTheta(){
 		return ((int) (Math.random()*1000) % 2 == 0 ? -1 : 1)*Math.random();
 	}
 
 	/**
-	 * @return ÑéÖ¤Âë×Ö·û¸öÊı
+	 * @return éªŒè¯ç å­—ç¬¦ä¸ªæ•°
 	 */
 	public int getVcodeLen() {
 		return vcodeLen;
 	}
 	/**
-	 * ÉèÖÃÑéÖ¤Âë×Ö·û¸öÊı
+	 * è®¾ç½®éªŒè¯ç å­—ç¬¦ä¸ªæ•°
 	 * @param vcodeLen
 	 */
 	public void setVcodeLen(int vcodeLen) {
@@ -220,13 +220,13 @@ public class CpachaUtil {
 		this.vcodeLen = vcodeLen;
 	}
 	/**
-	 * @return ×ÖÌå´óĞ¡
+	 * @return å­—ä½“å¤§å°
 	 */
 	public int getFontsize() {
 		return fontsize;
 	}
 	/**
-	 * ÉèÖÃ×ÖÌå´óĞ¡
+	 * è®¾ç½®å­—ä½“å¤§å°
 	 * @param fontsize
 	 */
 	public void setFontsize(int fontsize) {
@@ -235,39 +235,39 @@ public class CpachaUtil {
 		this.fontsize = fontsize;
 	}
 	/**
-	 * @return Í¼Æ¬¿í¶È
+	 * @return å›¾ç‰‡å®½åº¦
 	 */
 	public int getWidth() {
 		return width;
 	}
 	/**
-	 * ÉèÖÃÍ¼Æ¬¿í¶È
+	 * è®¾ç½®å›¾ç‰‡å®½åº¦
 	 * @param width
 	 */
 	public void setWidth(int width) {
 		this.width = width;
 	}
 	/**
-	 * @return Í¼Æ¬¸ß¶È
+	 * @return å›¾ç‰‡é«˜åº¦
 	 */
 	public int getHeight() {
 		return height;
 	}
 	/**
-	 * ÉèÖÃÍ¼Æ¬¸ß¶È
+	 * è®¾ç½®å›¾ç‰‡é«˜åº¦
 	 * @param height 
 	 */
 	public void setHeight(int height) {
 		this.height = height;
 	}
 	/**
-	 * @return ¸ÉÈÅÏßÌõÊı
+	 * @return å¹²æ‰°çº¿æ¡æ•°
 	 */
 	public int getDisturbline() {
 		return disturbline;
 	}
 	/**
-	 * ÉèÖÃ¸ÉÈÅÏßÌõÊı
+	 * è®¾ç½®å¹²æ‰°çº¿æ¡æ•°
 	 * @param disturbline
 	 */
 	public void setDisturbline(int disturbline) {

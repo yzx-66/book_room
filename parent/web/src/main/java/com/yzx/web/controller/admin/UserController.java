@@ -107,7 +107,6 @@ public class UserController {
     public Map<String,String> subpic(MultipartFile tempPhoto, HttpServletRequest request){
         Map<String,String> ret=new HashMap<>();
         String suffix=tempPhoto.getOriginalFilename().substring(tempPhoto.getOriginalFilename().lastIndexOf('.')+1);
-        System.out.println(suffix);
         if(tempPhoto==null){
             ret.put("type","error");
             ret.put("msg","请选择一张图片");
@@ -123,12 +122,12 @@ public class UserController {
             ret.put("msg","图片过大");
             return ret;
         }
-        String idaePath="C:/EXCS/IDEA_exc/project/parent/web/src/main/webapp/upload";
-        String mavenPath=request.getServletContext().getRealPath("/upload");
+        String idaePath="C:/EXCS/IDEA_exc/SSM_Hotel/parent/web/src/main/webapp/upload/upload_userPhoto";
+        String mavenPath=request.getServletContext().getRealPath("/upload/upload_userPhoto");
         String filename="pic_"+UUID.randomUUID()+"_"+tempPhoto.getOriginalFilename();
 
         Map<String,String> ideaRet=addFile(idaePath,tempPhoto,filename);
-        if(ideaRet.get("type")=="error"){
+        if(ideaRet.get("type").equals("error")){
             return ideaRet;
         }else {
             return addFile(mavenPath,tempPhoto,filename);
@@ -140,7 +139,7 @@ public class UserController {
         File File=new File(path);
         File mavenFile=new File(path);
         if(!File.exists()){
-            File.mkdir();
+            File.mkdirs();
         }
 
         try {
@@ -151,7 +150,7 @@ public class UserController {
             return ret;
         }
         ret.put("type","success");
-        ret.put("filepath","/upload/"+filename);
+        ret.put("filepath","/hotel/upload/upload_userPhoto/"+filename);
         return ret;
     }
 }
