@@ -3,6 +3,7 @@ package com.yzx.mapper.admin;
 import com.yzx.model.admin.Log;
 import com.yzx.model.admin.Page;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -11,4 +12,5 @@ public interface LogMapper {
      List<Log> findList(Map<String,Object> map);
      int getTotalNum(Map<String, Object> map);
      int delete(int id);
+     List<Log> find(Date date);
 }

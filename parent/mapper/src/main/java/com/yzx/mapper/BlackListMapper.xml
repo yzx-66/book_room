@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yzx.mapper.BlackListMapper">
+    <insert id="addBlackList" parameterType="blackList">
+         insert  into blacklist(accountId, inTime,outTime) values(#{accountId},#{inTime},#{outTime});
+     </insert>
+
+    <delete id="deleteBlackList" parameterType="int">
+        delete from blacklist where id=#{id}
+    </delete>
+
+    <select id="getTotal" parameterType="map" resultType="int">
+        SELECT COUNT(*) from blacklist
+        JOIN
+        (
+        SELECT
+        id
+        FROM
+        account
+        WHERE 1=1
+        <if test="name != null">AND NAME LIKE '%${name}%'</if>
+        <if test="realName != null">AND NAME LIKE '%${realName}%'</if>
+        <if test="phoneNum != null">AND NAME LIKE '%${phoneNum}%'</if>
+        <if test="idCard != null">AND NAME LIKE '%${idCard}%'</if>
+        ) a
+        on a.id=blacklist.accountId
+        <if test="pageSize != null">limit #{pageSize}</if>
+        <if test="offset != null">offset #{offset}</if>
+    </select>
+
+    <select id="findList" parameterType="map" resultType="blackList">
+        SELECT * from blacklist
+        JOIN
+        (
+        SELECT
+        id
+        FROM
+        account
+        WHERE 1=1
+        <if test="name != null">AND NAME LIKE '%${name}%'</if>
+        <if test="realName != null">AND NAME LIKE '%${realName}%'</if>
+        <if test="phoneNum != null">AND NAME LIKE '%${phoneNum}%'</if>
+        <if test="idCard != null">AND NAME LIKE '%${idCard}%'</if>
+        ) a
+        on a.id=blacklist.accountId
+        <if test="pageSize != null">limit #{pageSize}</if>
+        <if test="offset != null">offset #{offset}</if>
+    </select>
+
+    <select id="findBlackListById" parameterType="int" resultType="blackList">
+        select * from blacklist where id=#{id}
+    </select>
+
+    <select id="findAll" resultType="blackList">
+        select * from blacklist
+    </select>
+
+    <select id="findBlackListByAccountId" parameterType="int" resultType="blackList">
+        select * from blacklist where accountId=#{acountId}
+    </select>
+    
+</mapper>

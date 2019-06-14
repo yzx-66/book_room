@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yzx.mapper.AccountMapper">
+    <insert id="addAccount" parameterType="account">
+         insert  into account(name, phoneNum,password, realName, idCard, photo,address,status,monthBreakTimes,sumBreakTimes) values(#{name},#{phoneNum},#{password},#{realName},#{idCard},#{photo},#{address},#{status},#{monthBreakTimes},#{sumBreakTimes});
+     </insert>
+
+    <delete id="deleteAccount" parameterType="int">
+        delete from account where id=#{id}
+    </delete>
+
+    <update id="eidtAccount" parameterType="account">
+        update account set name=#{name},phoneNum=#{phoneNum},realName=#{realName}, idCard=#{idCard},photo =#{photo},address =#{address},status =#{status},monthBreakTimes =#{monthBreakTimes},sumBreakTimes =#{sumBreakTimes} where id=#{id}
+    </update>
+
+    <select id="getTotal" parameterType="map" resultType="int">
+        select count(*) from account
+        where 1=1
+        <if test="name != null">and name like '%${name}%'</if>
+        <if test="realName != null">and realName like '%${realName}%'</if>
+        <if test="phoneNum != null">and phoneNum like '%${phoneNum}%' </if>
+        <if test="idCard != null">and idCard like '%${idCard}%'</if>
+        <if test="status != null">and status=#{status}</if>
+        <if test="pageSize != null">limit #{pageSize}</if>
+        <if test="offset != null">offset #{offset}</if>
+    </select>
+
+    <select id="findList" parameterType="map" resultType="account">
+        SELECT * FROM account
+        where 1=1
+        <if test="name != null">and name like '%${name}%'</if>
+        <if test="realName != null">and realName like '%${realName}%'</if>
+        <if test="phoneNum != null">and phoneNum like '%${phoneNum}%'</if>
+        <if test="idCard != null">and idCard like '%${idCard}%'</if>
+        <if test="status != null">and status=#{status}</if>
+        <if test="pageSize != null">limit #{pageSize}</if>
+        <if test="offset != null">offset #{offset}</if>
+    </select>
+
+    <select id="findAccountById" parameterType="int" resultType="account">
+        select * from account where id=#{id}
+    </select>
+
+    <select id="findAll" resultType="account">
+        select * from account
+    </select>
+    
+</mapper>

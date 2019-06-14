@@ -1,10 +1,13 @@
+com\yzx\model\BlackList.class
 com\yzx\model\admin\User.class
-com\yzx\model\RoomType.class
 com\yzx\model\admin\Authority.class
 com\yzx\App.class
-com\yzx\model\admin\Role.class
+com\yzx\model\BookOrder.class
 com\yzx\model\admin\Room.class
 com\yzx\model\admin\Floor.class
+com\yzx\model\admin\Menu.class
+com\yzx\model\Account.class
+com\yzx\model\RoomType.class
+com\yzx\model\admin\Role.class
 com\yzx\model\admin\Log.class
 com\yzx\model\admin\Page.class
-com\yzx\model\admin\Menu.class

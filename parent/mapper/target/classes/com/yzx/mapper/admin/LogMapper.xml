@@ -23,4 +23,8 @@
        <if test="name != null">and content like '%${content}%'</if>
     </select>
 
+    <select id="find" resultType="log" parameterType="date">
+        select * from log where createTime> #{date}
+    </select>
+
 </mapper>
