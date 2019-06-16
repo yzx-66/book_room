@@ -418,7 +418,16 @@
             openAdd();
         }
         if($('#dowhat').html()=='edit'){
-            openEdit(JSON.parse($('#editRoomType').html()));
+        //    openEdit(JSON.parse($('#editRoomType').html()));
+            var item=JSON.parse($('#editRoomType').html());
+            var option={};
+            $('#search-name').val(item.name);
+            option.name=item.name;
+            $('#search-floorId').val(item.floorId);
+            option.floorId = item.floorId;
+            $("#search-status").val(item.status);
+            option.status = item.status;
+            $('#wu-datagrid-2').datagrid('reload',option);
         }
     }
 </script>

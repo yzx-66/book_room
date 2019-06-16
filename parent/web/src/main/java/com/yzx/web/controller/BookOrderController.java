@@ -260,7 +260,7 @@ public class BookOrderController {
             SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy/MM/dd");
             Room room=rooms.get(random.nextInt(size));
             room.setStatus(1);
-            room.setRemark("预定信息：<li>预定账号："+accountService.findAccountById(bookOrder.getAccountId()).getPhoneNum()+"</li><li>入住者："+bookOrder.getName()+"</li><li>联系电话："+bookOrder.getPhoneNum()+"</li><li>入住时间："+dateFormat.format(bookOrder.getArriveDate())+"--"+dateFormat.format(bookOrder.getLeaveDate())+"</li>");
+            room.setRemark("初步分配信息：<li>预定账号："+accountService.findAccountById(bookOrder.getAccountId()).getPhoneNum()+"</li><li>入住者："+bookOrder.getName()+"</li><li>联系电话："+bookOrder.getPhoneNum()+"</li><li>入住时间："+dateFormat.format(bookOrder.getArriveDate())+"--"+dateFormat.format(bookOrder.getLeaveDate())+"</li>");
             roomService.eidtRoom(room);
         }catch (Exception e){
             ret.put("type", "error");

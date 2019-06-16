@@ -27,7 +27,6 @@ public class RoomTypeController {
 
     @RequestMapping(value = "list",method = RequestMethod.GET)
     public String list(HttpServletRequest request,String dowhat,Integer id) throws JsonProcessingException {
-        request.getSession().setAttribute("floors",floorService.findAllFloors());
         if(dowhat!=null){
             if(dowhat.equals("add")){
                 request.getSession().setAttribute("dowhat","add");
@@ -38,12 +37,15 @@ public class RoomTypeController {
                 String editRoomType=mapper.writeValueAsString(roomTypeService.findRoomTypeById(id));
                 request.getSession().setAttribute("editRoomType",editRoomType);
             }
+        }else {
+            request.getSession().setAttribute("dowhat","no");
         }
         List<RoomType> allRoomTypes=roomTypeService.findAllRoomeType();
         Set<String> roomTypeNames=new HashSet<>();
         for(RoomType r:allRoomTypes){
             roomTypeNames.add(r.getName());
         }
+        request.getSession().setAttribute("floors",floorService.findAllFloors());
         request.getSession().setAttribute("roomTypeNames",roomTypeNames);
         return "admin/room_type/list";
     }
@@ -51,7 +53,6 @@ public class RoomTypeController {
     @RequestMapping("add")
     @ResponseBody
     public Map<String,String> add(HttpServletRequest request,RoomType roomType,int [] floorIds){//注意传的是数组
-        request.getSession().setAttribute("dowhat",null);
         Map<String,String> ret=new HashMap<>();
         Set<Integer> checkSame=new HashSet<>();
         for(int check:floorIds){
@@ -89,8 +90,6 @@ public class RoomTypeController {
     @RequestMapping("update")
     @ResponseBody
     public Map<String,String> update(HttpServletRequest request,RoomType roomType){
-        request.getSession().setAttribute("dowhat",null);
-
         List<RoomType> sameNameTypes=roomTypeService.findRoomTypeByName(roomType.getName());
         if(sameNameTypes.size()>1){
             for(RoomType rt:sameNameTypes){
