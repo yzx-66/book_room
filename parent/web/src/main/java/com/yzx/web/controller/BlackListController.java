@@ -2,6 +2,7 @@ package com.yzx.web.controller;
 
 import com.yzx.model.Account;
 import com.yzx.model.BlackList;
+import com.yzx.model.BookOrder;
 import com.yzx.service.AccountService;
 import com.yzx.service.BlackListService;
 import com.yzx.service.BookOrderService;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Controller
@@ -35,10 +37,11 @@ public class BlackListController {
     public Map<String,String> add(int accountId) throws ParseException {
         Map<String,String> ret=new HashMap<>();
         Account account=accountService.findAccountById(accountId);
+        List<BookOrder> bookOrders=bookOrderService.findBookOrdersByAccountId(accountId);
         if(blackListService.findBlackListByAccountId(accountId)!=null){
             ret.put("type","error");
             ret.put("msg","添加失败 该用户已经在黑名单");
-        }else if(bookOrderService.findBookOrdersByAccountId(accountId)!=null){
+        }else if(bookOrders!=null && bookOrders.size()>0){
             ret.put("type","error");
             ret.put("msg","添加失败 该用户还有未完成的定单");
         }else{
@@ -58,20 +61,24 @@ public class BlackListController {
 
     @RequestMapping("delete")
     @ResponseBody
-    public Map<String,String> delete(int [] id,int [] accountId){
+    public Map<String,String> delete(int [] accountId) throws ParseException {
         Map<String,String> ret=new HashMap<>();
-        for(int i=0;i<id.length;i++){
-            Account account=accountService.findAccountById(accountId[i]);
-            if(account.getSumBreakTimes()==BlackList.SUM_MOST_BREAKTIMES){
+        for(int i=0;i<accountId.length;i++){
+            BlackList blackList=blackListService.findBlackListByAccountId(accountId[i]);
+            SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd");
+            Date not=dateFormat.parse("1970-01-01");
+            if(blackList.getOutTime().compareTo(not)==0){
                 ret.put("type", "error");
-                ret.put("msg", "删除停止 有用户违约次数已达总上限 永久冻结");
+                ret.put("msg", "删除停止 存在用户永久冻结");
                 return ret;
             }
-            if(blackListService.deleteBlackList(id[i])<=0) {
+            if(blackListService.deleteBlackList(blackList.getId())<=0) {
                 ret.put("type", "error");
                 ret.put("msg", "删除出错 请联系管理员");
                 return ret;
             }
+            Account account=accountService.findAccountById(accountId[i]);
+            account.setMonthBreakTimes(0);
             account.setStatus(1);
             accountService.eidtAccount(account);
         }

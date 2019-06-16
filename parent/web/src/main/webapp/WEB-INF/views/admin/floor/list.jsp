@@ -286,7 +286,7 @@
                         async: false,
                         success:function (data) {
                             for(var i=0;i<data.length;i++){
-                                var roomtype=img+"<a href='/hotel/admin/room_type/list?dowhat=edit&id="+data[i].id+"' title=\"点我编辑\" style='text-decoration: underline'><span style='width: 150px'> 房间类型：<font color='red'>"+data[i].name+"</font></span>&nbsp;&nbsp;价格："+data[i].price+"&nbsp;（晚/RMB）&nbsp;&nbsp;&nbsp;、&nbsp;&nbsp;&nbsp;&nbsp;预定数："+data[i].bookNum+"&nbsp;&nbsp;&nbsp;&nbsp;、&nbsp;&nbsp;&nbsp;&nbsp;已入住数："+data[i].livedNum+"&nbsp;&nbsp;&nbsp;&nbsp;、&nbsp;&nbsp;&nbsp;&nbsp;可用数：<font color='green'>"+data[i].avilableNum+"</font></a></li><br>";
+                                var roomtype=img+"<a href='/hotel/admin/room_type/list?dowhat=edit&id="+data[i].id+"' title=\"点我编辑\" style='text-decoration: underline' xmlns=\"http://www.w3.org/1999/htm\"><span style='width: 150px'> 房间类型：<font color='red' size='3'>"+data[i].name+"</font></span>&nbsp;&nbsp;价格："+data[i].price+"&nbsp;（晚/RMB）&nbsp;&nbsp;&nbsp;、&nbsp;&nbsp;&nbsp;&nbsp;预定数：<font color='blue' size='2' >"+data[i].bookNum+"</font>&nbsp;&nbsp;&nbsp;&nbsp;、&nbsp;&nbsp;&nbsp;&nbsp;已入住数：<font color='#d2691e' size='2'> "+data[i].livedNum+"</font>&nbsp;&nbsp;&nbsp;&nbsp;、&nbsp;&nbsp;&nbsp;&nbsp;可用数：<font color='#8a2be2' size='2'>"+data[i].avilableNum+"</font></a></li><br>";
                                 ret+=roomtype;
                             }
                             if(data.length==0){

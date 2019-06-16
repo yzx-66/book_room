@@ -38,15 +38,8 @@ public class RoomTypeServiceImpl implements RoomTypeService {
 
     @Override
     public List<RoomType> findList(Map<String, Object> map){
-        List<RoomType> roomTypeList=roomTypeMapper.findList(map);
-        for(RoomType r:roomTypeList){
-            if(r.getStatus()==1){
-                r.setStatus(r.getAvilableNum()<=0?0:1);
-                r.setAvilableNum(r.getAvilableNum());
-                eidtRoomType(r);
-            }
-        }
-        return roomTypeList;
+        refresh();
+        return roomTypeMapper.findList(map);
     }
 
     @Override
@@ -72,5 +65,17 @@ public class RoomTypeServiceImpl implements RoomTypeService {
     @Override
     public List<RoomType> findRoomTypeByName(String name) {
         return roomTypeMapper.findRoomTypeByName(name);
+    }
+
+    @Override
+    public void refresh() {
+        List<RoomType> roomTypeList=roomTypeMapper.findAllRoomeType();
+        for(RoomType r:roomTypeList){
+            if(r.getStatus()==1){
+                r.setStatus(r.getAvilableNum()<=0?0:1);
+                r.setAvilableNum(r.getAvilableNum());
+                eidtRoomType(r);
+            }
+        }
     }
 }

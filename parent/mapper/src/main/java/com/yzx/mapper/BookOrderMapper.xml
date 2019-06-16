@@ -12,19 +12,19 @@
     </delete>
 
     <update id="eidtBookOrder" parameterType="bookOrder">
-        update bookorder set accountId=#{name},roomTypeId=#{roomTypeId}, name=#{name},idCard=#{idCard}, phoneNum=#{phoneNum},status =#{status},arriveDate =#{arriveDate},leaveDate =#{leaveDate},remark =#{remark} where id=#{id}
+        update bookorder set accountId=#{accountId},roomTypeId=#{roomTypeId}, name=#{name},idCard=#{idCard}, phoneNum=#{phoneNum},status =#{status},arriveDate =#{arriveDate},leaveDate =#{leaveDate},remark =#{remark} where id=#{id}
     </update>
 
     <select id="getTotal" parameterType="map" resultType="int">
         SELECT count(*) FROM bookorder b
         JOIN
-        (SELECT id FROM account WHERE name like '%${accountName}%')a
+        (SELECT id FROM account WHERE phoneNum like '%${phoneNum}%')a
         on b.accountId=a.id
         WHERE 1=1
         AND name like '%${name}%'
         AND phoneNum like '%${phoneNum}%'
-        <if test="arriveDate != null">AND arriveDate > #{arriveDate}</if>
-        <if test="leaveDate != null">AND leaveDate > #{leaveDate}</if>
+        <if test="arriveDate != null">AND arriveDate &gt;= #{arriveDate}</if>
+        <if test="leaveDate != null">AND leaveDate &lt;= #{leaveDate}</if>
         <if test="pageSize != null">limit #{pageSize}</if>
         <if test="offset != null">offset #{offset}</if>
     </select>
@@ -32,13 +32,13 @@
     <select id="findList" parameterType="map" resultType="bookOrder">
         SELECT * FROM bookorder b
         JOIN
-        (SELECT id FROM account WHERE name like '%${accountName}%')a
+        (SELECT id FROM account WHERE phoneNum like '%${accountPhone}%')a
         on b.accountId=a.id
         WHERE 1=1
         AND name like '%${name}%'
         AND phoneNum like '%${phoneNum}%'
-        <if test="arriveDate != null">AND arriveDate > #{arriveDate}</if>
-        <if test="leaveDate != null">AND leaveDate > #{leaveDate}</if>
+        <if test="arriveDate != null">AND arriveDate &gt;=  #{arriveDate}</if>
+        <if test="leaveDate != null">AND leaveDate &lt;= #{leaveDate}</if>
         <if test="pageSize != null">limit #{pageSize}</if>
         <if test="offset != null">offset #{offset}</if>
     </select>

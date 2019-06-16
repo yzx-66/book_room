@@ -13,5 +13,6 @@ public interface RoomService {
     int getTotal(Map<String,Object> map);
     List<Room> findList(Map<String,Object> map);
     Room findRoomById(int id);
-    List<Room> findRoomByTypeNameOrHight(Map<String,Object> map);
+    List<Room> findRoomByTypeNameOrHightOrStatus(Map<String,Object> map);
+    List<Room> findRoomByTypeIdAndStatus(Integer roomTypeId,Integer status);
 }

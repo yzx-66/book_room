@@ -1,6 +1,7 @@
 package com.yzx.mapper;
 
 import com.yzx.model.Account;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -13,4 +14,5 @@ public interface AccountMapper {
     List<Account> findList(Map<String,Object> map);
     Account findAccountById(int id);
     List<Account> findAll();
+    Account findAccountByPhoneNum(@Param("phoneNum") String phoneNum);
 }

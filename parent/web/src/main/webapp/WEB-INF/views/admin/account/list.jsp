@@ -31,11 +31,11 @@
                                         <option value="0">被冻结</option>
                                         <option value="1">正常</option>
                                       </select>
-            <a href="#" id="search-btn" class="easyui-linkbutton" iconCls="icon-search" click="search()">开始检索</a>
+            <a href="#" id="search-btn" class="easyui-linkbutton" iconCls="icon-search">开始检索</a>
         </div>
     </div>
     <!-- End of toolbar -->
-    <table id="wu-datagrid-2" class="easyui-datagrid" toolbar="#wu-toolbar-2"></table>
+    <table id="wu-datagrid-2"  toolbar="#wu-toolbar-2"></table>
 </div>
 <!-- Begin of easyui-dialog -->
 <div id="wu-dialog-2" class="easyui-dialog" data-options="closed:true,iconCls:'icon-save'" style="width:400px; padding:10px;">
@@ -90,7 +90,7 @@
             option.status=$('#search-status').val();
         }
         $('#wu-datagrid-2').datagrid('reload',option);
-    })
+    });
 
     /**
      * Name 添加记录
@@ -183,8 +183,7 @@
                             $.messager.alert('信息提示','删除成功！','info');
                             $('#wu-datagrid-2').datagrid('reload');
                         }
-                        else
-                        {
+                        else {
                             $.messager.alert('信息提示',data.msg,'info');
                             $('#wu-datagrid-2').datagrid('reload');
                         }
@@ -192,6 +191,33 @@
                 });
             }
         });
+    }
+    
+    function deleteForever() {
+        var item = $('#wu-datagrid-2').datagrid('getSelected');
+        if(item==null || item.length==0 ){
+            $.messager.message('信息提示','请选择一条','info');
+            return;
+        }
+        $.messager.confirm('信息提示','该用户将永久加黑 确定加黑？',function (result) {
+             if(result){
+                 $.ajax({
+                     url:'/hotel/admin/blackList/add',
+                     data:{accountId:item.id},
+                     dataType:'json',
+                     success:function (data) {
+                         if(data.type=='success'){
+                             $.messager.alert('信息提示','拉黑成功！','info');
+                             $('#wu-datagrid-2').datagrid('reload');
+                         }
+                         else {
+                             $.messager.alert('信息提示',data.msg,'info');
+                             $('#wu-datagrid-2').datagrid('reload');
+                         }
+                     }
+                 })
+             }
+        })
     }
 
     /**
@@ -290,37 +316,46 @@
         return data;
     }
 
-    /**
-     * Name 载入数据
-     */
-    $('#wu-datagrid-2').datagrid({
-        url:'/hotel/admin/account/list',
-        rownumbers:true,
-        singleSelect:false,
-        loadFilter:pagerFilter,
-        pageSize:100,
-        pageList:[10,20,30,50,100],
-        pagination:true,
-        multiSort:true,
-        fit:true,
-        fitColumns:true,
-        columns:[[
-            { field:'photo',title:'头像预览',width:100,formatter:function (value,row,index) {
-                    var img = "&nbsp;&nbsp;&nbsp;<img style='width: 50px;height: 50px' src="+value+"/>";
-                    return img;
-                }},
-            { field:'name',title:'用户名',width:100,sortable:true},
-            { field:'phoneNum',title:'手机号',width:100,sortable:true},
-            { field:'realName',title:'真实姓名',width:100,sortable:true},
-            { field:'idCard',title:'身份证吗',width:100,sortable:true},
-            { field:'status',title:'状态',width:100,sortable:true,formatter:function (value) {
-                    switch (value) {
-                        case 0:return "被冻结";
-                        case 1:return "正常";
+    init();
+    function init() {
+        setTimeout(refreshDic, 100);
+    }
+    function refreshDic() {
+        $('#wu-datagrid-2').datagrid({
+            url: '/hotel/admin/account/list',
+            rownumbers:true,
+            singleSelect:false,
+            loadFilter:pagerFilter,
+            pageSize:100,
+            pageList:[10,20,30,50,100],
+            pagination:true,
+            multiSort:true,
+            fit:true,
+            fitColumns:true,
+            columns: [[
+                {
+                    field: 'photo', title: '头像预览', width:115, formatter: function (value, row, index) {
+                        var img = "&nbsp;&nbsp;&nbsp;<img style='width: 50px;height: 50px' src=" + value + "/>";
+                        return img;
                     }
-                }},
-            { field:'address',title:'住址',width:100,sortable:true},
-        ]]
-    });
+                },
+                {field: 'name', title: '用户名', width:117, sortable: true},
+                {field: 'phoneNum', title: '手机号', width: 235, sortable: true},
+                {field: 'realName', title: '真实姓名', width: 116, sortable: true},
+                {field: 'idCard', title: '身份证吗', width: 274, sortable: true},
+                {
+                    field: 'status', title: '状态', width: 116, sortable: true, formatter: function (value) {
+                        switch (value) {
+                            case 0:
+                                return "被冻结";
+                            case 1:
+                                return "正常";
+                        }
+                    }
+                },
+                {field: 'address', title: '住址', width: 318, sortable: true},
+            ]]
+        });
+    }
 </script>
 </html>

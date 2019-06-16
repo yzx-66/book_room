@@ -6,6 +6,7 @@ import com.yzx.model.RoomType;
 import com.yzx.model.admin.Page;
 import com.yzx.service.RoomTypeService;
 import com.yzx.service.admin.FloorService;
+import com.yzx.service.admin.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;

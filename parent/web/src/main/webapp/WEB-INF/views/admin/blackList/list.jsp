@@ -45,7 +45,7 @@
         option.phoneNum=$('#search-phoneNum').val();
         option.idCard=$('#search-idCard').val();
         $('#wu-datagrid-2').datagrid('reload',option);
-    })
+    });
 
 
     /**
@@ -57,11 +57,11 @@
             $.messager.message('信息提示','请至少选择一条','info');
             return;
         }
-        $.messager.confirm('信息提示','确定要删除该记录？', function(result){
+        $.messager.confirm('信息提示','该用户违约总数不变 本月清零 确定要删除该记录？', function(result){
             if(result){
                 var ids="";
                 for(var i=0;i<items.length;i++){
-                    ids+='id='+items[i].id+'&';
+                    ids+='accountId='+items[i].id+'&';
                 }
 
                 $.ajax({
@@ -113,47 +113,53 @@
         return data;
     }
 
-    /**
-     * Name 载入数据
-     */
-    $('#wu-datagrid-2').datagrid({
-        url:'/hotel/admin/account/list?status=0',
-        rownumbers:true,
-        singleSelect:false,
-        loadFilter:pagerFilter,
-        pageSize:100,
-        pageList:[10,20,30,50,100],
-        pagination:true,
-        multiSort:true,
-        fit:true,
-        fitColumns:true,
-        columns:[[
-            { field:'photo',title:'头像预览',width:100,formatter:function (value,row,index) {
-                    var img = "&nbsp;&nbsp;&nbsp;<img style='width: 50px;height: 50px' src="+value+"/>";
-                    return img;
-                }},
-            { field:'name',title:'用户名',width:100,sortable:true},
-            { field:'phoneNum',title:'手机号',width:100,sortable:true},
-            { field:'realName',title:'真实姓名',width:100,sortable:true},
-            { field:'idCard',title:'身份证吗',width:100,sortable:true},
-            { field:'monthBreakTimes',title:'本月违约次数',width:100,sortable:true},
-            { field:'sumBreakTimes',title:'总违约次数',width:100,sortable:true},
-            { field:'id',title:'解除时间',width:100,sortable:true,formatter:function (value){
-                var ret=0;
-                  $.ajax({
-                      url:'/hotel/admin/blackList/findBlackListByAccountId?accountId='+value,
-                      dataType:'json',
-                      async:false,
-                      success:function (data) {
-                          console.log(data);
-                          ret+=data.outTime;
-                          console.log(typeof (1));
-                      }
-                  })
-                    return new Date(ret).toLocaleString();
+    init();
+    function init() {
+        setTimeout(refreshDic, 100);
+    }
 
-            }},
-        ]]
-    });
+    function refreshDic(){
+        $('#wu-datagrid-2').datagrid({
+            url:'/hotel/admin/account/list?status=0',
+            rownumbers:true,
+            singleSelect:false,
+            loadFilter:pagerFilter,
+            pageSize:100,
+            pageList:[10,20,30,50,100],
+            pagination:true,
+            multiSort:true,
+            fit:true,
+            fitColumns:true,
+            columns:[[
+                { field:'photo',title:'头像预览',width:5,formatter:function (value,row,index) {
+                        var img = "&nbsp;&nbsp;&nbsp;<img style='width: 50px;height: 50px' src="+value+"/>";
+                        return img;
+                    }},
+                { field:'name',title:'用户名',width:3,sortable:true},
+                { field:'phoneNum',title:'手机号',width:5,sortable:true},
+                { field:'realName',title:'真实姓名',width:3,sortable:true},
+                { field:'idCard',title:'身份证吗',width:5,sortable:true},
+                { field:'monthBreakTimes',title:'本月违约次数',width:3,sortable:true},
+                { field:'sumBreakTimes',title:'总违约次数',width:3,sortable:true},
+                { field:'id',title:'解除时间',width:9,sortable:true,formatter:function (value){
+                        var ret="";
+                        $.ajax({
+                            url:'/hotel/admin/blackList/findBlackListByAccountId?accountId='+value,
+                            dataType:'json',
+                            async:false,
+                            success:function (data) {
+                                ret+=new Date(data.inTime).toLocaleString()+" --- ";
+                                if(data.outTime==-28800000){
+                                    ret+="永不解除";
+                                }else {
+                                    ret += new Date(data.outTime).toLocaleString();
+                                }
+                            }
+                        })
+                        return ret;
+                    }},
+            ]]
+        });
+    }
 </script>
 </html>

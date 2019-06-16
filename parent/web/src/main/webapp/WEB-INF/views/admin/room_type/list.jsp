@@ -391,10 +391,18 @@
             { field:'price',title:'价格',width:100,sortable:true},
             { field:'liveNum',title:'可住人数',width:100,sortable:true},
             { field:'bedNum',title:'床数',width:100,sortable:true},
-            { field:'roomNum',title:'该型房数',width:100,sortable:true},
-            { field:'avilableNum',title:'可使用房数',width:100,sortable:true},
-            { field:'bookNum',title:'已预定房数',width:100,sortable:true},
-            { field:'livedNum',title:'已入住房数',width:100,sortable:true},
+            { field:'roomNum',title:'该型房数',width:100,sortable:true,formatter:function (value) {
+                    return "<span style=\"color:orange;font-size:17px\" >"+value+"</span>";
+                }},
+            { field:'avilableNum',title:'可使用房数',width:100,sortable:true,formatter:function (value) {
+                    return "<span style=\"color:blue;font-size:20px\" >"+value+"</span>";
+                }},
+            { field:'bookNum',title:'已预定房数',width:100,sortable:true,formatter:function (value) {
+                    return "<span style=\"color:green;font-size:17px\" >"+value+"</span>";
+                }},
+            { field:'livedNum',title:'已入住房数',width:100,sortable:true,formatter:function (value) {
+                    return "<span style=\"color:red;font-size:17px\" >"+value+"</span>";
+                }},
             { field:'status',title:'状态',width:100,sortable:true,formatter:function (value) {
                     switch (value) {
                         case 0:return "不可住";

@@ -47,7 +47,12 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public List<Room> findRoomByTypeNameOrHight(Map<String, Object> map) {
-        return roomMapper.findRoomByTypeNameOrHight(map);
+    public List<Room> findRoomByTypeNameOrHightOrStatus(Map<String, Object> map) {
+        return roomMapper.findRoomByTypeNameOrHightOrStatus(map);
+    }
+
+    @Override
+    public List<Room> findRoomByTypeIdAndStatus(Integer roomTypeId, Integer status) {
+        return roomMapper.findRoomByTypeIdAndStatus(roomTypeId,status);
     }
 }

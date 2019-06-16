@@ -14,4 +14,6 @@ public interface AccountService {
     List<Account> findList(Map<String,Object> map) throws ParseException;
     Account findAccountById(int id);
     List<Account> findAll();
+    Account findAccountByPhoneNum(String phoneNum);
+    void rufreshAccounts() throws ParseException;
 }

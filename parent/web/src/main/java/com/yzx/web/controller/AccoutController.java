@@ -33,11 +33,16 @@ public class AccoutController {
     @ResponseBody
     public Map<String,String> add(Account account){
         Map<String,String> ret=new HashMap<>();
-        if(accountService.addAccount(account)<=0){
+        if(accountService.findAccountByPhoneNum(account.getPhoneNum())!=null){
             ret.put("type","error");
-            ret.put("msg","添加失败 请联系管理员");
+            ret.put("msg","添加失败 手机号已经注册");
         }else {
-            ret.put("type","success");
+            if(accountService.addAccount(account)<=0){
+                ret.put("type","error");
+                ret.put("msg","添加失败 请联系管理员");
+            }else {
+                ret.put("type","success");
+            }
         }
         return ret;
     }

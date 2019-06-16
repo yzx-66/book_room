@@ -138,6 +138,16 @@ public class RoomController {
         return roomService.findRoomById(id);
     }
 
+    @RequestMapping("getRoomNumsByTypeAndHight")
+    @ResponseBody
+    public Integer getRoomNumsByTypeAndHight(String roomTypeName,Integer hight){
+         Map<String,Object> queryMap=new HashMap<>();
+         queryMap.put("roomTypeName",roomTypeName);
+         queryMap.put("hight",hight);
+         queryMap.put("status",0);
+         return roomService.findRoomByTypeNameOrHightOrStatus(queryMap).size();
+    }
+
     @RequestMapping("subpic")
     @ResponseBody
     public Map<String,String> subpic(MultipartFile tempPhoto, HttpServletRequest request){

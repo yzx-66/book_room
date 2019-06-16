@@ -46,5 +46,9 @@
     <select id="findAll" resultType="account">
         select * from account
     </select>
+
+    <select id="findAccountByPhoneNum" parameterType="string" resultType="account">
+        select * from account where phoneNum=#{phoneNum}
+    </select>
     
 </mapper>

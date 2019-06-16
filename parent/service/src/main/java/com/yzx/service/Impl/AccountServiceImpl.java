@@ -18,7 +18,6 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-@Transactional
 public class AccountServiceImpl implements AccountService {
     @Autowired
     private AccountMapper accountMapper;
@@ -49,6 +48,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public List<Account> findList(Map<String, Object> map) throws ParseException {
+        System.out.println("sss");
         rufreshAccounts();
         List<Account> accounts=accountMapper.findList(map);
         for(Account account:accounts){
@@ -67,8 +67,8 @@ public class AccountServiceImpl implements AccountService {
         return accountMapper.findAll();
     }
 
+    @Override
     public void rufreshAccounts() throws ParseException {
-        System.out.println(999);
         List<Account> accounts=findAll();
         List<BlackList> blackLists=blackListMapper.findAll();
         boolean ishave=false;
@@ -94,11 +94,16 @@ public class AccountServiceImpl implements AccountService {
             }
 
             if(account.getMonthBreakTimes()>=BlackList.MONTH_MOST_BREAKTIMES && account.getStatus()==1){
-                System.out.println(111);
                 blackListService.doInBreakListByMonthBreakTimes(account.getId());
                 account.setStatus(0);
                 accountMapper.eidtAccount(account);
             }
         }
     }
+
+    @Override
+    public Account findAccountByPhoneNum( String phoneNum){
+        return accountMapper.findAccountByPhoneNum(phoneNum);
+    }
+
 }

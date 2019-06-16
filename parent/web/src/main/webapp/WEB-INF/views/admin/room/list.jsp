@@ -39,8 +39,9 @@
             <label>房间状态：</label> <select id="search-status" style="width:100px">
                                         <option value="-1" selected="selected">全部状态</option>
                                         <option value="0">可入住</option>
-                                        <option value="1">已入住</option>
-                                        <option value="2">打扫中</option>
+                                        <option value="1">已预定</option>
+                                        <option value="2">已入住</option>
+                                        <option value="3">打扫中</option>
                                       </select>
             <a href="#" id="search-btn" class="easyui-linkbutton" iconCls="icon-search" click="search()">开始检索</a>
         </div>
@@ -398,8 +399,9 @@
             { field:'status',title:'状态',width:100,sortable:true,formatter:function (value) {
                     switch (value) {
                         case 0:return "可入住";
-                        case 1:return "已入住";
-                        case 2:return "打扫中";
+                        case 1:return "已预定";
+                        case 2:return "已入住";
+                        case 3:return "打扫中";
                     }
                 }},
             { field:'remark',title:'备注',width:100},
