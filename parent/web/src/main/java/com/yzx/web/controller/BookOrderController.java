@@ -2,11 +2,13 @@ package com.yzx.web.controller;
 
 import com.yzx.mapper.admin.LogMapper;
 import com.yzx.model.Account;
+import com.yzx.model.BlackList;
 import com.yzx.model.BookOrder;
 import com.yzx.model.RoomType;
 import com.yzx.model.admin.Page;
 import com.yzx.model.admin.Room;
 import com.yzx.service.AccountService;
+import com.yzx.service.BlackListService;
 import com.yzx.service.BookOrderService;
 import com.yzx.service.RoomTypeService;
 import com.yzx.service.admin.RoomService;
@@ -40,12 +42,17 @@ public class BookOrderController {
     private RoomService roomService;
     @Autowired
     private AccountService accountService;
+    @Autowired
+    private BlackListService blackListService;
 
     @RequestMapping(value = "list",method = RequestMethod.GET)
     public String list(HttpServletRequest request){
         List<RoomType> allRoomTypes=roomTypeService.findAllRoomeType();
         Set<String> roomTypeNames=new HashSet<>();
         for(RoomType r:allRoomTypes){
+            if(r.getStatus()==RoomType.NOT_LIVE){
+                continue;
+            }
             roomTypeNames.add(r.getName());
         }
         request.getSession().setAttribute("roomTypeNames",roomTypeNames);
@@ -56,12 +63,20 @@ public class BookOrderController {
     @ResponseBody
     public Map<String,Object> add(BookOrder bookOrder,String arriveTime,String leaveTime,String roomTypeName,Integer hight,String accountPhone){
         Map<String,Object> ret=new HashMap<>();
-        Random random=new Random();
+
+        List<BlackList> blackLists=blackListService.findAll();
+        Account account=accountService.findAccountByPhoneNum(accountPhone);
+        for(BlackList blackList:blackLists){
+            if(account.getId()==blackList.getAccountId()){
+                ret.put("type","error");
+                ret.put("msg","添加失败，该用户现在处于冻结状态，可能由于违约次数超过上限，一月3次后冻结一个月，达20次将永久冻结，您现在月违约："+account.getMonthBreakTimes()+"，共违约："+account.getSumBreakTimes());
+                return ret;
+            }
+        }
 
         if(!bindAccountPhone(accountPhone,bookOrder,ret)){
             return ret;
         }
-
         if(!IsContinueByDateFormat(ret,arriveTime,leaveTime).get("type").equals("success")){
             return ret;
         }
@@ -85,6 +100,12 @@ public class BookOrderController {
     @ResponseBody
     public Map<String,Object> update(BookOrder bookOrder,String accountPhone,String arriveTime,String leaveTime,int oldRoomTypeId,String roomTypeName,Integer hight){
         Map<String,Object> ret=new HashMap<>();
+
+        if(bookOrder.getStatus()!=BookOrder.IN_BOOK){
+            ret.put("type","error");
+            ret.put("msg","只有预定订单可以修改");
+            return ret;
+        }
 
         if(!bindAccountPhone(accountPhone,bookOrder,ret)){
             return ret;
@@ -119,14 +140,23 @@ public class BookOrderController {
         Map<String,String> ret=new HashMap<>();
         try{
             for(int i=0;i<id.length;i++){
-                int roomTypeId=bookOrderService.findBookOrderById(id[i]).getRoomTypeId();
+                BookOrder bookOrder=bookOrderService.findBookOrderById(id[i]);
+                if(bookOrder.getStatus()==BookOrder.IN_ARRIVED){
+                    ret.put("type", "error");
+                    ret.put("msg", "删除停止 存在正在入住的订单");
+                    return ret;
+                }
+
+                int roomTypeId=bookOrder.getRoomTypeId();
                 if(bookOrderService.deleteBookOrder(id[i])<=0) {
                     ret.put("type", "error");
                     ret.put("msg", "删除中出错 请联系管理员");
                     return ret;
                 }else {
                     RoomType roomType=roomTypeService.findRoomTypeById(roomTypeId);
-                    makeRoom_1_to_0(roomType);
+                    if(bookOrder.getStatus()==BookOrder.IN_BOOK){
+                        makeRoom_1_to_0(roomType);
+                    }
                 }
             }
         }catch (Exception e){
@@ -157,12 +187,12 @@ public class BookOrderController {
         if (!StringUtils.isEmpty(arriveTime)){
             queryMap.put("arriveDate",format.parse(arriveTime));
         }else {
-            queryMap.put("arriveDate",null);
+            queryMap.put("arriveDate",arriveTime);
         }
-        if (!StringUtils.isEmpty(arriveTime)){
+        if (!StringUtils.isEmpty(leaveTime)){
             queryMap.put("leaveDate",format.parse(leaveTime));
         }else {
-            queryMap.put("leaveDate",null);
+            queryMap.put("leaveDate",leaveTime);
         }
         queryMap.put("status",status);
         queryMap.put("pageSize",page.getRows());
@@ -260,7 +290,7 @@ public class BookOrderController {
             SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy/MM/dd");
             Room room=rooms.get(random.nextInt(size));
             room.setStatus(1);
-            room.setRemark("初步分配信息：<li>预定账号："+accountService.findAccountById(bookOrder.getAccountId()).getPhoneNum()+"</li><li>入住者："+bookOrder.getName()+"</li><li>联系电话："+bookOrder.getPhoneNum()+"</li><li>入住时间："+dateFormat.format(bookOrder.getArriveDate())+"--"+dateFormat.format(bookOrder.getLeaveDate())+"</li>");
+          //  room.setRemark("初步分配信息：<li>预定账号："+accountService.findAccountById(bookOrder.getAccountId()).getPhoneNum()+"</li><li>入住者："+bookOrder.getName()+"</li><li>联系电话："+bookOrder.getPhoneNum()+"</li><li>入住时间："+dateFormat.format(bookOrder.getArriveDate())+"--"+dateFormat.format(bookOrder.getLeaveDate())+"</li>");
             roomService.eidtRoom(room);
         }catch (Exception e){
             ret.put("type", "error");

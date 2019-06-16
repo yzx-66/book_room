@@ -66,12 +66,12 @@
             </tr>
             <tr>
                 <td align="right">房间编号:</td>
-                <td><input type="text" id="sn_id" name="sn" class="wu-text easyui-validatebox" data-options="required:true, missingMessage:'请填写房间名称'"/></td>
+                <td><input type="text" id="sn_id" name="sn" class="wu-text easyui-validatebox" data-options="required:true, missingMessage:'请填写房间编号'"/></td>
             </tr>
             <tr id="edit-hide1">
                 <td align="right">选择房型:</td>
                 <td>
-                    <select id="typeRoomName_id" onchange="fllowChangRoomType()" name="roomTypeName" style="width: 268px;">
+                    <select id="typeRoomName_id" onchange="fllowChangRoomType()" name="roomTypeName" style="width: 268px;" class="easyui-validatebox" data-options="required:true, missingMessage:'请选择房型'">
                         <c:forEach items="${roomTypeNames}" var="n">
                             <option value=${n}>${n}</option>
                         </c:forEach>
@@ -81,7 +81,7 @@
             <tr id="edit-hide2">
                 <td align="right">楼 层:</td>
                 <td>
-                    <select id="hight_id"  name="hight" style="width: 268px;">
+                    <select id="hight_id"  name="hight" style="width: 268px;" class="easyui-validatebox" data-options="required:true, missingMessage:'请选择楼层'">
 
                     </select>
             </tr>
@@ -98,6 +98,23 @@
 <!-- End of easyui-dialog -->
 <script src="/hotel/resource/admin/easyui/js/jquery-form.js"></script>
 <script type="text/javascript">
+
+    function check(){
+        if($('#typeRoomName_id').val()==null || $('#typeRoomName_id').val()==""){
+            $.messager.alert('信息提示','房型不可以为空！','info');
+            return false;
+        }
+        if($('#hight_id').val()==null || $('#hight_id').val()==""){
+            $.messager.alert('信息提示','楼层不可以为空！','info');
+            return false;
+        }
+        var validate = $("#wu-form-2").form("validate");
+        if(!validate){
+            $.messager.alert("消息提醒","请检查你输入的数据!","warning");
+            return false;
+        }
+        return true;
+    }
 
     $('#search-btn').click(function search() {
         var option = {name:$("#search-name").val()};
@@ -120,6 +137,9 @@
      * Name 添加记录
      */
     function add(){
+        if(!check()){
+            return;
+        }
         var data=$('#wu-form-2').serialize();
         $.ajax({
             url:'/hotel/admin/room/add',
@@ -144,6 +164,9 @@
      * Name 修改记录
      */
     function edit(item){
+        if(!check()){
+            return;
+        }
         var data=$('#wu-form-2').serialize()+"&id="+item.id+"&oldTypeId="+item.roomTypeId;
         $.ajax({
             url:'/hotel/admin/room/update',

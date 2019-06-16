@@ -40,6 +40,7 @@
                                         <option value="-1" selected="selected">全部状态</option>
                                         <option value="0">住满</option>
                                         <option value="1">可入住</option>
+                                        <option value="2">不可住</option>
                                       </select>
             <a href="#" id="search-btn" class="easyui-linkbutton" iconCls="icon-search" click="search()">开始检索</a>
         </div>
@@ -94,8 +95,9 @@
                 <td align="right">状 态:</td>
                 <td>
                     <select name="status" style="width: 268px;" id="stauts_id">
-                        <option value="0">不可住</option>
+                        <option value="0">住满</option>
                         <option value="1">可入住</option>
+                        <option value="2">不可住</option>
                     </select>
                 </td>
             </tr>
@@ -112,6 +114,19 @@
 <!-- End of easyui-dialog -->
 <script src="/hotel/resource/admin/easyui/js/jquery-form.js"></script>
 <script type="text/javascript">
+
+    function check(){
+        if($('#floorId_id').val()==null || $('#floorId_id').val()==""){
+            $.messager.alert('信息提示','楼层不可以为空！','info');
+            return false;
+        }
+        var validate = $("#wu-form-2").form("validate");
+        if(!validate){
+            $.messager.alert("消息提醒","请检查你输入的数据!","warning");
+            return false;
+        }
+        return true;
+    }
 
     var times=1;
     function addFloorId() {
@@ -140,6 +155,9 @@
      * Name 添加记录
      */
     function add(){
+        if(!check()){
+            return;
+        }
         var data=$('#wu-form-2').serialize();
         $.ajax({
             url:'/hotel/admin/room_type/add',
@@ -164,6 +182,9 @@
      * Name 修改记录
      */
     function edit(item){
+        if(!check()){
+            return;
+        }
         var data=$('#wu-form-2').serialize()+"&id="+item.id+"&bookNum="+item.bookNum+"&livedNum="+item.livedNum+'&roomNum='+item.roomNum;
         $.ajax({
             url:'/hotel/admin/room_type/update',
@@ -172,7 +193,11 @@
             data:data,
             success:function(data){
                 if(data.type=='success'){
-                    $.messager.alert('信息提示','提交成功！','info');
+                    if($('#stauts_id').val==2){
+                        $.messager.alert('信息提示','提交成功,将在预定列表不可见！','info');
+                    }else{
+                        $.messager.alert('信息提示','提交成功！','info');
+                    }
                     $('#wu-dialog-2').dialog('close');
                     $('#wu-datagrid-2').datagrid('reload');
                 }
@@ -405,8 +430,9 @@
                 }},
             { field:'status',title:'状态',width:100,sortable:true,formatter:function (value) {
                     switch (value) {
-                        case 0:return "不可住";
+                        case 0:return "住满";
                         case 1:return "可入住";
+                        case 2:return "不可住";
                     }
                 }},
             { field:'remark',title:'备注',width:100},

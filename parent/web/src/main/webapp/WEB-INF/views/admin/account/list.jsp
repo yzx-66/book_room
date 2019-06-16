@@ -81,6 +81,15 @@
 <script src="/hotel/resource/admin/easyui/js/jquery-form.js"></script>
 <script type="text/javascript">
 
+    function check(){
+        var validate = $("#wu-form-2").form("validate");
+        if(!validate){
+            $.messager.alert("消息提醒","请检查你输入的数据!","warning");
+            return false;
+        }
+        return true;
+    }
+
     $('#search-btn').click(function search() {
         var option = {name:$("#search-name").val()};
         option.realName=$('#search-realName').val();
@@ -96,6 +105,9 @@
      * Name 添加记录
      */
     function add(){
+        if(!check()){
+            return
+        }
         var data=$('#wu-form-2').serialize();
         $.ajax({
             url:'/hotel/admin/account/add',
@@ -120,6 +132,9 @@
      * Name 修改记录
      */
     function edit(item){
+        if(!check()){
+            return
+        }
         var data=$('#wu-form-2').serialize()+"&id="+item.id+"&status="+item.status;
         $.ajax({
             url:'/hotel/admin/account/update',

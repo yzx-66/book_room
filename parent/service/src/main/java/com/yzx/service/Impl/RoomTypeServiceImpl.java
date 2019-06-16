@@ -2,11 +2,13 @@ package com.yzx.service.Impl;
 
 import com.yzx.mapper.RoomTypeMapper;
 import com.yzx.model.RoomType;
+import com.yzx.service.BookOrderService;
 import com.yzx.service.RoomTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
 
@@ -15,6 +17,8 @@ import java.util.Map;
 public class RoomTypeServiceImpl implements RoomTypeService {
     @Autowired
     private RoomTypeMapper roomTypeMapper;
+    @Autowired
+    private BookOrderService bookOrderService;
 
     @Override
     public int addRoomType(RoomType roomType) {
@@ -37,8 +41,8 @@ public class RoomTypeServiceImpl implements RoomTypeService {
     }
 
     @Override
-    public List<RoomType> findList(Map<String, Object> map){
-        refresh();
+    public List<RoomType> findList(Map<String, Object> map) throws ParseException {
+        bookOrderService.refresh();
         return roomTypeMapper.findList(map);
     }
 
@@ -71,7 +75,7 @@ public class RoomTypeServiceImpl implements RoomTypeService {
     public void refresh() {
         List<RoomType> roomTypeList=roomTypeMapper.findAllRoomeType();
         for(RoomType r:roomTypeList){
-            if(r.getStatus()==1){
+            if(r.getStatus()!=2){
                 r.setStatus(r.getAvilableNum()<=0?0:1);
                 r.setAvilableNum(r.getAvilableNum());
                 eidtRoomType(r);

@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.*;
 
 @Controller
@@ -109,14 +110,14 @@ public class RoomTypeController {
 //            ret.put("msg","修改失败 房间数修改不合理");
 //            return ret;
 //        }
-        if(roomType.getStatus()==0){
 
-            if(roomType.getBedNum()!=0 && roomType.getBookNum()!=0){
-                ret.put("type","error");
-                ret.put("msg","修改失败 房间有预定或者使用 状态不可改为不可用");
-                return ret;
-            }
-        }
+//        if(roomType.getStatus()==RoomType.NOT_LIVE){
+//            if(roomType.getBedNum()!=0 && roomType.getBookNum()!=0){
+//                ret.put("type","error");
+//                ret.put("msg","修改失败 房间有预定或者使用 状态不可改为不可用");
+//                return ret;
+//            }
+//        }
         if(roomTypeService.eidtRoomType(roomType)>0){
             ret.put("type","success");
         }else{
@@ -150,7 +151,7 @@ public class RoomTypeController {
     public Map<String,Object> findList(Page page,
                                        @RequestParam(value = "name",defaultValue = "",required = false)String name,
                                        @RequestParam(value = "floorId",required = false)Integer floorId,
-                                       @RequestParam(value = "status",required = false)Integer status) {
+                                       @RequestParam(value = "status",required = false)Integer status) throws ParseException {
         Map<String,Object> ret=new HashMap<>();
         Map<String,Object> queryMap=new HashMap<>();
 

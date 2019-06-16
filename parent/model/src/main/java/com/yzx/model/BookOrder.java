@@ -9,11 +9,16 @@ public class BookOrder {
     private String name;//预定者姓名
     private String idCard;//身份证号码
     private String phoneNum;//手机号
-    private int status;//状态：0：预定中，1：已入住,2:已结算离店
+    private int status;//状态：0：预定中，1：已入住,2:已结算离店 3:已违约
     private Date arriveDate;//入住日期
     private Date leaveDate;//离店日期
     private Date createTime;//预定日期
     private String remark;
+
+    public final static int IN_BOOK=0;
+    public final static int IN_ARRIVED=1;
+    public final static int IN_LEAVE=2;
+    public final static int IN_BREAK=3;
 
     public int getId() {
         return id;

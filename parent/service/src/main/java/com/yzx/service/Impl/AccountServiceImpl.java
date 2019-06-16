@@ -6,6 +6,7 @@ import com.yzx.model.Account;
 import com.yzx.model.BlackList;
 import com.yzx.service.AccountService;
 import com.yzx.service.BlackListService;
+import com.yzx.service.BookOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +26,8 @@ public class AccountServiceImpl implements AccountService {
     private BlackListService blackListService;
     @Autowired
     private BlackListMapper blackListMapper;
+    @Autowired
+    private BookOrderService bookOrderService;
 
     @Override
     public int addAccount(Account account) {
@@ -48,8 +51,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public List<Account> findList(Map<String, Object> map) throws ParseException {
-        System.out.println("sss");
-        rufreshAccounts();
+        bookOrderService.refresh();
         List<Account> accounts=accountMapper.findList(map);
         for(Account account:accounts){
             account.setPassword("");
@@ -68,7 +70,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public void rufreshAccounts() throws ParseException {
+    public void rufresh() throws ParseException {
         List<Account> accounts=findAll();
         List<BlackList> blackLists=blackListMapper.findAll();
         boolean ishave=false;

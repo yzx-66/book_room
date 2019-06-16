@@ -66,10 +66,22 @@
 </style>
 <!-- End of easyui-dialog -->
 <script type="text/javascript">
+
+    function check(){
+        var validate = $("#wu-form-2").form("validate");
+        if(!validate){
+            $.messager.alert("消息提醒","请检查你输入的数据!","warning");
+            return false;
+        }
+        return true;
+    }
     /**
      * Name 添加记录
      */
     function add(){
+        if(!check()){
+            return;
+        }
         var hight=$('#hight_id').val();
         if(hight==null || hight=="" || isNaN(hight)){
             $.messager.alert('信息提示','请输入正确的楼层！','info');
@@ -99,6 +111,9 @@
      * Name 修改记录
      */
     function edit(id){
+        if(!check()){
+            return;
+        }
         var hight=$('#hight_id').val();
         if(hight==null || hight=="" || isNaN(hight)){
             $.messager.alert('信息提示','请输入正确的楼层！','info');

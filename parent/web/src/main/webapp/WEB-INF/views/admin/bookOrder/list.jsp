@@ -25,13 +25,14 @@
             <label>预定账号的手机：</label><input type="text" id="search-accountPhone" class="wu-text" style="width:100px">
             <label>入住者姓名：</label><input type="text" id="search-name" class="wu-text" style="width:100px">
             <label>入住者手机：</label><input type="text" id="search-phoneNum" class="wu-text" style="width:100px">
-            <label>入住起始日期：</label> <input type="text" id="search-arriveTime" style="width:100px" class="wu-text easyui-datebox"/>
-            <label>入住截至日期：</label><input type="text" id="search-leaveTime" style="width:100px" class="wu-text easyui-datebox"/>
+            <label>入住起始日期：</label><input type="text" id="search-arriveTime" style="width:100px" class="wu-text easyui-datebox">
+            <label>入住截至日期：</label><input id="search-leaveTime" type="text" class="easyui-datebox">
             <label>状态</label><select id="search-status">
                                     <option value="-1" selected="selected">全部</option>
-                                    <option value="0" selected="selected">预定中</option>
-                                    <option value="1" selected="selected">已入住</option>
-                                    <option value="2" selected="selected">已离店</option>
+                                    <option value="0">预定中</option>
+                                    <option value="1">已入住</option>
+                                    <option value="2">已离店</option>
+                                    <option value="3">已违约</option>
                                 </select>
             <a href="#" id="search-btn" class="easyui-linkbutton" iconCls="icon-search">开始检索</a>
         </div>
@@ -44,16 +45,16 @@
     <form id="wu-form-2" method="post">
         <table id="tab">
                 <td align="right">预定账号的手机:</td>
-                <td><input type="text" id="accountPhone" name="accountPhone" class="wu-text easyui-validatebox" data-options="required:true, missingMessage:'请填写订单名称'"/></td>
+                <td><input type="text" id="accountPhone" name="accountPhone" class="wu-text easyui-validatebox" data-options="required:true, missingMessage:'请填写账号的手机'"/></td>
             </tr>
             <tr>
                 <td align="right">入住者姓名:</td>
-                <td><input type="text" id="name_id" name="name" class="wu-text easyui-validatebox" data-options="required:true, missingMessage:'请填写订单名称'"/></td>
+                <td><input type="text" id="name_id" name="name" class="wu-text easyui-validatebox" data-options="required:true, missingMessage:'请填写入住者姓名'"/></td>
             </tr>
             <tr id="edit-hide1">
                 <td align="right">选择房型:</td>
                 <td>
-                    <select id="typeRoomName_id" onchange="fllowChangRoomType()" name="roomTypeName" style="width: 268px;">
+                    <select id="typeRoomName_id" onchange="fllowChangRoomType()" name="roomTypeName" style="width: 268px;" class="easyui-validatebox" data-options="required:true, missingMessage:'请选择房型'">
                         <c:forEach items="${roomTypeNames}" var="n">
                             <option value=${n}>${n}</option>
                         </c:forEach>
@@ -63,26 +64,26 @@
             <tr id="edit-hide2">
                 <td align="right">楼 层:</td>
                 <td>
-                    <select id="hight_id"  name="hight" style="width: 268px;">
+                    <select id="hight_id"  name="hight" style="width: 268px;" class="easyui-validatebox" data-options="required:true, missingMessage:'请选择楼层'">
 
                     </select>
                 </td>
             </tr>
             <tr>
                 <td align="right">入住者身份证号:</td>
-                <td><input type="text" id="idCard_id" name="idCard" class="wu-text easyui-validatebox" data-options="required:true, missingMessage:'请填写订单名称'"/></td>
+                <td><input type="text" id="idCard_id" name="idCard" class="wu-text easyui-validatebox" data-options="required:true, missingMessage:'请填写身份证号'"/></td>
             </tr>
             <tr>
                 <td align="right">入住者手机:</td>
-                <td><input type="text" id="phoneNum_id" name="phoneNum" class="wu-text easyui-validatebox" data-options="required:true, missingMessage:'请填写订单名称'"/></td>
+                <td><input type="text" id="phoneNum_id" name="phoneNum" class="wu-text easyui-validatebox" data-options="required:true, missingMessage:'请填写手机号'"/></td>
             </tr>
             <tr>
                 <td align="right">入住日期:</td>
-                <td><input type="text" id="arriveTime_id" name="arriveTime" class="wu-text easyui-datebox easyui-validatebox" data-options="required:true, missingMessage:'请填写订单名称'"/></td>
+                <td><input type="text" id="arriveTime_id" name="arriveTime" class="wu-text easyui-datebox easyui-validatebox"/></td>
             </tr>
             <tr>
                 <td align="right">退房日期:</td>
-                <td><input type="text" id="leaveTime_id" name="leaveTime" class="wu-text easyui-datebox easyui-validatebox" data-options="required:true, missingMessage:'请填写订单名称'"/></td>
+                <td><input type="text" id="leaveTime_id" name="leaveTime" class="wu-text easyui-datebox easyui-validatebox"/></td>
             </tr>
             <tr>
                 <td valign="top" align="right">备 注:</td>
@@ -98,6 +99,35 @@
 <script src="/hotel/resource/admin/easyui/js/jquery-form.js"></script>
 <script type="text/javascript">
 
+    function check(){
+        if($('#typeRoomName_id').val()==null || $('#typeRoomName_id').val()==""){
+            $.messager.alert('信息提示','房型不可以为空！','info');
+            return false;
+        }
+        if($('#hight_id').val()==null || $('#hight_id').val()==""){
+            $.messager.alert('信息提示','楼层不可以为空！','info');
+            return false;
+        }
+        if($('#arriveTime_id').datebox('getValue')==null || $('#arriveTime_id').datebox('getValue')==""){
+            $.messager.alert('信息提示','入住时间不可以为空！','info');
+            return false;
+        }
+        if($('#leaveTime_id').datebox('getValue')==null || $('#leaveTime_id').datebox('getValue')==""){
+            $.messager.alert('信息提示','离店时间不可以为空！','info');
+            return false;
+        }
+        var validate = $("#wu-form-2").form("validate");
+        if(!validate){
+            $.messager.alert("消息提醒","请检查你输入的数据!","warning");
+            return false;
+        }
+        if($('#arriveTime_id').datebox('getValue')==$('#leaveTime_id').datebox('getVaule')){
+            $.messager.alert('信息提示','入住和离店不可以是同一天，至少入住一天，从零点起算','info');
+            return false;
+        }
+        return true;
+    }
+
     $('#search-btn').click(function search() {
         console.log($('#search-leaveTime').val());
         var option = {name:$("#search-name").val()};
@@ -107,13 +137,13 @@
         if($('#search-phoneNum').val()!=null && $('#search-phoneNum').val()!=""){
             option.phoneNum=$('#search-phoneNum').val();
         }
-        if($('#search-arriveTime').val()!=null && $('#search-arriveTime').val()!=""){
-            option.arriveTime=$('#search-arriveTime').val();
+        if($('#search-arriveTime').datebox('getValue')!=null && $('#search-arriveTime').datebox('getValue')!=""){
+            option.arriveTime=$('#search-arriveTime').datebox('getValue');
         }
-        if($('#search-leaveTime').val()!=null && $('#search-leaveTime').val()!=""){
-            option.leaveTime=$('#search-leaveTime').val();
+        if($('#search-leaveTime').datebox('getValue')!=null && $('#search-leaveTime').datebox('getValue')!=""){
+            option.leaveTime=$('#search-leaveTime').datebox('getValue');
         }
-        if(status=$('#search-leaveTime').val()!=-1){
+        if(status=$('#search-status').val()!=-1){
             option.status=$('#search-status').val();
         }
         $('#wu-datagrid-2').datagrid('reload',option);
@@ -123,6 +153,9 @@
      * Name 添加记录
      */
     function add(){
+        if(!check()){
+            return;
+        }
         var data=$('#wu-form-2').serialize();
         if($('#hight_id').val()==0){
             $.messager.alert('信息提示','不可以选择已经没有空房的楼层','info');
@@ -151,8 +184,13 @@
      * Name 修改记录
      */
     function edit(item){
-        if($('#hight_id').val()==0){
-            $.messager.alert('信息提示','不可以选择已经没有空房的楼层','info');
+        if(!check()){
+            return;
+        }
+        var now=new Date();
+        var arriveDate=new Date(item.arriveDate);
+        if(now.getTime()>arriveDate.getTime()){
+            $.messager.alert('信息提示','预定订单已经过了到店日期无法修改，只可删除，若不删除会占用房间，过了离店日期自动失效，且该客户将增加一次违约次数','info');
             return;
         }
         var data=$('#wu-form-2').serialize()+"&id="+item.id+"&oldRoomTypeId="+item.roomTypeId;
@@ -182,7 +220,7 @@
              url:'/hotel/admin/floor/findFloorsByRoomTypeName',
              data:{name:$('#typeRoomName_id').val()},
              dataType:'json',
-            success:function (data) {
+             success:function (data) {
                 $('#hight_id').append("<option value=\"-1\">全部楼层随机分配！</option>");
                 for(var i=0;i<data.length;i++){
                     $.ajax({
@@ -192,7 +230,7 @@
                         async:false,
                         success:function (size) {
                             if(size==0){
-                                $('#hight_id').append("<option value=\"0\">"+data[i].hight+"&nbsp;层（该层已经预定全部 请勿选择！）</option>");
+                                $('#hight_id').append("<option value="+data[i].hight+">"+data[i].hight+"&nbsp;层（该层已经预定全部 请勿选择，修改不受影响！）</option>");
                             }else {
                                 $('#hight_id').append("<option value="+data[i].hight+">"+data[i].hight+"&nbsp;层（该层剩余："+size+"间）</option>");
                             }
@@ -212,7 +250,7 @@
             $.messager.message('信息提示','请至少选择一条','info');
             return;
         }
-        $.messager.confirm('信息提示','确定要删除该记录？', function(result){
+        $.messager.confirm('信息提示','确定要删除这些记录？ 预定的与没按预定到店的将还原房间数，入住的无法在离店前删除，已经违约与离店的的不影响房间状态 ', function(result){
             if(result){
                 var ids="";
                 for(var i=0;i<items.length;i++){
@@ -356,7 +394,7 @@
         fit:true,
         fitColumns:true,
         columns:[[
-            { field:'accountId',title:'订单账号',width:100,sortable:true,formatter:function (value) {
+            { field:'accountId',title:'账号所属手机',width:100,sortable:true,formatter:function (value) {
                     var ret="";
                     $.ajax({
                         url:'/hotel/admin/account/findaccountById',
@@ -364,7 +402,7 @@
                         dataType:'json',
                         async:false,
                         success:function (data) {
-                            ret+="&nbsp;&nbsp;真实姓名："+data.realName+"<br>&nbsp;&nbsp;手机号："+data.phoneNum;
+                            ret+="&nbsp;"+data.phoneNum;
                         }
                     })
                     return ret;
@@ -378,7 +416,7 @@
                         dataType:'json',
                         async:false,
                         success:function (data) {
-                            ret+="&nbsp;&nbsp;层数："+data.hight+"&nbsp;F<br>";
+                            ret+="&nbsp;&nbsp;"+data.hight+"&nbsp;F：";
                         }
                     });
                 $.ajax({
@@ -387,7 +425,7 @@
                     dataType:'json',
                     async:false,
                     success:function (data) {
-                        ret+="&nbsp;&nbsp;房型："+data.name;
+                        ret+="&nbsp;"+data.name;
                     }
                 });
                     return ret;
@@ -405,6 +443,7 @@
                         case 0:return "预定中";
                         case 1:return "已入住";
                         case 2:return "已结算离店";
+                        case 3:return "已违约";
                     }
                 }},
             { field:'remark',title:'备注',width:100},
