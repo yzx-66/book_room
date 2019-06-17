@@ -7,13 +7,13 @@ public class Room {
     private int roomTypeId;
     private String photo;
     private String remark;
-    private int status=0;//房型状态，0：可入住,1:已预定,2:已入住,3:打扫中
+    private int status;//房型状态，0：可入住,1:已预定,2:已入住,3:打扫中
 
     public final static int CAN_LIVE=0;
     public final static int ALEARY_BOOK=1;
     public final static int ALEARY_LIVE=2;
     public final static int DO_CLEAN=3;
-    public final static int BE_CHOOSE=4;
+    public final static int CAN_NOT_LIVE=4;
 
     public int getId() {
         return id;

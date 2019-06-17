@@ -113,6 +113,12 @@ public class AccoutController {
         return accountService.findAccountById(id);
     }
 
+    @RequestMapping("findaccountByBookOrderId")
+    @ResponseBody
+    public Account findaccountByBookOrderId(int id){
+        return accountService.findaccountByBookOrderId(id);
+    }
+
     @RequestMapping("subpic")
     @ResponseBody
     public Map<String,String> subpic(MultipartFile tempPhoto, HttpServletRequest request){

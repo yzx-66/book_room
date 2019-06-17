@@ -108,4 +108,9 @@ public class AccountServiceImpl implements AccountService {
         return accountMapper.findAccountByPhoneNum(phoneNum);
     }
 
+    @Override
+    public Account findaccountByBookOrderId(int id) {
+        return accountMapper.findaccountByBookOrderId(id);
+    }
+
 }

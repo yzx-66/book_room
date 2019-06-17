@@ -9,6 +9,7 @@ import com.yzx.model.admin.Room;
 import com.yzx.service.RoomTypeService;
 import com.yzx.service.admin.FloorService;
 import com.yzx.service.admin.RoomService;
+import org.omg.CORBA.PUBLIC_MEMBER;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -55,6 +56,7 @@ public class RoomController {
     @ResponseBody
     public Map<String,String> add(Room room,String roomTypeName,int hight){
         Map<String,String> ret=new HashMap<>();
+        room.setStatus(Room.CAN_LIVE);
         RoomType roomType=roomTypeService.findRoomTypeByNameAndHight(roomTypeName,hight);
 
         room.setRoomTypeId(roomType.getId());
@@ -71,17 +73,48 @@ public class RoomController {
 
     @RequestMapping("update")
     @ResponseBody
-    public Map<String,String> update(Room room,String roomTypeName,int hight,int oldTypeId){
+    public Map<String,String> update(Room room,String roomTypeName,int hight,int oldTypeId,int oldStatus){
+        Map<String,String> ret=new HashMap<>();
         RoomType roomType=roomTypeService.findRoomTypeByNameAndHight(roomTypeName,hight);
         if(roomType.getId()!=oldTypeId){
+            if(oldStatus!=Room.CAN_LIVE){
+                ret.put("type","error");
+                ret.put("msg","修改失败 房间只有在状态在可用的时候才可以修改房型");
+                return ret;
+            }
             RoomType oldRoomType=roomTypeService.findRoomTypeById(oldTypeId);
             oldRoomType.setRoomNum(oldRoomType.getRoomNum()-1);
             roomTypeService.eidtRoomType(oldRoomType);
             roomType.setRoomNum(roomType.getRoomNum()+1);
-            roomTypeService.eidtRoomType(roomType);
         }
         room.setRoomTypeId(roomType.getId());
-        Map<String,String> ret=new HashMap<>();
+
+        Room oldRoom=roomService.findRoomById(room.getId());
+        if(oldRoom.getStatus()!=room.getStatus()){
+            if(oldRoom.getStatus()==Room.ALEARY_BOOK || oldRoom.getStatus()==Room.ALEARY_LIVE){
+                ret.put("type","error");
+                ret.put("msg","修改失败 房间已经有预定或者入住，无法修改状态");
+                return ret;
+            }else {
+                switch (room.getStatus()){
+                    case Room.CAN_NOT_LIVE:
+                            if(oldStatus!=Room.DO_CLEAN){
+                                roomType.setcanNotLiveNum(roomType.getcanNotLiveNum()+1);
+                            }
+                           break;
+                    case Room.DO_CLEAN:
+                        if(oldStatus!=Room.CAN_NOT_LIVE){
+                            roomType.setcanNotLiveNum(roomType.getcanNotLiveNum()+1);
+                        }
+                        break;
+                    case Room.CAN_LIVE:
+                        roomType.setcanNotLiveNum(roomType.getcanNotLiveNum()-1);
+                        break;
+                }
+            }
+        }
+        roomTypeService.eidtRoomType(roomType);
+
         if(roomService.eidtRoom(room)>0){
             ret.put("type","success");
         }else{
@@ -146,6 +179,16 @@ public class RoomController {
          queryMap.put("hight",hight);
          queryMap.put("status",0);
          return roomService.findRoomByTypeNameOrHightOrStatus(queryMap).size();
+    }
+
+    @RequestMapping("findRoomsByRTAndHAndS")
+    @ResponseBody
+    public List<Room> findRoomsByRoomTypeNameAndHightAndStatus(String roomTypeName,Integer hight,Integer status){
+        Map<String,Object> queryMap=new HashMap<>();
+        queryMap.put("roomTypeName",roomTypeName);
+        queryMap.put("hight",hight);
+        queryMap.put("status",status);
+        return roomService.findRoomByTypeNameOrHightOrStatus(queryMap);
     }
 
     @RequestMapping("subpic")

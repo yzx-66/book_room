@@ -304,6 +304,7 @@
                             var avilableNum=0;
                             var bookNum=0;
                             var livedNum=0;
+                            var canNotLiveNum=0
                             var roomType="";
                             for(var i=0;i<data.length;i++){
                                 //var roomtype=img+"<a href='/hotel/admin/room_type/list?dowhat=edit&id="+data[i].id+"' title=\"点我编辑\" style='text-decoration: underline' xmlns=\"http://www.w3.org/1999/htm\"><span style='width: 150px'> 房间类型：<font color='red' size='3'>"+data[i].name+"</font></span>&nbsp;&nbsp;价格："+data[i].price+"&nbsp;（晚/RMB）&nbsp;&nbsp;&nbsp;、&nbsp;&nbsp;&nbsp;&nbsp;预定数：<font color='blue' size='2' >"+data[i].bookNum+"</font>&nbsp;&nbsp;&nbsp;&nbsp;、&nbsp;&nbsp;&nbsp;&nbsp;已入住数：<font color='#d2691e' size='2'> "+data[i].livedNum+"</font>&nbsp;&nbsp;&nbsp;&nbsp;、&nbsp;&nbsp;&nbsp;&nbsp;可用数：<font color='#8a2be2' size='2'>"+data[i].avilableNum+"</font></a></li><br>";
@@ -311,9 +312,10 @@
                                 avilableNum+=data[i].avilableNum;
                                 bookNum+=data[i].bookNum;
                                 livedNum+=data[i].livedNum;
+                                canNotLiveNum+=data[i].canNotLiveNum;
                                 roomType+="<a href='/hotel/admin/room_type/list?dowhat=edit&id="+data[i].id+"' title=\"点我查询\" style='text-decoration: underline'><font color='blue'> "+data[i].name+"</font></a>&nbsp;&nbsp;&nbsp;&nbsp";
                             }
-                            ret="<li>&nbsp;<img src=/hotel/resource/admin/easyui/css/icons/heart.png />&nbsp;&nbsp;&nbsp;&nbsp;房间总数："+roomNum+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;预定总数："+bookNum+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;已入住数："+livedNum+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;可用数：<font color='#006400' size='3'> "+avilableNum+"</font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;全部房型："+roomType+"</li>";
+                            ret="<li>&nbsp;<img src=/hotel/resource/admin/easyui/css/icons/heart.png />&nbsp;&nbsp;&nbsp;&nbsp;房间总数："+roomNum+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;预定总数："+bookNum+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;已入住数："+livedNum+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;不可用数："+canNotLiveNum+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;可用数：<font color='#006400' size='3'> "+avilableNum+"</font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;全部房型："+roomType+"</li>";
                             if(data.length==0){
                                 ret="<li>&nbsp;<img src=/hotel/resource/admin/easyui/css/icons/heart_broken.png />&nbsp;&nbsp;&nbsp;&nbsp;<a href='/hotel/admin/room_type/list?dowhat=add' title=\"点我添加\" style='text-decoration: underline'><font color='blue'>没有房型点击添加</font></a> </li>"
                             }

@@ -78,6 +78,7 @@ public class RoomTypeController {
             roomType.setFloorId(fid);
             roomType.setLivedNum(0);
             roomType.setBookNum(0);
+            roomType.setcanNotLiveNum(0);
             if(roomTypeService.addRoomType(roomType)<=0){
                 ret.put("type","error");
                 ret.put("msg","添加失败 请联系管理员");
@@ -182,6 +183,12 @@ public class RoomTypeController {
     @ResponseBody
     public List<RoomType> findRoomTypeByName(String name){
         return roomTypeService.findRoomTypeByName(name);
+    }
+
+    @RequestMapping("findRoomTypeByRoomId")
+    @ResponseBody
+    public RoomType findRoomTypeByRoomId(int id){
+        return roomTypeService.findRoomTypeByRoomId(id);
     }
 
     @RequestMapping("subpic")

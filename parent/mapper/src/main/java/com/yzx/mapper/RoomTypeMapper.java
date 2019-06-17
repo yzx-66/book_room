@@ -17,4 +17,5 @@ public interface RoomTypeMapper {
     RoomType findRoomTypeById(int id);
     RoomType findRoomTypeByNameAndHight(@Param("name") String name,@Param("hight")int hight);
     List<RoomType> findRoomTypeByName(@Param("name") String name);
+    RoomType findRoomTypeByRoomId(int id);
 }

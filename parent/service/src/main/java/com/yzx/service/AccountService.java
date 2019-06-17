@@ -15,5 +15,6 @@ public interface AccountService {
     Account findAccountById(int id);
     List<Account> findAll();
     Account findAccountByPhoneNum(String phoneNum);
+    Account findaccountByBookOrderId(int id);
     void rufresh() throws ParseException;
 }

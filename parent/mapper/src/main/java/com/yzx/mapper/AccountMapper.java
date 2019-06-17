@@ -15,4 +15,5 @@ public interface AccountMapper {
     Account findAccountById(int id);
     List<Account> findAll();
     Account findAccountByPhoneNum(@Param("phoneNum") String phoneNum);
+    Account findaccountByBookOrderId(int id);
 }

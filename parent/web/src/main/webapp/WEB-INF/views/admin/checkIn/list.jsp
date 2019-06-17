@@ -14,7 +14,7 @@
     <div id="wu-toolbar-2">
         <div class="wu-toolbar-button">
             <c:forEach items="${button }" var="b">
-                <c:if test="${b.key== '订单列表'}">
+                <c:if test="${b.key== '入住列表'}">
                     <c:forEach items="${b.value }" var="m">
                         <a href="#" class="easyui-linkbutton" iconCls="icon-${m.icon}"  onclick="${m.url}" plain="true">${m.name}</a>
                     </c:forEach>
@@ -22,17 +22,15 @@
             </c:forEach>
         </div>
         <div class="wu-toolbar-search">
-            <label>预定账号的手机：</label><input type="text" id="search-accountPhone" class="wu-text" style="width:100px">
+            <label>入住账号的手机：</label><input type="text" id="search-accountPhone" class="wu-text" style="width:100px">
             <label>入住者姓名：</label><input type="text" id="search-name" class="wu-text" style="width:100px">
             <label>入住者手机：</label><input type="text" id="search-phoneNum" class="wu-text" style="width:100px">
             <label>入住起始日期：</label><input type="text" id="search-arriveTime" style="width:100px" class="wu-text easyui-datebox">
             <label>入住截至日期：</label><input id="search-leaveTime" type="text" class="easyui-datebox">
             <label>状态</label><select id="search-status">
                                     <option value="-1" selected="selected">全部</option>
-                                    <option value="0">预定中</option>
-                                    <option value="1">已入住</option>
-                                    <option value="2">已离店</option>
-                                    <option value="3">已违约</option>
+                                    <option value="0">入住中</option>
+                                    <option value="1">已离店</option>
                                 </select>
             <a href="#" id="search-btn" class="easyui-linkbutton" iconCls="icon-search">开始检索</a>
         </div>
@@ -44,14 +42,17 @@
 <div id="wu-dialog-2" class="easyui-dialog" data-options="closed:true,iconCls:'icon-save'" style="width:400px; padding:10px;">
     <form id="wu-form-2" method="post">
         <table id="tab">
-                <td align="right">预定账号的手机:</td>
-                <td><input type="text" id="accountPhone" name="accountPhone" class="wu-text easyui-validatebox" data-options="required:true, missingMessage:'请填写账号的手机'"/></td>
+                <td align="right">入住账号（非预定不选）:</td>
+                <td><input type="text" id="accountPhone_id" name="accountPhone" style="width: 175px" class="wu-text" readonly="readonly" />
+                    <a href="#" id="herf_foorId" onclick="showBookOrders()" class="easyui-linkbutton" style="width: 62px;" iconCls="icon-add1">订单</a>
+                    <input type="hidden" id="bookOrderId_id" name="bookOrderId"/>
+                </td>
             </tr>
             <tr>
                 <td align="right">入住者姓名:</td>
                 <td><input type="text" id="name_id" name="name" class="wu-text easyui-validatebox" data-options="required:true, missingMessage:'请填写入住者姓名'"/></td>
             </tr>
-            <tr id="edit-hide1">
+            <tr id="order_hide">
                 <td align="right">选择房型:</td>
                 <td>
                     <select id="typeRoomName_id" onchange="fllowChangRoomType()" name="roomTypeName" style="width: 268px;" class="easyui-validatebox" data-options="required:true, missingMessage:'请选择房型'">
@@ -61,13 +62,33 @@
                     </select>
                 </td>
             </tr>
-            <tr id="edit-hide2">
-                <td align="right">楼 层:</td>
+            <tr id="notOrder_hide" style="display:none;">
+                <td align="right">选择房型:</td>
                 <td>
-                    <select id="hight_id"  name="hight" style="width: 268px;" class="easyui-validatebox" data-options="required:true, missingMessage:'请选择楼层'">
+                    <select id="orderRoomTypeName_id" name="roomTypeName" style="width: 268px;" class="easyui-validatebox" data-options="required:true, missingMessage:'请选择房型'">
 
                     </select>
                 </td>
+            </tr>
+            <tr>
+                <td align="right">楼 层:</td>
+                <td>
+                    <select id="hight_id" onchange="fllowChangHight()" name="hight" style="width: 268px;" class="easyui-validatebox" data-options="required:true, missingMessage:'请选择楼层'">
+
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">房 间:</td>
+                <td>
+                    <select id="room_id" name="roomId" style="width: 268px;" class="easyui-validatebox" data-options="required:true, missingMessage:'请选择房间'">
+                        <option>请先选择房型和楼层！</option>");
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">入住价格:</td>
+                <td><input type="text" id="checkinPrice_id" name="checkinPrice" class="wu-text easyui-validatebox" data-options="required:true, missingMessage:'请填写身份证号'"/></td>
             </tr>
             <tr>
                 <td align="right">入住者身份证号:</td>
@@ -79,11 +100,11 @@
             </tr>
             <tr>
                 <td align="right">入住日期:</td>
-                <td><input type="text" id="arriveTime_id" name="arriveTime" class="wu-text easyui-datebox"/></td>
+                <td><input type="text" id="arriveTime_id" name="arriveTime" class="wu-text easyui-datebox easyui-validatebox"/></td>
             </tr>
             <tr>
                 <td align="right">退房日期:</td>
-                <td><input type="text" id="leaveTime_id" name="leaveTime" class="wu-text easyui-datebox"/></td>
+                <td><input type="text" id="leaveTime_id" name="leaveTime" class="wu-text easyui-datebox easyui-validatebox"/></td>
             </tr>
             <tr>
                 <td valign="top" align="right">备 注:</td>
@@ -93,17 +114,19 @@
     </form>
 </div>
 
+<div id="orders_dialog_id" class="easyui-dialog" data-options="closed:true,iconCls:'icon-save'" style="width:750px;height:500px; padding:10px;">
+    <table id="order_table_id"></table>
+</div>
+
 <%@include file="/WEB-INF/views/admin/commen/footer.jsp" %>
 
 <!-- End of easyui-dialog -->
 <script src="/hotel/resource/admin/easyui/js/jquery-form.js"></script>
 <script type="text/javascript">
 
+    var chose=0;//判断是预定订单还是现场入住订单
+
     function check(){
-        if($('#typeRoomName_id').val()==null || $('#typeRoomName_id').val()==""){
-            $.messager.alert('信息提示','房型不可以为空！','info');
-            return false;
-        }
         if($('#hight_id').val()==null || $('#hight_id').val()==""){
             $.messager.alert('信息提示','楼层不可以为空！','info');
             return false;
@@ -121,6 +144,10 @@
         if(arrvieTime==leaveTime){
             $.messager.alert('信息提示','入住和离店不可以是同一天，至少入住一天，从零点起算','info');
             return false;
+        }
+        if($('#room_id').val()==0){
+            $.messager.alert('信息提示','必须选择一间房','info');
+            return;
         }
         var validate = $("#wu-form-2").form("validate");
         if(!validate){
@@ -151,16 +178,13 @@
         $('#wu-datagrid-2').datagrid('reload',option);
     })
 
-    /**
-     * Name 添加记录
-     */
     function add(){
         if(!check()){
             return;
         }
         var data=$('#wu-form-2').serialize();
         $.ajax({
-            url:'/hotel/admin/bookOrder/add',
+            url:'/hotel/admin/checkIn/add',
             type:'post',
             dataType:'json',
             data:data,
@@ -170,56 +194,81 @@
                     $('#wu-dialog-2').dialog('close');
                     $('#wu-datagrid-2').datagrid('reload');
                 }
-                else
-                {
+                else {
                     $.messager.alert('信息提示',data.msg,'info');
                 }
             }
         });
     }
 
-    /**
-     * Name 修改记录
-     */
-    function edit(item){
-        if(!check()){
+    function back() {
+        var item = $('#wu-datagrid-2').datagrid('getSelected');
+        if(item==null || item.length==0 ){
+            $.messager.alert('信息提示','请选择一条入住记录','info');
             return;
         }
-        var now=new Date();
-        var arriveDate=new Date(item.arriveDate);
-        if(now.getTime()>arriveDate.getTime()){
-            $.messager.alert('信息提示','预定订单已经过了到店日期无法修改，只可删除，若不删除会占用房间，过了离店日期自动失效，且该客户将增加一次违约次数','info');
+        if(item.status==1){
+            $.messager.alert('信息提示','该订单已经结算','info');
             return;
         }
-        var data=$('#wu-form-2').serialize()+"&id="+item.id+"&oldRoomTypeId="+item.roomTypeId;
-        $.ajax({
-            url:'/hotel/admin/bookOrder/update',
-            type:'post',
-            dataType:'json',
-            data:data,
-            success:function(data){
-                if(data.type=='success'){
-                    $.messager.alert('信息提示','提交成功！','info');
-                    $('#wu-dialog-2').dialog('close');
-                    $('#wu-datagrid-2').datagrid('reload');
-                }
-                else
-                {
-                    $.messager.alert('信息提示',data.msg,'info');
-                }
+        $.messager.confirm('信息提示','请确定是否结清房款？房款为：'+item.liveDays*item.checkinPrice, function(result){
+            if(result){
+                $.ajax({
+                    url:'/hotel/admin/checkIn/back',
+                    data:{id:item.id},
+                    success:function(data){
+                        if(data.type=='success'){
+                            $.messager.alert('信息提示','退房成功！','info');
+                            $('#wu-datagrid-2').datagrid('reload');
+                        }
+                        else
+                        {
+                            $.messager.alert('信息提示',data.msg,'info');
+                            $('#wu-datagrid-2').datagrid('reload');
+                        }
+                    }
+                });
             }
         });
 
+    }
+
+    function remove(){
+        var item = $('#wu-datagrid-2').datagrid('getSelected');
+        if(item==null || item.length==0){
+            $.messager.message('信息提示','请选择一条入住记录','info');
+            return;
+        }
+        $.messager.confirm('信息提示','确定要删除该条记录？该条记录将不计入营业额，但是会记录在营业日志中,且房间状态立刻变为可用', function(result){
+            $.ajax({
+                url:'/hotel/admin/checkIn/delete',
+                data:{id:item.id},
+                success:function(data){
+                    if(data.type=='success'){
+                        if(item.bookOrderId!=null || item.bookOrderId!=""){
+                            $.messager.alert('信息提示','删除成功！该订单重新变为预定中','info');
+                        }else{
+                            $.messager.alert('信息提示','删除成功！','info');
+                        }
+                        $('#wu-datagrid-2').datagrid('reload');
+                    }
+                    else {
+                        $.messager.alert('信息提示',data.msg,'info');
+                        $('#wu-datagrid-2').datagrid('reload');
+                    }
+                }
+            });
+        });
     }
 
     function fllowChangRoomType() {
         $('#hight_id').empty();
         $.ajax({
-             url:'/hotel/admin/floor/findFloorsByRoomTypeName',
-             data:{name:$('#typeRoomName_id').val()},
-             dataType:'json',
-             success:function (data) {
-                $('#hight_id').append("<option value=\"-1\">全部楼层随机分配！</option>");
+            url:'/hotel/admin/floor/findFloorsByRoomTypeName',
+            data:{name:$('#typeRoomName_id').val()},
+            dataType:'json',
+            success:function (data) {
+                $('#hight_id').append("<option>请选择！</option>");
                 for(var i=0;i<data.length;i++){
                     $.ajax({
                         url:'/hotel/admin/room/getRoomNumsByTypeAndHight',
@@ -227,16 +276,36 @@
                         dataType:'json',
                         async:false,
                         success:function (size) {
-                            if(size==0){
-                                $('#hight_id').append("<option value="+data[i].hight+">"+data[i].hight+"&nbsp;层（该层已经预定全部 请勿选择，修改不受影响！）</option>");
-                            }else {
+                            if(size!=0){
                                 $('#hight_id').append("<option value="+data[i].hight+">"+data[i].hight+"&nbsp;层（该层剩余："+size+"间）</option>");
+                            }else {
+                                $('#hight_id').append("<option value=0>"+data[i].hight+"&nbsp;层（该层剩余："+size+"间）</option>");
                             }
                         }
                     })
                 }
             }
         });
+    }
+
+    function fllowChangHight() {
+        $('#room_id').empty();
+        var roomTypeName=$('#typeRoomName_id').val();
+        if(roomTypeName==null || roomTypeName==""){
+            roomTypeName=$('#orderRoomTypeName_id').val();
+        }
+        var hight=$('#hight_id').val();
+        $.ajax({
+            url:'/hotel/admin/room/findRoomsByRTAndHAndS',
+            data:{roomTypeName:roomTypeName,hight:hight,status:chose},
+            dataType:'json',
+            async:false,
+            success:function (data) {
+                for(var i=0;i<data.length;i++){
+                    $('#room_id').append("<option value="+data[i].id+">房间编号："+data[i].sn+"</option>");
+                }
+            }
+        })
     }
 
     function formatDate(time, formatStr) {
@@ -260,44 +329,154 @@
         });
     }
 
-    function remove(){
-        var items = $('#wu-datagrid-2').datagrid('getSelections');
-        if(items==null || items.length==0 ){
-            $.messager.message('信息提示','请至少选择一条','info');
-            return;
-        }
-        $.messager.confirm('信息提示','确定要删除这些记录？ 预定的与没按预定到店的将还原房间数，入住的无法在离店前删除，已经违约与离店的的不影响房间状态 ', function(result){
-            if(result){
-                var ids="";
-                for(var i=0;i<items.length;i++){
-                    ids+='id='+items[i].id+'&';
+    function showBookOrders() {
+        $('#order_table_id').datagrid({
+            url:'/hotel/admin/bookOrder/list?status=0',
+            rownumbers:true,
+            singleSelect:false,
+            pageSize:100,
+            pageList:[10,20,30,50,100],
+            pagination:true,
+            multiSort:true,
+            fit:true,
+            fitColumns:true,
+            columns:[[
+                { field:'chk',checkbox:true},
+                { field:'accountId',title:'账号所属手机',width:100,sortable:true,formatter:function (value) {
+                        var ret="";
+                        $.ajax({
+                            url:'/hotel/admin/account/findaccountById',
+                            data:{id:value},
+                            dataType:'json',
+                            async:false,
+                            success:function (data) {
+                                ret+="&nbsp;"+data.phoneNum;
+                            }
+                        })
+                        return ret;
+                    }},
+                { field:'name',title:'入住者姓名',width:100,sortable:true},
+                { field:'roomTypeId',title:'房型',width:100,sortable:true,formatter:function (value,row,index) {
+                        var ret="";
+                        $.ajax({
+                            url:'/hotel/admin/floor/findFloorByRoomTypeId',
+                            data:'id='+value,
+                            dataType:'json',
+                            async:false,
+                            success:function (data) {
+                                ret+="&nbsp;&nbsp;"+data.hight+"&nbsp;F：";
+                            }
+                        });
+                        $.ajax({
+                            url:'/hotel/admin/room_type/findRoomTypeById',
+                            data:'id='+value,
+                            dataType:'json',
+                            async:false,
+                            success:function (data) {
+                                ret+="&nbsp;"+data.name;
+                            }
+                        });
+                        return ret;
+                    }},
+                { field:'idCard',title:'入住者身份证号',width:100,sortable:true},
+                { field:'phoneNum',title:'入住者手机号',width:100,sortable:true},
+                { field:'arriveDate',title:'入住时间',width:100,sortable:true,formatter:function (value) {
+                        return new Date(value).toLocaleDateString();
+                    }},
+                { field:'leaveDate',title:'退房时间',width:100,sortable:true,formatter:function (value) {
+                        return new Date(value).toLocaleDateString();
+                    }},
+                { field:'status',title:'状态',width:100,sortable:true,formatter:function (value) {
+                        switch (value) {
+                            case 0:return "预定中";
+                            case 1:return "已入住";
+                            case 2:return "已结算离店";
+                            case 3:return "已违约";
+                        }
+                    }},
+                { field:'remark',title:'备注',width:100},
+            ]]
+        });
+        $('#orders_dialog_id').dialog({
+            closed: false,
+            modal:true,
+            title: "添加信息",
+            buttons: [{
+                text: '确定',
+                iconCls: 'icon-ok',
+                handler: function () {
+                    chose=1;
+                    $('#wu-form-2').form('clear');
+                    setvalue();
+                    $('#orders_dialog_id').dialog('close');
                 }
-
-                $.ajax({
-                    url:'/hotel/admin/bookOrder/delete',
-                    data:ids,
-                    success:function(data){
-                        if(data.type=='success'){
-                            $.messager.alert('信息提示','删除成功！','info');
-                            $('#wu-datagrid-2').datagrid('reload');
-                        }
-                        else
-                        {
-                            $.messager.alert('信息提示',data.msg,'info');
-                            $('#wu-datagrid-2').datagrid('reload');
-                        }
-                    }
-                });
-            }
+            }, {
+                text: '取消',
+                iconCls: 'icon-cancel',
+                handler: function () {
+                    $('#orders_dialog_id').dialog('close');
+                }
+            }]
         });
     }
 
-    /**
-     * Name 打开添加窗口
-     */
+    function setvalue() {
+        item = $('#order_table_id').datagrid('getSelected');
+        if(item==null || item.length==0){
+            $.messager.alert('信息提示','请选择一条要修改的信息！','info');
+            return;
+        }
+        $('#order_hide').hide();
+        $('#notOrder_hide').show();
+        $('#orderRoomTypeName_id').empty();
+        $('#hight_id').empty();
+        $.ajax({
+            url:'/hotel/admin/account/findaccountById',
+            data:{id:item.accountId},
+            dataType:'json',
+            async:false,
+            success:function (data) {
+                $('#accountPhone_id').val(data.phoneNum);
+            }
+        })
+        $.ajax({
+            url:'/hotel/admin/room_type/findRoomTypeById',
+            data:{id:item.roomTypeId},
+            dataType:'json',
+            async:false,
+            success:function (data) {
+                $('#orderRoomTypeName_id').append('<option value='+data.name+'>'+data.name+'</option>')
+                $('#orderRoomTypeName_id').val(data.name);
+            }
+        })
+        $.ajax({
+            url:'/hotel/admin/floor/findFloorByRoomTypeId',
+            data:{id:item.roomTypeId},
+            dataType:'json',
+            async:false,
+            success:function (data) {
+                $('#hight_id').append('<option value='+data.hight+'>'+data.hight+'</option>')
+                $('#hight_id').val(data.hight);
+            }
+        })
+
+        $('#bookOrderId_id').val(item.id);
+        $('#name_id').val(item.name);
+        $('#idCard_id').val(item.idCard);
+        $('#phoneNum_id').val(item.phoneNum);
+        $('#arriveTime_id').datebox('setValue',formatDate(item.arriveDate,'YYYY-MM-DD'));
+        $('#leaveTime_id').datebox('setValue',formatDate(item.leaveDate,'YYYY-MM-DD'));
+        $('#remark_id').val(item.remark);
+
+        fllowChangHight();
+    }
+
     function openAdd(){
         $('#wu-form-2').form('clear');
+        $('#order_hide').show();
+        $('#notOrder_hide').hide();
         $('#hight_id').empty();
+        chose=0;
         $('#wu-dialog-2').dialog({
             closed: false,
             modal:true,
@@ -305,7 +484,7 @@
             buttons: [{
                 text: '确定',
                 iconCls: 'icon-ok',
-                handler: add
+                handler: add,
             }, {
                 text: '取消',
                 iconCls: 'icon-cancel',
@@ -317,113 +496,12 @@
     }
 
     /**
-     * Name 打开修改窗口
-     */
-    function openEdit(){
-        item = $('#wu-datagrid-2').datagrid('getSelected');
-        $('#wu-form-2').form('clear');
-        $('#hight_id').empty();
-        if(item==null || item.length==0){
-            $.messager.alert('信息提示','请选择一条要修改的信息！','info');
-            return;
-        }
-        $.ajax({
-            url:'/hotel/admin/account/findaccountById',
-            data:{id:item.accountId},
-            dataType:'json',
-            async:false,
-            success:function (data) {
-                $('#accountPhone').val(data.phoneNum);
-            }
-        });
-        $.ajax({
-            url:'/hotel/admin/floor/findFloorByRoomTypeId',
-            data:{id:item.roomTypeId},
-            dataType:'json',
-            async:false,
-            success:function (data) {
-                $('#hight_id').append('<option value='+data.hight+'>'+data.hight+'</option>');
-                $('#hight_id').val(data.hight);
-            }
-        });
-        $.ajax({
-            url:'/hotel/admin/room_type/findRoomTypeById',
-            data:{id:item.roomTypeId},
-            dataType:'json',
-            async:false,
-            success:function (data) {
-                $('#typeRoomName_id').val(data.name);
-            }
-        });
-
-        $('#name_id').val(item.name);
-    //    $('#typeRoomName_id').val(null);
-    //    $('#hight_id').val(null);
-        $('#idCard_id').val(item.idCard);
-        $('#phoneNum_id').val(item.phoneNum);
-        $('#arriveTime_id').datebox('setValue',formatDate(item.arriveDate,'YYYY-MM-DD'));
-        $('#leaveTime_id').datebox('setValue',formatDate(item.leaveDate,'YYYY-MM-DD'));
-        $('#remark_id').val(item.remark);
-
-        $('#wu-dialog-2').dialog({
-            closed: false,
-            modal:true,
-            title: "修改信息",
-            buttons: [{
-                text: '确定',
-                iconCls: 'icon-ok',
-                handler:function() {
-                    edit(item);
-                }
-            },{
-                text: '取消',
-                iconCls: 'icon-cancel',
-                handler: function () {
-                    $('#wu-dialog-2').dialog('close');
-                }
-            }]
-        });
-    }
-
-
-    /**
-     * Name 分页过滤器
-     */
-    function pagerFilter(data){
-        if (typeof data.length == 'number' && typeof data.splice == 'function'){// is array
-            data = {
-                total: data.length,
-                rows: data
-            }
-        }
-        var dg = $(this);
-        var opts = dg.datagrid('options');
-        var pager = dg.datagrid('getPager');
-        pager.pagination({
-            onSelectPage:function(pageNum, pageSize){
-                opts.pageNumber = pageNum;
-                opts.pageSize = pageSize;
-                pager.pagination('refresh',{pageNumber:pageNum,pageSize:pageSize});
-                dg.datagrid('loadData',data);
-            }
-        });
-        if (!data.originalRows){
-            data.originalRows = (data.rows);
-        }
-        var start = (opts.pageNumber-1)*parseInt(opts.pageSize);
-        var end = start + parseInt(opts.pageSize);
-        data.rows = (data.originalRows.slice(start, end));
-        return data;
-    }
-
-    /**
      * Name 载入数据
      */
     $('#wu-datagrid-2').datagrid({
-        url:'/hotel/admin/bookOrder/list',
+        url:'/hotel/admin/checkIn/list',
         rownumbers:true,
-        singleSelect:false,
-        loadFilter:pagerFilter,
+        singleSelect:true,
         pageSize:100,
         pageList:[10,20,30,50,100],
         pagination:true,
@@ -431,22 +509,36 @@
         fit:true,
         fitColumns:true,
         columns:[[
-            { field:'accountId',title:'账号所属手机',width:100,sortable:true,formatter:function (value) {
+            { field:'bookOrderId',title:'入住账号',width:100,sortable:true,formatter:function (value) {
                     var ret="";
-                    $.ajax({
-                        url:'/hotel/admin/account/findaccountById',
-                        data:{id:value},
-                        dataType:'json',
-                        async:false,
-                        success:function (data) {
-                            ret+="&nbsp;"+data.phoneNum;
-                        }
-                    })
+                    if(value==null || value=="")   {
+                        ret="现场入住"
+                    }
+                    else{
+                        $.ajax({
+                            url:'/hotel/admin/account/findaccountByBookOrderId',
+                            data:{id:value},
+                            dataType:'json',
+                            async:false,
+                            success:function (data) {
+                                ret+="&nbsp;"+data.phoneNum;
+                            }
+                        })
+                    }
                     return ret;
                 }},
             { field:'name',title:'入住者姓名',width:100,sortable:true},
-            { field:'roomTypeId',title:'房型',width:100,sortable:true,formatter:function (value,row,index) {
+            { field:'roomId',title:'房型',width:100,sortable:true,formatter:function (value,row,index) {
                 var ret="";
+                    $.ajax({
+                        url:'/hotel/admin/room_type/findRoomTypeByRoomId',
+                        data:'id='+value,
+                        dataType:'json',
+                        async:false,
+                        success:function (data) {
+                            value=data.id;
+                        }
+                    });
                     $.ajax({
                         url:'/hotel/admin/floor/findFloorByRoomTypeId',
                         data:'id='+value,
@@ -469,6 +561,7 @@
             }},
             { field:'idCard',title:'入住者身份证号',width:100,sortable:true},
             { field:'phoneNum',title:'入住者手机号',width:100,sortable:true},
+            { field:'liveDays',title:'入住者天数',width:100,sortable:true},
             { field:'arriveDate',title:'入住时间',width:100,sortable:true,formatter:function (value) {
                     return new Date(value).toLocaleDateString();
                 }},
@@ -477,10 +570,8 @@
                 }},
             { field:'status',title:'状态',width:100,sortable:true,formatter:function (value) {
                     switch (value) {
-                        case 0:return "预定中";
-                        case 1:return "已入住";
-                        case 2:return "已结算离店";
-                        case 3:return "已违约";
+                        case 0:return "入住中";
+                        case 1:return "已结算离店";
                     }
                 }},
             { field:'remark',title:'备注',width:100},

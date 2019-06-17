@@ -12,6 +12,7 @@ public class RoomType {
     private int avilableNum;//可住或可预定房间数
     private int bookNum;//预定数
     private int livedNum;//已经入住数
+    private int canNotLiveNum;
     private int status;//房型状态，0：房型已满,1:可预订可入住 2:不可住
     private String remark;//房型备注
 
@@ -84,8 +85,16 @@ public class RoomType {
         this.roomNum = roomNum;
     }
 
+    public int getcanNotLiveNum() {
+        return canNotLiveNum;
+    }
+
+    public void setcanNotLiveNum(int canNotLiveNum) {
+        this.canNotLiveNum = canNotLiveNum;
+    }
+
     public int getAvilableNum() {
-        return roomNum-(bookNum+livedNum);
+        return roomNum-(bookNum+livedNum+canNotLiveNum);
     }
 
     public void setAvilableNum(int avilableNum) {

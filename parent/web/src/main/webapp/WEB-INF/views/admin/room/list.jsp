@@ -85,6 +85,15 @@
 
                     </select>
             </tr>
+            <tr id="add-hide">
+                <td align="right">状 态:</td>
+                <td>
+                    <select id="status_id"  name="status" style="width: 268px;" class="easyui-validatebox" data-options="required:true, missingMessage:'请选择状态'">
+                         <option value="0">可入住</option>
+                         <option value="3">打扫中</option>
+                         <option value="4">不可住</option>
+                    </select>
+            </tr>
             <tr>
                 <td valign="top" align="right">备 注:</td>
                 <td><textarea name="remark" id="remark_id" rows="6" class="wu-textarea" style="width:260px"></textarea></td>
@@ -167,7 +176,7 @@
         if(!check()){
             return;
         }
-        var data=$('#wu-form-2').serialize()+"&id="+item.id+"&oldTypeId="+item.roomTypeId;
+        var data=$('#wu-form-2').serialize()+"&id="+item.id+"&oldTypeId="+item.roomTypeId+"&oldStatus="+item.status;
         $.ajax({
             url:'/hotel/admin/room/update',
             type:'post',
@@ -281,8 +290,10 @@
      * Name 打开添加窗口
      */
     function openAdd(){
-        $('#edit-hide1').show();
-        $('#edit-hide2').show();
+    //    $('#edit-hide1').show();
+     //   $('#edit-hide2').show();
+        $('#add-hide').hide();
+        $('#hight_id').empty();
         $('#img_id').attr('src','/hotel/resource/admin/easyui/images/user_photo.jpg');
         $('#wu-form-2').form('clear');
         $('#wu-dialog-2').dialog({
@@ -309,6 +320,8 @@
     function openEdit(){
    //     $('#edit-hide1').hide();
   //      $('#edit-hide2').hide();
+        $('#add-hide').show();
+        $('#hight_id').empty();
         item = $('#wu-datagrid-2').datagrid('getSelected');
         $('#wu-form-2').form('clear');
         if(item==null || item.length==0){
@@ -316,13 +329,31 @@
             return;
         }
 
+        $.ajax({
+            url:'/hotel/admin/floor/findFloorByRoomTypeId',
+            data:{id:item.roomTypeId},
+            dataType:'json',
+            async:false,
+            success:function (data) {
+                $('#hight_id').append('<option value='+data.hight+'>'+data.hight+'</option>');
+                $('#hight_id').val(data.hight);
+            }
+        });
+        $.ajax({
+            url:'/hotel/admin/room_type/findRoomTypeById',
+            data:{id:item.roomTypeId},
+            dataType:'json',
+            async:false,
+            success:function (data) {
+                $('#typeRoomName_id').val(data.name);
+            }
+        });
+
         $('#img_id').attr('src',item.photo);
         $('#photo_id').val(item.photo);
         $('#name_id').val(item.name);
         $('#sn_id').val(item.sn);
-        $('#typeRoomId_id').val(null);
-        $('#hight_id').val(null);
-        $('#stauts_id').val(item.status);
+        $('#status_id').val(item.status);
         $('#remark_id').val(item.remark);
 
         $('#wu-dialog-2').dialog({
@@ -425,6 +456,7 @@
                         case 1:return "已预定";
                         case 2:return "已入住";
                         case 3:return "打扫中";
+                        case 4:return "不可住";
                     }
                 }},
             { field:'remark',title:'备注',width:100},

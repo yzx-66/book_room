@@ -50,5 +50,11 @@
     <select id="findAccountByPhoneNum" parameterType="string" resultType="account">
         select * from account where phoneNum=#{phoneNum}
     </select>
-    
+
+    <select id="findaccountByBookOrderId" parameterType="int" resultType="account">
+        select * from account
+        join
+        (select accountId from bookorder where id=#{id})b
+        on b.accountId=account.id
+    </select>
 </mapper>

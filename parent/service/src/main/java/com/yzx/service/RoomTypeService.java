@@ -17,5 +17,6 @@ public interface RoomTypeService {
     RoomType findRoomTypeById(int id);
     RoomType findRoomTypeByNameAndHight(String typeName,int hight);
     List<RoomType> findRoomTypeByName(String name);
+    RoomType findRoomTypeByRoomId(int id);
     void refresh();
 }

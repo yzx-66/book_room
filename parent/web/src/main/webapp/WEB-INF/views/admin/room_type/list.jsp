@@ -94,7 +94,7 @@
             <tr id="edit-hide2">
                 <td align="right">状 态:</td>
                 <td>
-                    <select name="status" style="width: 268px;" id="stauts_id">
+                    <select name="status" style="width: 268px;" id="status_id">
                         <option value="0">住满</option>
                         <option value="1">可入住</option>
                         <option value="2">不可住</option>
@@ -193,7 +193,7 @@
             data:data,
             success:function(data){
                 if(data.type=='success'){
-                    if($('#stauts_id').val==2){
+                    if($('#status_id').val()==2){
                         $.messager.alert('信息提示','提交成功,将在预定列表不可见！','info');
                     }else{
                         $.messager.alert('信息提示','提交成功！','info');
@@ -319,7 +319,7 @@
         $('#liveNum_id').val(item.liveNum);
         $('#bedNum_id').val(item.bedNum);
         $('#roomNum_id').val(item.roomNum);
-        $('#stauts_id').val(item.status);
+        $('#status_id').val(item.status);
         $('#remark_id').val(item.remark);
 
         //alert(item.productid);return;
@@ -427,6 +427,9 @@
                 }},
             { field:'livedNum',title:'已入住房数',width:100,sortable:true,formatter:function (value) {
                     return "<span style=\"color:red;font-size:17px\" >"+value+"</span>";
+                }},
+            { field:'canNotLiveNum',title:'不可用房数',width:100,sortable:true,formatter:function (value) {
+                    return "<span style=\"color:grey;font-size:17px\" >"+value+"</span>";
                 }},
             { field:'status',title:'状态',width:100,sortable:true,formatter:function (value) {
                     switch (value) {

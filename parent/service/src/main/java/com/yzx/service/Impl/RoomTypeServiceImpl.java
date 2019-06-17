@@ -72,6 +72,11 @@ public class RoomTypeServiceImpl implements RoomTypeService {
     }
 
     @Override
+    public RoomType findRoomTypeByRoomId(int id){
+        return roomTypeMapper.findRoomTypeByRoomId(id);
+    }
+
+    @Override
     public void refresh() {
         List<RoomType> roomTypeList=roomTypeMapper.findAllRoomeType();
         for(RoomType r:roomTypeList){
