@@ -56,16 +56,28 @@
     
     <mvc:resources mapping="/resource/**" location="/resource/"/>
     <mvc:resources mapping="/upload/**" location="/upload/"/>
-    <mvc:resources mapping="/upload_room/**" location="/upload_room/"/>
     
     <mvc:interceptors>
         <mvc:interceptor>
-            <mvc:mapping path="/**"/>
+            <mvc:mapping path="/admin/**"/>
             <mvc:exclude-mapping path="/admin/system/login/**"/>
             <mvc:exclude-mapping path="/admin/system/get_cpacha/**"/>
             <mvc:exclude-mapping path="/admin/system/index"/>
             <mvc:exclude-mapping path="/resource/**"/>
+
+            <mvc:exclude-mapping path="/admin/floor/findFloorsByRoomTypeName"/>
+            <mvc:exclude-mapping path="/admin/room/getRoomNumsByTypeAndHight"/>
+            <mvc:exclude-mapping path="/admin/bookOrder/add"/>
+            <mvc:exclude-mapping path="/admin/floor/findFloorByRoomTypeId"/>
+            <mvc:exclude-mapping path="/admin/bookOrder/update"/>
+            <mvc:exclude-mapping path="/admin/bookOrder/findbookOrderById"/>
+            <mvc:exclude-mapping path="/admin/bookOrder/delete"/>
+
             <bean class="com.yzx.web.interceptor.admin.loginInterceptor"/>
+        </mvc:interceptor>
+        <mvc:interceptor>
+            <mvc:mapping path="/home/account/**"/>
+            <bean class="com.yzx.web.interceptor.home.loginInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
 

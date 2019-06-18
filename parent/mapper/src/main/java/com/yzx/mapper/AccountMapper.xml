@@ -12,7 +12,7 @@
     </delete>
 
     <update id="eidtAccount" parameterType="account">
-        update account set name=#{name},phoneNum=#{phoneNum},realName=#{realName}, idCard=#{idCard},photo =#{photo},address =#{address},status =#{status},monthBreakTimes =#{monthBreakTimes},sumBreakTimes =#{sumBreakTimes} where id=#{id}
+        update account set name=#{name},phoneNum=#{phoneNum},password=#{password},realName=#{realName}, idCard=#{idCard},photo =#{photo},address =#{address},status =#{status},monthBreakTimes =#{monthBreakTimes},sumBreakTimes =#{sumBreakTimes} where id=#{id}
     </update>
 
     <select id="getTotal" parameterType="map" resultType="int">

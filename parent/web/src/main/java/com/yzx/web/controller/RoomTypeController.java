@@ -99,6 +99,7 @@ public class RoomTypeController {
                     if(!rt.getName().equals(roomType.getName()) || !rt.getPhoto().equals(roomType.getPhoto())){
                         rt.setName(roomType.getName());
                         rt.setPhoto(roomType.getPhoto());
+                        rt.setPrice(roomType.getPrice());
                         roomTypeService.eidtRoomType(rt);
                     }
                 }

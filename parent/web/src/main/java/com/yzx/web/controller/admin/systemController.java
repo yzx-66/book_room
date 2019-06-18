@@ -125,7 +125,7 @@ public class systemController {
         session.setAttribute("user",null);
         session.setAttribute("menu",null);
         session.setAttribute("button",null);
-        return "redirect:/hotel/admin/system/index";
+        return "redirect:/admin/system/index";
     }
 
     @RequestMapping(value = "edit-password",method = RequestMethod.GET)

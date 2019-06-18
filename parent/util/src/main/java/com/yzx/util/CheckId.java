@@ -40,13 +40,23 @@ public class CheckId {
     }
 
     //1.身份证信息查询
-    public static Map<String ,String> getRequest1(String idNum,String username) {
-        Map<String, String> ret = new HashMap<>();
+    public static Map<String ,Object> getRequest1(String idNum,String name) {
+        Map<String, Object> ret = new HashMap<>();
+
+        int n = 0;
+        for(int i = 0; i < name.length(); i++) {
+            n = (int)name.charAt(i);
+            if(!(19968 <= n && n <40869)) {
+                ret.put("type", "error");
+                ret.put("msg", "名字不合法");
+                return ret;
+            }
+        }
 
         String result = null;
         String url = "http://apis.juhe.cn/idcard/index";//请求接口地址
         Map params = new HashMap();//请求参数
-        params.put("cardno", "610103200006203613");//身份证号码
+        params.put("cardno", idNum);//身份证号码
         params.put("dtype", "json");//返回数据格式：json或xml,默认json
         params.put("key", APPKEY);//你申请的key
 
@@ -56,12 +66,12 @@ public class CheckId {
             if (object.getInt("error_code") == 0) {
                 System.out.println(object.get("result"));
                 ret.put("type", "success");
-                logService.addLog("用户名："+username+"实名认证成功");
+                logService.addLog("用户名："+name+"实名认证成功");
             } else {
                 System.out.println(object.get("error_code") + ":" + object.get("reason"));
                 ret.put("type", "error");
                 ret.put("msg", (String) object.get("reason"));
-                logService.addLog("用户名："+username+"实名认证失败"+"，原因："+object.get("reason"));
+                logService.addLog("用户名："+name+"实名认证失败"+"，原因："+object.get("reason"));
             }
         } catch (Exception e) {
             e.printStackTrace();

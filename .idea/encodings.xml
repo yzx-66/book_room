@@ -10,5 +10,12 @@
     <file url="file://$PROJECT_DIR$/parent/web" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/parent/web/src/main/webapp/WEB-INF/errors" charset="GBK" />
     <file url="file://$PROJECT_DIR$/parent/web/src/main/webapp/resource/admin" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/parent/web/src/main/webapp/resource/home" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/parent/web/src/main/webapp/resource/home/images/ahomepage.jpg" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/parent/web/src/main/webapp/resource/home/images/bookOrder1.jpg" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/parent/web/src/main/webapp/resource/home/images/homeIndex.jpg" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/parent/web/src/main/webapp/resource/home/images/homeIndex1.jpg" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/parent/web/src/main/webapp/resource/home/images/login.jpg" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/parent/web/src/main/webapp/resource/home/images/login1.jpg" charset="UTF-8" />
   </component>
 </project>

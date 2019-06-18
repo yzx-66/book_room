@@ -11,6 +11,7 @@ import com.yzx.service.BlackListService;
 import com.yzx.service.BookOrderService;
 import com.yzx.service.RoomTypeService;
 import com.yzx.service.admin.RoomService;
+import com.yzx.util.CheckId;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -68,6 +69,11 @@ public class BookOrderController {
             }
         }
 
+        Map<String,Object> res=CheckId.getRequest1(bookOrder.getIdCard(),bookOrder.getName());
+        if(res.get("type").equals("error")){
+            return res;
+        }
+
         if(!bindAccountPhone(accountPhone,bookOrder,ret)){
             return ret;
         }
@@ -78,14 +84,14 @@ public class BookOrderController {
         RoomType roomType=getRoomType(roomTypeName,hight);
         setBookOrder(bookOrder,(Date)ret.get("arriveDate"),(Date)ret.get("leaveDate"),roomType);
 
+        if(!makeRoom_0_to_1(roomType,ret,bookOrder)){
+            return ret;
+        }
         if(bookOrderService.addBookOrder(bookOrder)<=0){
             ret.put("type","error");
             ret.put("msg","添加失败 请联系管理员");
         }else {
             ret.put("type","success");
-            if(!makeRoom_0_to_1(roomType,ret,bookOrder)){
-                return ret;
-            }
         }
         return ret;
     }
@@ -101,6 +107,11 @@ public class BookOrderController {
             return ret;
         }
 
+        Map<String,Object> res=CheckId.getRequest1(bookOrder.getIdCard(),bookOrder.getName());
+        if(res.get("type").equals("error")){
+            return res;
+        }
+
         if(!bindAccountPhone(accountPhone,bookOrder,ret)){
             return ret;
         }
@@ -113,17 +124,17 @@ public class BookOrderController {
         RoomType oldRoomType=roomTypeService.findRoomTypeById(oldRoomTypeId);
         setBookOrder(bookOrder,(Date)ret.get("arriveDate"),(Date)ret.get("leaveDate"),newRoomType);
 
+        if(oldRoomTypeId!=newRoomType.getId()){
+            if(!makeRoom_0_to_1(newRoomType,ret,bookOrder)){
+                return ret;
+            }
+            makeRoom_1_to_0(oldRoomType);
+        }
         if(bookOrderService.eidtBookOrder(bookOrder)<=0){
             ret.put("type","error");
             ret.put("msg","修改失败 请联系管理员");
         }else{
             ret.put("type","success");
-            if(oldRoomTypeId!=newRoomType.getId()){
-                if(!makeRoom_0_to_1(newRoomType,ret,bookOrder)){
-                    return ret;
-                }
-                makeRoom_1_to_0(oldRoomType);
-            }
         }
         return ret;
     }
@@ -166,7 +177,7 @@ public class BookOrderController {
     @RequestMapping(value="list",method = RequestMethod.POST)//搜索的时候的参数名
     @ResponseBody
     public Map<String,Object> findList(Page page,Integer status,String arriveTime,String leaveTime,
-                                       @RequestParam(value = "accountPhone",defaultValue = "",required = false)String accountName,
+                                       @RequestParam(value = "accountPhone",defaultValue = "",required = false)String accountPhone,
                                        @RequestParam(value = "name",defaultValue = "",required = false)String name,
                                        @RequestParam(value = "phoneNum",defaultValue = "",required = false)String phoneNum
 
@@ -175,7 +186,7 @@ public class BookOrderController {
         Map<String,Object> queryMap=new HashMap<>();
 
         SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd");
-        queryMap.put("accountPhone",accountName);
+        queryMap.put("accountPhone",accountPhone);
         queryMap.put("name",name);
         queryMap.put("phoneNum",phoneNum);
         if (!StringUtils.isEmpty(arriveTime)){
@@ -209,7 +220,7 @@ public class BookOrderController {
         SimpleDateFormat formater=new SimpleDateFormat("yyyy-MM-dd");
         Date now_day=formater.parse(formater.format(new Date()));
         if(now_day.compareTo(arrive)!=1) {
-            if(arrive.compareTo(leave)!=1){
+            if(arrive.compareTo(leave)==-1){
                 return true;
             }
         }
@@ -274,8 +285,6 @@ public class BookOrderController {
     }
 
     public boolean makeRoom_0_to_1(RoomType roomType,Map<String,Object>ret,BookOrder bookOrder){
-        roomType.setBookNum(roomType.getBookNum()+1);
-        roomTypeService.eidtRoomType(roomType);
         List<Room> rooms=roomService.findRoomByTypeIdAndStatus(roomType.getId(),0);
 
         int size=rooms.size();
@@ -291,6 +300,8 @@ public class BookOrderController {
             ret.put("msg", "预定失败 已经没有剩房");
             return false;
         }
+        roomType.setBookNum(roomType.getBookNum()+1);
+        roomTypeService.eidtRoomType(roomType);
         return true;
     }
 

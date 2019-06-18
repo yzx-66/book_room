@@ -297,7 +297,7 @@
      * Name 打开修改窗口
      */
     function openEdit(item){
-        $.messager.show({showType:'slide', showSpeed:'600',msg:'修改房型图片或者名字 同一房型将一起改变',title:'小提示'});
+        $.messager.show({showType:'slide', showSpeed:'600',msg:'修改房型图片、名字或者价格，同一房型将一起改变',title:'小提示'});
         if(item==null){
             item = $('#wu-datagrid-2').datagrid('getSelected');
             console.log(111);

@@ -218,7 +218,7 @@
                     data:{id:item.id},
                     success:function(data){
                         if(data.type=='success'){
-                            $.messager.alert('信息提示','退房成功！','info');
+                            $.messager.alert('信息提示','退房成功！房间现在为打扫中，请打扫完后将房间状态调成可入住','info');
                             $('#wu-datagrid-2').datagrid('reload');
                         }
                         else
@@ -272,7 +272,7 @@
                 for(var i=0;i<data.length;i++){
                     $.ajax({
                         url:'/hotel/admin/room/getRoomNumsByTypeAndHight',
-                        data:{roomTypeName:$('#typeRoomName_id').val(),hight:data[i]},
+                        data:{roomTypeName:$('#typeRoomName_id').val(),hight:data[i].hight},
                         dataType:'json',
                         async:false,
                         success:function (size) {

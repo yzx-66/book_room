@@ -228,7 +228,7 @@
 
     function checkIsHaveRoomType() {
         if($('#typeRoomName_id').val()==null){
-            $.messager.alert('信息提示','请检查房型是否已选 且修改时不可用','info');
+            $.messager.alert('信息提示','请检查房型是否已选','info');
         }else{
             photoSameAsType();
         }

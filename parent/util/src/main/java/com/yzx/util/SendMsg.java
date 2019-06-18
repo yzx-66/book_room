@@ -40,13 +40,14 @@ public class SendMsg {
     private static String MOBILE_NUMBER_ILLEGAL="isv.MOBILE_NUMBER_ILLEGAL";
     private static String DAY_LIMIT_CONTROL="isv.DAY_LIMIT_CONTROL";
     private static String OUT_OF_SERVICE="isp.OUT_OF_SERVICE";
+    private static String BUSINESS_LIMIT_CONTROL="isv.BUSINESS_LIMIT_CONTROL";
 
     @Autowired
     public SendMsg(LogService logService){
         SendMsg.logService=logService;
     }
 
-    public static Map<String,String> sendmsg(String phoneNum){
+    public static Map<String,Object> sendmsg(String phoneNum){
         System.out.println(logService);
         logService.addLog("发送短信验证码回调：");
 
@@ -61,12 +62,12 @@ public class SendMsg {
         request.setVersion("2017-05-25");
         request.setAction("SendSms");
         request.putQueryParameter("PhoneNumbers", phoneNum);
-        request.putQueryParameter("SignName", "SSMHotel");
+        request.putQueryParameter("SignName", "SSMInn");
         request.putQueryParameter("TemplateCode", "SMS_167527459");
         request.putQueryParameter("TemplateParam", "{\"code\":"+code+"}");
 
 
-        Map<String,String> ret=new HashMap<>();
+        Map<String,Object> ret=new HashMap<>();
         try {
             CommonResponse response = client.getCommonResponse(request);
             ObjectMapper mapper=new ObjectMapper();
@@ -87,6 +88,11 @@ public class SendMsg {
             if(back.getCode().equals(OUT_OF_SERVICE)){
                 ret.put("type","error");
                 ret.put("msg","业务已停机");
+                return ret;
+            }
+            if(back.getCode().equals(BUSINESS_LIMIT_CONTROL)){
+                ret.put("type","error");
+                ret.put("msg",back.getMessage());
                 return ret;
             }
             if(back.getCode().equals("OK")){

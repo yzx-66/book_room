@@ -1,4 +1,4 @@
-package com.yzx.web.controller;
+package com.yzx.web.controller.admin;
 
 import com.yzx.model.Account;
 import com.yzx.model.BlackList;
