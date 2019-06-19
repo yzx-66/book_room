@@ -12,9 +12,9 @@
 <head>
     <meta charset="UTF-8">
     <title>SSM房间预定</title>
-    <link href="/hotel/resource/home/css/login.css" type="text/css" rel="Stylesheet" />
-    <link href="/hotel/resource/home/css/regsiter.css" type="text/css" rel="Stylesheet" />
-    <link href="/hotel/resource/home/css/index.css" type="text/css" rel="Stylesheet" />
+    <link href="/lnn/resource/home/css/login.css" type="text/css" rel="Stylesheet" />
+    <link href="/lnn/resource/home/css/regsiter.css" type="text/css" rel="Stylesheet" />
+    <link href="/lnn/resource/home/css/index.css" type="text/css" rel="Stylesheet" />
     <style>
         #ad>ul {
             margin:0;
@@ -66,7 +66,7 @@
                 <div class="form-group">
                     <label >验证码：</label>
                     <input required type="text" placeholder="请输入验证码" name="cpacha_pic" maxlength="11" id="cpacha_pic" style="width: 125px"/>
-                    <img id="cpachaPic" src="/hotel/home/index/get_cpacha?vc=4&w=100&h=30" title="点击切换验证码" style="cursor: pointer;border:1px solid black"  width="118px" height="32px" onclick="changeCpacha()"/>
+                    <img id="cpachaPic" src="/lnn/home/index/get_cpacha?vc=4&w=100&h=30" title="点击切换验证码" style="cursor: pointer;border:1px solid black"  width="118px" height="32px" onclick="changeCpacha()"/>
                     <span class="msg-default hidden">请输入正确的验证码</span>
                 </div>
                 <div class="form-group">
@@ -95,7 +95,7 @@
                 已有账号，去 <a href="login.html">登陆</a>
             </div>
             <ul id="trigger">
-                <li><img src="/hotel/resource/home/images/new1.png"></li>
+                <li><img src="/lnn/resource/home/images/new1.png"></li>
             </ul>
 
         </div>
@@ -108,19 +108,19 @@
 </style>
 <div id="c_footer" class="fixed">
     <p style="text-align: center;">
-        <a href="/hotel/home/index/homepage">首页</a>|
+        <a href="/lnn/home/index/homepage">首页</a>|
         <a href="">关于我们</a>|
-        <a href="/hotel/admin/system/index">登录后台</a>
+        <a href="/lnn/admin/system/index">登录后台</a>
     </p>
 </div>
 <!--底部-->
-<script src="/hotel/resource/home/js/jquery-1.11.3.js"></script>
+<script src="/lnn/resource/home/js/jquery-1.11.3.js"></script>
 <link rel="stylesheet" href="//apps.bdimg.com/libs/jqueryui/1.10.4/css/jquery-ui.min.css">
 <script src="//apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src="//apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
 <script>
     function changeCpacha(){
-        $('#cpachaPic').attr('src','/hotel/home/index/get_cpacha?vc=4&w=100&h=30&d='+new Date().getTime());
+        $('#cpachaPic').attr('src','/lnn/home/index/get_cpacha?vc=4&w=100&h=30&d='+new Date().getTime());
     };
 
     $(function() {
@@ -132,7 +132,7 @@
                     return;
                 }
                 $.ajax({
-                    url:'/hotel/home/index/checkCpachaMsg',
+                    url:'/lnn/home/index/checkCpachaMsg',
                     data:{cpacha:$('#cpacha_pic').val()},
                     dataType:'json',
                     type:'post',
@@ -140,7 +140,7 @@
                         if(data.type=='success') {
                             changeCpacha();
                            $.ajax({
-                               url:'/hotel/home/index/sendMsg',
+                               url:'/lnn/home/index/sendMsg',
                                data:{phoneNum:$('#uphone').val()},
                                type:'post',
                                dataType:'json',
@@ -257,12 +257,12 @@
         if(login==1){
             $.ajax({
                 type: 'POST',
-                url: '/hotel/home/index/registUp',
+                url: '/lnn/home/index/registUp',
                 data: data,
                 success: function(data){
                     if(data.type=='success') {
                         alert('注册成功！请在订房前完成实名认证');
-                        location.href = '/hotel/home/index/login';
+                        location.href = '/lnn/home/index/login';
                     } else {
                         alert(data.msg)
                         return;

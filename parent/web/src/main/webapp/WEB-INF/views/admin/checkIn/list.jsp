@@ -121,7 +121,7 @@
 <%@include file="/WEB-INF/views/admin/commen/footer.jsp" %>
 
 <!-- End of easyui-dialog -->
-<script src="/hotel/resource/admin/easyui/js/jquery-form.js"></script>
+<script src="/lnn/resource/admin/easyui/js/jquery-form.js"></script>
 <script type="text/javascript">
 
     var chose=0;//判断是预定订单还是现场入住订单
@@ -184,7 +184,7 @@
         }
         var data=$('#wu-form-2').serialize()+'&chose='+chose;
         $.ajax({
-            url:'/hotel/admin/checkIn/add',
+            url:'/lnn/admin/checkIn/add',
             type:'post',
             dataType:'json',
             data:data,
@@ -214,7 +214,7 @@
         $.messager.confirm('信息提示','请确定是否结清房款？房款为：'+item.liveDays*item.checkinPrice, function(result){
             if(result){
                 $.ajax({
-                    url:'/hotel/admin/checkIn/back',
+                    url:'/lnn/admin/checkIn/back',
                     data:{id:item.id},
                     success:function(data){
                         if(data.type=='success'){
@@ -241,7 +241,7 @@
         }
         $.messager.confirm('信息提示','确定要删除该条记录？该条记录将不计入营业额，但是会记录在营业日志中,且房间状态立刻变为可用', function(result){
             $.ajax({
-                url:'/hotel/admin/checkIn/delete',
+                url:'/lnn/admin/checkIn/delete',
                 data:{id:item.id},
                 success:function(data){
                     if(data.type=='success'){
@@ -264,14 +264,14 @@
     function fllowChangRoomType() {
         $('#hight_id').empty();
         $.ajax({
-            url:'/hotel/admin/floor/findFloorsByRoomTypeName',
+            url:'/lnn/admin/floor/findFloorsByRoomTypeName',
             data:{name:$('#typeRoomName_id').val()},
             dataType:'json',
             success:function (data) {
                 $('#hight_id').append("<option>请选择！</option>");
                 for(var i=0;i<data.length;i++){
                     $.ajax({
-                        url:'/hotel/admin/room/getRoomNumsByTypeAndHight',
+                        url:'/lnn/admin/room/getRoomNumsByTypeAndHight',
                         data:{roomTypeName:$('#typeRoomName_id').val(),hight:data[i].hight},
                         dataType:'json',
                         async:false,
@@ -296,7 +296,7 @@
         }
         var hight=$('#hight_id').val();
         $.ajax({
-            url:'/hotel/admin/room/findRoomsByRTAndHAndS',
+            url:'/lnn/admin/room/findRoomsByRTAndHAndS',
             data:{roomTypeName:roomTypeName,hight:hight,status:chose},
             dataType:'json',
             async:false,
@@ -331,7 +331,7 @@
 
     function showBookOrders() {
         $('#order_table_id').datagrid({
-            url:'/hotel/admin/bookOrder/list?status=0',
+            url:'/lnn/admin/bookOrder/list?status=0',
             rownumbers:true,
             singleSelect:false,
             pageSize:100,
@@ -345,7 +345,7 @@
                 { field:'accountId',title:'账号所属手机',width:100,sortable:true,formatter:function (value) {
                         var ret="";
                         $.ajax({
-                            url:'/hotel/admin/account/findaccountById',
+                            url:'/lnn/admin/account/findaccountById',
                             data:{id:value},
                             dataType:'json',
                             async:false,
@@ -359,7 +359,7 @@
                 { field:'roomTypeId',title:'房型',width:100,sortable:true,formatter:function (value,row,index) {
                         var ret="";
                         $.ajax({
-                            url:'/hotel/admin/floor/findFloorByRoomTypeId',
+                            url:'/lnn/admin/floor/findFloorByRoomTypeId',
                             data:'id='+value,
                             dataType:'json',
                             async:false,
@@ -368,7 +368,7 @@
                             }
                         });
                         $.ajax({
-                            url:'/hotel/admin/room_type/findRoomTypeById',
+                            url:'/lnn/admin/room_type/findRoomTypeById',
                             data:'id='+value,
                             dataType:'json',
                             async:false,
@@ -431,7 +431,7 @@
         $('#orderRoomTypeName_id').empty();
         $('#hight_id').empty();
         $.ajax({
-            url:'/hotel/admin/account/findaccountById',
+            url:'/lnn/admin/account/findaccountById',
             data:{id:item.accountId},
             dataType:'json',
             async:false,
@@ -440,7 +440,7 @@
             }
         })
         $.ajax({
-            url:'/hotel/admin/room_type/findRoomTypeById',
+            url:'/lnn/admin/room_type/findRoomTypeById',
             data:{id:item.roomTypeId},
             dataType:'json',
             async:false,
@@ -450,7 +450,7 @@
             }
         })
         $.ajax({
-            url:'/hotel/admin/floor/findFloorByRoomTypeId',
+            url:'/lnn/admin/floor/findFloorByRoomTypeId',
             data:{id:item.roomTypeId},
             dataType:'json',
             async:false,
@@ -499,7 +499,7 @@
      * Name 载入数据
      */
     $('#wu-datagrid-2').datagrid({
-        url:'/hotel/admin/checkIn/list',
+        url:'/lnn/admin/checkIn/list',
         rownumbers:true,
         singleSelect:true,
         pageSize:100,
@@ -516,7 +516,7 @@
                     }
                     else{
                         $.ajax({
-                            url:'/hotel/admin/account/findaccountByBookOrderId',
+                            url:'/lnn/admin/account/findaccountByBookOrderId',
                             data:{id:value},
                             dataType:'json',
                             async:false,
@@ -531,7 +531,7 @@
             { field:'roomId',title:'房型',width:100,sortable:true,formatter:function (value,row,index) {
                 var ret="";
                     $.ajax({
-                        url:'/hotel/admin/room_type/findRoomTypeByRoomId',
+                        url:'/lnn/admin/room_type/findRoomTypeByRoomId',
                         data:'id='+value,
                         dataType:'json',
                         async:false,
@@ -540,7 +540,7 @@
                         }
                     });
                     $.ajax({
-                        url:'/hotel/admin/floor/findFloorByRoomTypeId',
+                        url:'/lnn/admin/floor/findFloorByRoomTypeId',
                         data:'id='+value,
                         dataType:'json',
                         async:false,
@@ -549,7 +549,7 @@
                         }
                     });
                 $.ajax({
-                    url:'/hotel/admin/room_type/findRoomTypeById',
+                    url:'/lnn/admin/room_type/findRoomTypeById',
                     data:'id='+value,
                     dataType:'json',
                     async:false,

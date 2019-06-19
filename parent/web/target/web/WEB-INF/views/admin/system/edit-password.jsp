@@ -34,7 +34,7 @@
         }
         var old_password=$('#oldPassword').val();
         $.ajax({
-            url:'/hotel/admin/system/edit-password',
+            url:'/lnn/admin/system/edit-password',
             type:'post',
             dataType:'json',
             data:{old_password:old_password,new_password:new_password},

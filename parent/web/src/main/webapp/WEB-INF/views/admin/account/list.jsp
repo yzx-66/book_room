@@ -43,7 +43,7 @@
         <table id="tab">
             <tr>
                 <td>头像预览</td>
-                <td><img src="/hotel/resource/admin/easyui/images/user_photo.jpg" id="img_id" style="width: 100px;height:100px;">
+                <td><img src="/lnn/resource/admin/easyui/images/user_photo.jpg" id="img_id" style="width: 100px;height:100px;">
                     <input type="file" name="tempPhoto" style="width: 90px" onchange="subpic()"/>
                     <input type="hidden" name="photo" id="photo_id">
                 </td>
@@ -78,7 +78,7 @@
 <%@include file="/WEB-INF/views/admin/commen/footer.jsp" %>
 
 <!-- End of easyui-dialog -->
-<script src="/hotel/resource/admin/easyui/js/jquery-form.js"></script>
+<script src="/lnn/resource/admin/easyui/js/jquery-form.js"></script>
 <script type="text/javascript">
 
     function check(){
@@ -110,7 +110,7 @@
         }
         var data=$('#wu-form-2').serialize();
         $.ajax({
-            url:'/hotel/admin/account/add',
+            url:'/lnn/admin/account/add',
             type:'post',
             dataType:'json',
             data:data,
@@ -137,7 +137,7 @@
         }
         var data=$('#wu-form-2').serialize()+"&id="+item.id+"&status="+item.status;
         $.ajax({
-            url:'/hotel/admin/account/update',
+            url:'/lnn/admin/account/update',
             type:'post',
             dataType:'json',
             data:data,
@@ -158,7 +158,7 @@
 
     function subpic() {
         var options={
-            url:'/hotel/admin/account/subpic',
+            url:'/lnn/admin/account/subpic',
             type:'post',
             dataType:'json',
             success:function (data) {
@@ -191,7 +191,7 @@
                 }
 
                 $.ajax({
-                    url:'/hotel/admin/account/delete',
+                    url:'/lnn/admin/account/delete',
                     data:ids,
                     success:function(data){
                         if(data.type=='success'){
@@ -217,7 +217,7 @@
         $.messager.confirm('信息提示','该用户将永久加黑 确定加黑？',function (result) {
              if(result){
                  $.ajax({
-                     url:'/hotel/admin/blackList/add',
+                     url:'/lnn/admin/blackList/add',
                      data:{accountId:item.id},
                      dataType:'json',
                      success:function (data) {
@@ -240,7 +240,7 @@
      */
     function openAdd(){
         $('#edit-hide').show();
-        $('#img_id').attr('src','/hotel/resource/admin/easyui/images/user_photo.jpg');
+        $('#img_id').attr('src','/lnn/resource/admin/easyui/images/user_photo.jpg');
         $('#wu-form-2').form('clear');
         $('#wu-dialog-2').dialog({
             closed: false,
@@ -337,7 +337,7 @@
     }
     function refreshDic() {
         $('#wu-datagrid-2').datagrid({
-            url: '/hotel/admin/account/list',
+            url: '/lnn/admin/account/list',
             rownumbers:true,
             singleSelect:false,
             loadFilter:pagerFilter,

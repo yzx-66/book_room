@@ -13,9 +13,9 @@ body{ padding-bottom:25px;}
 </style>
 <div id="c_footer" class="fixed">
     <p style="text-align: center;">
-        <a href="/hotel/home/index/homepage">首页</a>|
+        <a href="/lnn/home/index/homepage">首页</a>|
         <a href="">关于我们</a>|
-        <a href="/hotel/admin/system/index">登录后台</a>
+        <a href="/lnn/admin/system/index">登录后台</a>
     </p>
 </div>
 </body>

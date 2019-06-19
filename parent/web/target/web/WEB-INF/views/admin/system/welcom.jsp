@@ -21,10 +21,12 @@
     <h2>系统环境</h2>
     <p>系统环境：Windows</p>
     <p>开发工具：idea</p>
+    <p>项目搭建工具：maven</p>
+    <p>代码仓库：git（码云）</p>
     <p>Java版本：JDK 1.8</p>
     <p>服务器：tomcat 9.0</p>
     <p>数据库：MySQL 5.7</p>
-    <p>系统采用技术： spring+springMVC+mybaits+EasyUI+jQuery+Ajax</p>
+    <p>系统采用技术： spring+springMVC+mybaits+EasyUI+jQuery+Ajax+ECharts</p>
 </div>
 </body>
 </html>

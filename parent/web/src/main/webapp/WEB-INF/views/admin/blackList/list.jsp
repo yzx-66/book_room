@@ -36,7 +36,7 @@
 <%@include file="/WEB-INF/views/admin/commen/footer.jsp" %>
 
 <!-- End of easyui-dialog -->
-<script src="/hotel/resource/admin/easyui/js/jquery-form.js"></script>
+<script src="/lnn/resource/admin/easyui/js/jquery-form.js"></script>
 <script type="text/javascript">
 
     $('#search-btn').click(function search() {
@@ -65,7 +65,7 @@
                 }
 
                 $.ajax({
-                    url:'/hotel/admin/blackList/delete',
+                    url:'/lnn/admin/blackList/delete',
                     data:ids,
                     success:function(data){
                         if(data.type=='success'){
@@ -120,7 +120,7 @@
 
     function refreshDic(){
         $('#wu-datagrid-2').datagrid({
-            url:'/hotel/admin/account/list?status=0',
+            url:'/lnn/admin/account/list?status=0',
             rownumbers:true,
             singleSelect:false,
             loadFilter:pagerFilter,
@@ -144,7 +144,7 @@
                 { field:'id',title:'解除时间',width:9,sortable:true,formatter:function (value){
                         var ret="";
                         $.ajax({
-                            url:'/hotel/admin/blackList/findBlackListByAccountId?accountId='+value,
+                            url:'/lnn/admin/blackList/findBlackListByAccountId?accountId='+value,
                             dataType:'json',
                             async:false,
                             success:function (data) {

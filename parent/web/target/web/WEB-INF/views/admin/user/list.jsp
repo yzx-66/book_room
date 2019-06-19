@@ -29,7 +29,7 @@
     <table>
         <tr>
             <td>头像预览</td>
-            <td><img src="/hotel/resource/admin/easyui/images/user_photo.jpg" id="img_id" style="width: 100px;height:100px;">
+            <td><img src="/lnn/resource/admin/easyui/images/user_photo.jpg" id="img_id" style="width: 100px;height:100px;">
                 <input type="file" name="tempPhoto" style="width: 90px" onchange="subpic()"/>
                 <input type="hidden" name="photo" id="photo_id">
             </td>
@@ -79,7 +79,7 @@
 <%@include file="/WEB-INF/views/admin/commen/footer.jsp" %>
 
     <!-- End of easyui-dialog -->
-    <script src="/hotel/resource/admin/easyui/js/jquery-form.js"></script>
+    <script src="/lnn/resource/admin/easyui/js/jquery-form.js"></script>
     <script type="text/javascript">
 
         function checkAuthory() {
@@ -99,7 +99,7 @@
         }
         var data=$('#wu-form-2').serialize();
         $.ajax({
-            url:'/hotel/admin/user/add',
+            url:'/lnn/admin/user/add',
             type:'post',
             dataType:'json',
             data:data,
@@ -124,7 +124,7 @@
         }
         var data=$('#wu-form-2').serialize()+"&id="+id;
         $.ajax({
-            url:'/hotel/admin/user/update',
+            url:'/lnn/admin/user/update',
             type:'post',
             dataType:'json',
             data:data,
@@ -163,7 +163,7 @@
                 }
 
                 $.ajax({
-                    url:'/hotel/admin/user/delete',
+                    url:'/lnn/admin/user/delete',
                     data:ids,
                     success:function(data){
                         if(data.type=='success'){
@@ -186,7 +186,7 @@
 
     function subpic() {
         var options={
-            url:'/hotel/admin/user/subpic',
+            url:'/lnn/admin/user/subpic',
             type:'post',
             dataType:'json',
             success:function (data) {
@@ -209,7 +209,7 @@
     function openAdd(){
     $('#wu-form-2').form('clear');
     $('#edit-hide').show();
-    $('#img_id').attr('src','/hotel/resource/admin/easyui/images/user_photo.jpg');
+    $('#img_id').attr('src','/lnn/resource/admin/easyui/images/user_photo.jpg');
     $('#wu-dialog-2').dialog({
     closed: false,
     modal:true,
@@ -306,7 +306,7 @@
     * Name 载入数据
     */
     $('#wu-datagrid-2').datagrid({
-        url:'/hotel/admin/user/list',
+        url:'/lnn/admin/user/list',
         rownumbers:true,
         singleSelect:false,
         loadFilter:pagerFilter,

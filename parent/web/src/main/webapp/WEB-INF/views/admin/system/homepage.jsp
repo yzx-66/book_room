@@ -13,18 +13,18 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="copyright" content="All Rights Reserved, Copyright (C) 2013, Wuyeguo, Ltd." />
     <title>SSM后台管理系统</title>
-    <link rel="stylesheet" type="text/css" href="/hotel/resource/admin/easyui/easyui/1.3.4/themes/default/easyui.css" />
-    <link rel="stylesheet" type="text/css" href="/hotel/resource/admin/easyui/css/wu.css" />
-    <link rel="stylesheet" type="text/css" href="/hotel/resource/admin/easyui/css/icon.css" />
-    <script type="text/javascript" src="/hotel/resource/admin/easyui/js/jquery-1.8.0.min.js"></script>
-    <script type="text/javascript" src="/hotel/resource/admin/easyui/easyui/1.3.4/jquery.easyui.min.js"></script>
-    <script type="text/javascript" src="/hotel/resource/admin/easyui/easyui/1.3.4/locale/easyui-lang-zh_CN.js"></script>
+    <link rel="stylesheet" type="text/css" href="/lnn/resource/admin/easyui/easyui/1.3.4/themes/default/easyui.css" />
+    <link rel="stylesheet" type="text/css" href="/lnn/resource/admin/easyui/css/wu.css" />
+    <link rel="stylesheet" type="text/css" href="/lnn/resource/admin/easyui/css/icon.css" />
+    <script type="text/javascript" src="/lnn/resource/admin/easyui/js/jquery-1.8.0.min.js"></script>
+    <script type="text/javascript" src="/lnn/resource/admin/easyui/easyui/1.3.4/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="/lnn/resource/admin/easyui/easyui/1.3.4/locale/easyui-lang-zh_CN.js"></script>
 </head>
 <body class="easyui-layout">
 
 <!--页面加载图片-->
 <div id="loading" style="position:absolute;z-index:1000;top:0px;left:0px;width:100%;height:100%;background:#FFFFFF;text-align :center;">
-    <img src="/hotel/resource/admin/easyui/images/loading.jpg" width="600px" height="600px">
+    <img src="/lnn/resource/admin/easyui/images/loading.jpg" width="600px" height="600px">
     <h1><font color="#15428B"></font></h1>
 </div>
 
@@ -35,7 +35,7 @@
     </div>
     <div class="wu-header-right">
         <p><strong class="easyui-tooltip" title="2条未读消息">${user.name}</strong>，欢迎您！</p>
-        <p><a href="#">网站首页</a>|<a href="#">支持论坛</a>|<a href="#">帮助中心</a>|<a href="/hotel/admin/system/loginout">安全退出</a></p>
+        <p><a href="#">网站首页</a>|<a href="#">支持论坛</a>|<a href="#">帮助中心</a>|<a href="/lnn/admin/system/loginout">安全退出</a></p>
     </div>
 </div>
 <!-- end of header -->
@@ -46,7 +46,7 @@
             <div title="${parentMenu.key.name }" data-options="iconCls:'icon-${parentMenu.key.icon }'" style="padding:5px;">
                 <ul class="easyui-tree wu-side-tree">
                     <c:forEach items="${parentMenu.value }" var="chileMenu">
-                        <li iconCls="icon-${chileMenu.icon }"><a href="javascript:void(0)" data-icon="icon-${chileMenu.icon }" data-link="/hotel/${chileMenu.url}" iframe="1">${chileMenu.name}</a></li>
+                        <li iconCls="icon-${chileMenu.icon }"><a href="javascript:void(0)" data-icon="icon-${chileMenu.icon }" data-link="/lnn/${chileMenu.url}" iframe="1">${chileMenu.name}</a></li>
                     </c:forEach>
                 </ul>
             </div>
@@ -57,7 +57,7 @@
 <!-- begin of main -->
 <div class="wu-main" data-options="region:'center'">
     <div id="wu-tabs" class="easyui-tabs" data-options="border:false,fit:true">
-        <div title="首页" data-options="href:'/hotel/admin/system/welcom',closable:false,iconCls:'icon-tip',cls:'pd3'"></div>
+        <div title="首页" data-options="href:'/lnn/admin/system/welcom',closable:false,iconCls:'icon-tip',cls:'pd3'"></div>
     </div>
 </div>
 <!-- end of main -->

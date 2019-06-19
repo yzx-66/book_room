@@ -212,16 +212,16 @@ public class RoomTypeController {
             ret.put("msg","图片过大");
             return ret;
         }
-        String idaePath="C:/EXCS/IDEA_exc/SSM_Hotel/parent/web/src/main/webapp/upload/upload_roomType";  //
+//        String idaePath="C:/EXCS/IDEA_exc/SSM_Hotel/parent/web/src/main/webapp/upload/upload_roomType";  //
         String mavenPath=request.getServletContext().getRealPath("/upload/upload_roomType");
         String filename="pic_"+ UUID.randomUUID()+"_"+tempPhoto.getOriginalFilename();
 
-              Map<String,String> ideaRet=addFile(idaePath,tempPhoto,filename);             //
-              if(ideaRet.get("type").equals("error")){                                            //
-                  return ideaRet;                                                          //
-              }else {                                                                      //
+//              Map<String,String> ideaRet=addFile(idaePath,tempPhoto,filename);             //
+//              if(ideaRet.get("type").equals("error")){                                            //
+//                  return ideaRet;                                                          //
+//              }else {                                                                      //
                   return addFile(mavenPath,tempPhoto,filename);
-              }                                                                            //
+//              }                                                                            //
     }
 
     public Map<String,String> addFile(String path,MultipartFile photo,String filename){
@@ -240,7 +240,7 @@ public class RoomTypeController {
             return ret;
         }
         ret.put("type","success");
-        ret.put("filepath","/hotel/upload/upload_roomType/"+filename);
+        ret.put("filepath","/lnn/upload/upload_roomType/"+filename);
         return ret;
     }
 }

@@ -12,12 +12,12 @@
 <head>
     <meta charset="UTF-8">
     <title>SSM房间预定</title>
-    <link rel="stylesheet" href="/hotel/resource/home/css/index.css">
-    <link rel="stylesheet" href="/hotel/resource/home/css/order.css">
-    <link rel="stylesheet" href="/hotel/resource/home/css/jquery-ui.min.css">
+    <link rel="stylesheet" href="/lnn/resource/home/css/index.css">
+    <link rel="stylesheet" href="/lnn/resource/home/css/order.css">
+    <link rel="stylesheet" href="/lnn/resource/home/css/jquery-ui.min.css">
     <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 </head>
-<body style="background-image:url(http://localhost:8080/hotel/resource/home/images/bookOrder.jpg);">
+<body style="background-image:url(http://localhost:8080/lnn/resource/home/images/bookOrder.jpg);">
 <div style="display: none" id="showDoWhat">${showDoWhat}</div>
 <div style="display: none" id="choseBookOrder">${choseBookOrder}</div>
 <div style="display: none" id="checkIdCard">${account.idCard}</div>
@@ -44,11 +44,11 @@
         </div>
         <div class="jump">
 
-            <a href="/hotel/home/index/homepage">更多房型</a>
+            <a href="/lnn/home/index/homepage">更多房型</a>
         </div>
     </div>
     <!--预定信息-->
-    <div class="book_info" style="background-image:url(http://localhost:8080/hotel/resource/home/images/bookOrder1.jpg);">
+    <div class="book_info" style="background-image:url(http://localhost:8080/lnn/resource/home/images/bookOrder1.jpg);">
         <form id="order_info">
             <ul>
                 <li>
@@ -101,8 +101,8 @@
     <div class="malog">
         <div class="message">
             <p class="msgs"></p>
-            <p>您可以在 <a href="/hotel/home/account/homepage">我的订单</a>查看详情</p>
-            <p>系统会在<span class="num">5</span>秒后跳转会 <a href="/hotel/home/account/homepage">菜单列表</a></p>
+            <p>您可以在 <a href="/lnn/home/account/homepage">我的订单</a>查看详情</p>
+            <p>系统会在<span class="num">5</span>秒后跳转会 <a href="/lnn/home/account/homepage">菜单列表</a></p>
         </div>
     </div>
 
@@ -114,20 +114,20 @@
 </style>
 <div id="c_footer" class="fixed">
     <p style="text-align: center;">
-        <a href="/hotel/home/index/homepage">首页</a>|
+        <a href="/lnn/home/index/homepage">首页</a>|
         <a href="">关于我们</a>|
-        <a href="/hotel/admin/system/index">登录后台</a>
+        <a href="/lnn/admin/system/index">登录后台</a>
     </p>
 </div>
 
 <!----页底--->
-<script src="/hotel/resource/home/js/jquery-1.11.3.js"></script>
-<script src="/hotel/resource/home/js/jquery-ui.min.js"></script>
+<script src="/lnn/resource/home/js/jquery-1.11.3.js"></script>
+<script src="/lnn/resource/home/js/jquery-ui.min.js"></script>
 <script>
     function fllowChangRoomType() {
         $('#hight_id').empty();
         $.ajax({
-            url:'/hotel/admin/floor/findFloorsByRoomTypeName',
+            url:'/lnn/admin/floor/findFloorsByRoomTypeName',
             data:{name:$('#typeName').val()},
             dataType:'json',
             type:'post',
@@ -136,7 +136,7 @@
                 $('#hight').append("<option value=\"-1\" selected=selected>全部楼层随机分配！</option>");
                 for(var i=0;i<data.length;i++){
                     $.ajax({
-                        url:'/hotel/admin/room/getRoomNumsByTypeAndHight',
+                        url:'/lnn/admin/room/getRoomNumsByTypeAndHight',
                         type:'post',
                         data:{roomTypeName:$('#typeName').val(),hight:data[i].hight},
                         dataType:'json',
@@ -155,7 +155,7 @@
         if($('#showDoWhat').html()==0){
             var item=JSON.parse($('#choseBookOrder').html());
             $.ajax({
-                url:'/hotel/admin/floor/findFloorByRoomTypeId',
+                url:'/lnn/admin/floor/findFloorByRoomTypeId',
                 data:{id:item.roomTypeId},
                 dataType:'json',
                 async:false,
@@ -240,14 +240,14 @@
         if($('#checkIdCard').html()==null || $('#checkIdCard').html()==''){
             var r=confirm("您还没有实名认证，无法进行预定，请先取个人中心完善资料，点击确定补全资料");
             if (r==true) {
-                 window.parent.location='/hotel/home/account/homepage?#info';
+                 window.parent.location='/lnn/home/account/homepage?#info';
             }return;
         }
         $("#idCard").next("span.msg").text('');
         var remark = $("#remark").val();
         if($('#showDoWhat').html()==1){
             $.ajax({
-                url:'/hotel/admin/bookOrder/add',
+                url:'/lnn/admin/bookOrder/add',
                 type:'post',
                 dataType:'json',
                 data:{accountPhone:$('#accountPhone').val(),roomTypeName:$('#typeName').val(),hight:$('#hight').val(),name:name,phoneNum:phoneNum,idCard:idCard,remark:remark,arriveTime:arriveTime,leaveTime:leaveTime},
@@ -255,7 +255,7 @@
                     if(data.type == 'success'){
                         $(".malog").show();
                         setTimeout(function(){
-                            window.location.href = '/hotel/home/account/homepage';
+                            window.location.href = '/lnn/home/account/homepage';
                         },1000)
                     }else{
                         alert(data.msg);
@@ -266,14 +266,14 @@
             var item=JSON.parse($('#choseBookOrder').html());
             var data=$('#wu-form-2').serialize()+"&id="+item.id+"&oldRoomTypeId="+item.roomTypeId;
             $.ajax({
-                url:'/hotel/admin/bookOrder/update',
+                url:'/lnn/admin/bookOrder/update',
                 type:'post',
                 dataType:'json',
                 data:{accountPhone:$('#accountPhone').val(),roomTypeName:$('#typeName').val(),hight:$('#hight').val(),name:name,phoneNum:phoneNum,idCard:idCard,remark:remark,arriveTime:arriveTime,leaveTime:leaveTime,id:item.id,oldRoomTypeId:item.roomTypeId},
                 success:function(data){
                     if(data.type=='success') {
                         alert('修改成功！');
-                        window.parent.location = "/hotel/home/account/homepage";
+                        window.parent.location = "/lnn/home/account/homepage";
                     } else{
                         alert(data.msg);
                         return;

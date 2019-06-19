@@ -54,7 +54,7 @@
         <table id="tab">
             <tr>
                 <td>房型预览</td>
-                <td><img src="/hotel/resource/admin/easyui/images/user_photo.jpg" id="img_id" style="width: 100px;height:100px;">
+                <td><img src="/lnn/resource/admin/easyui/images/user_photo.jpg" id="img_id" style="width: 100px;height:100px;">
                     <input type="file" name="tempPhoto" style="width: 90px" onchange="subpic()"/>
                     <input type="hidden" name="photo" id="photo_id">
                 </td>
@@ -112,7 +112,7 @@
 <%@include file="/WEB-INF/views/admin/commen/footer.jsp" %>
 
 <!-- End of easyui-dialog -->
-<script src="/hotel/resource/admin/easyui/js/jquery-form.js"></script>
+<script src="/lnn/resource/admin/easyui/js/jquery-form.js"></script>
 <script type="text/javascript">
 
     function check(){
@@ -160,7 +160,7 @@
         }
         var data=$('#wu-form-2').serialize();
         $.ajax({
-            url:'/hotel/admin/room_type/add',
+            url:'/lnn/admin/room_type/add',
             type:'post',
             dataType:'json',
             data:data,
@@ -187,7 +187,7 @@
         }
         var data=$('#wu-form-2').serialize()+"&id="+item.id+"&bookNum="+item.bookNum+"&livedNum="+item.livedNum+'&roomNum='+item.roomNum;
         $.ajax({
-            url:'/hotel/admin/room_type/update',
+            url:'/lnn/admin/room_type/update',
             type:'post',
             dataType:'json',
             data:data,
@@ -212,7 +212,7 @@
 
     function subpic() {
         var options={
-            url:'/hotel/admin/room_type/subpic',
+            url:'/lnn/admin/room_type/subpic',
             type:'post',
             dataType:'json',
             success:function (data) {
@@ -239,7 +239,7 @@
         $.messager.confirm('信息提示','确定要删除该记录？', function(result){
             if(result){
                 $.ajax({
-                    url:'/hotel/admin/room_type/delete',
+                    url:'/lnn/admin/room_type/delete',
                     data:"id="+item.id,
                     success:function(data){
                         if(data.type=='success'){
@@ -270,7 +270,7 @@
      */
     function openAdd(){
         clearFloorIdSelects();
-        $('#img_id').attr('src','/hotel/resource/admin/easyui/images/user_photo.jpg');
+        $('#img_id').attr('src','/lnn/resource/admin/easyui/images/user_photo.jpg');
         $('#edit-hide1').show();
         $('#edit-hide2').show();
 
@@ -387,7 +387,7 @@
         multiSort:true,
         fit:true,
         fitColumns:true,
-        url:'/hotel/admin/room_type/list',
+        url:'/lnn/admin/room_type/list',
         columns:[[
             { field:'photo',title:'房型预览',width:100,formatter:function (value,row,index) {
                     var img = "&nbsp;&nbsp;&nbsp;<img style='width: 50px;height: 50px' src="+value+"/>";
@@ -397,7 +397,7 @@
             { field:'floorId',title:'层名',width:100,sortable:true,formatter:function (value,row,index) {
                 var ret="";
                 $.ajax({
-                    url:'/hotel/admin/floor/findFloorById',
+                    url:'/lnn/admin/floor/findFloorById',
                     data:'id='+value,
                     dataType:'json',
                     async:false,

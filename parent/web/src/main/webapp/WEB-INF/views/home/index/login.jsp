@@ -16,8 +16,8 @@
     <meta name="Keywords" content="">
     <meta name="Description" content="">
     <title>SSM房间预定</title>
-    <link href="/hotel/resource/home/css/index.css" type="text/css" rel="Stylesheet" />
-    <link href="/hotel/resource/home/css/login.css" type="text/css" rel="Stylesheet" />
+    <link href="/lnn/resource/home/css/index.css" type="text/css" rel="Stylesheet" />
+    <link href="/lnn/resource/home/css/login.css" type="text/css" rel="Stylesheet" />
 </head>
 <style>
 .vintage{
@@ -29,7 +29,7 @@ font-weight: bold;
 font-size: 30px;
 }
 </style>
-<body style="background-image:url(http://localhost:8080/hotel/resource/home/images/login.jpg);">
+<body style="background-image:url(http://localhost:8080/lnn/resource/home/images/login.jpg);">
 
 <header>
     <div style="padding-top: 80px;" class="vintage">
@@ -39,9 +39,9 @@ font-size: 30px;
 </header>
 <section>
     <div class="left">
-        <img src="/hotel/resource/home/images/index.jpg">
+        <img src="/lnn/resource/home/images/index.jpg">
     </div>
-    <div class="login" style="background-image:url(http://localhost:8080/hotel/resource/home/images/login1.jpg);">
+    <div class="login" style="background-image:url(http://localhost:8080/lnn/resource/home/images/login1.jpg);">
 
 
         <div id="normal">
@@ -58,22 +58,22 @@ font-size: 30px;
 
             <div class="codes" style="margin-top:25px;">
                 <input type="text" name="cpacha" id="cpacha" class="blur" placeholder="请输入验证码" style="width: 193px"/>
-                <img id="cpachaPic" src="/hotel/home/index/get_cpacha?vc=4&w=100&h=30" title="点击切换验证码" style="cursor: pointer;"  width="100px" height="32px"/>
+                <img id="cpachaPic" src="/lnn/home/index/get_cpacha?vc=4&w=100&h=30" title="点击切换验证码" style="cursor: pointer;"  width="100px" height="32px"/>
             </div>
 
         </div>
 
         <div class="log" id="bt_login" style="margin-top:25px;cursor: pointer;">登 录</div>
-        <a href="/hotel/home/index/regist" style="margin-left: 250px;cursor: pointer;"><font color="black">立即注册</font></a>
+        <a href="/lnn/home/index/regist" style="margin-left: 250px;cursor: pointer;"><font color="black">立即注册</font></a>
     </div>
     <div class="reg">
-        <a href="/hotel/home/index/homepage" style="cursor: pointer;color: black;font-size: 15px">先不登陆 &gt;&gt;</a>
+        <a href="/lnn/home/index/homepage" style="cursor: pointer;color: black;font-size: 15px">先不登陆 &gt;&gt;</a>
     </div>
 </section>
-<script src="/hotel/resource/home/js/jquery-1.11.3.js"></script>
+<script src="/lnn/resource/home/js/jquery-1.11.3.js"></script>
 <script>
     $('#cpachaPic').click(function changeCpacha(){
-        $('#cpachaPic').attr('src','/hotel/home/index/get_cpacha?vc=4&w=100&h=30&d='+new Date().getTime());
+        $('#cpachaPic').attr('src','/lnn/home/index/get_cpacha?vc=4&w=100&h=30&d='+new Date().getTime());
     });
 
     $('#bt_login').click(function () {
@@ -95,13 +95,13 @@ font-size: 30px;
         }
 
         $.ajax({
-            url: '/hotel/home/index/loginUp',
+            url: '/lnn/home/index/loginUp',
             data: {phoneNum: phoneNum, password: password, cpacha: cpacha},
             dataType: 'json',
             type: 'post',
             success: function (data) {
                 if (data.type == 'success') {
-                    window.parent.location = "/hotel/home/index/homepage";
+                    window.parent.location = "/lnn/home/index/homepage";
                 } else {
                     alert(data.msg);
                     return;

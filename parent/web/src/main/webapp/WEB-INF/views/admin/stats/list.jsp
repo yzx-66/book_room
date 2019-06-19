@@ -34,7 +34,7 @@
     <!-- Begin of easyui-dialog -->
 
     <%@include file="/WEB-INF/views/admin/commen/footer.jsp" %>
-    <script type="text/javascript" src="/hotel/resource/admin/echarts/js/echarts.common.min.js"></script>
+    <script type="text/javascript" src="/lnn/resource/admin/echarts/js/echarts.common.min.js"></script>
     <!-- End of easyui-dialog -->
     <script type="text/javascript">
         $(document).ready(function(){
@@ -48,7 +48,7 @@
         }
         function getData(type){
             $.ajax({
-                url:'/hotel/admin/stats/get_stats',
+                url:'/lnn/admin/stats/get_stats',
                 type:'post',
                 dataType:'json',
                 data:{type:type},

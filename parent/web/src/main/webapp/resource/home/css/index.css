@@ -716,7 +716,7 @@ div#slider #indexs li:hover,div#slider #indexs li.hover {
    font-size:20px;
    color:#fff;
    text-align:center;
-   background:url(../images/hotel_international_desc_bg.png)  0 -45px;
+   background:url(../images/lnn_international_desc_bg.png)  0 -45px;
     transition: all ease .5s;
   }
    #facility>ul.fac>li>div.shade_box.clo{
@@ -745,7 +745,7 @@ p.index_text{
    font-size:18px;
    margin:10px 0 5px 0;
    text-align:center;
-   background:url(../images/hotel/x1.png) no-repeat center center;
+   background:url(../images/lnn/x1.png) no-repeat center center;
 }
 p.index_text+span{
    margin-bottom:10px;
@@ -775,7 +775,7 @@ p.index_text+span{
   height:144px;
   border-radius:50%;
   padding:4px;
-  background:url(../images/hotel/x5.png);
+  background:url(../images/lnn/x5.png);
   margin:0 auto;
   
 
@@ -786,13 +786,13 @@ p.index_text+span{
  
 }
 #service>li.core2>div{
- background:url(../images/hotel/x2.png);
+ background:url(../images/lnn/x2.png);
 }
 #service>li.core3>div{
- background:url(../images/hotel/x3.png);
+ background:url(../images/lnn/x3.png);
 }
 #service>li.core4>div{
- background:url(../images/hotel/x4.png);
+ background:url(../images/lnn/x4.png);
 }
 #service>li>hr{
   width:30px;
@@ -854,7 +854,7 @@ p.index_text+span{
 /*优惠精选*/
 #spe_off{
   height:527px;
-  background:url(../images/hotel/ind_bg.jpg) no-repeat;
+  background:url(../images/lnn/ind_bg.jpg) no-repeat;
   margin:10px 0;
   padding:10px 15px;
 
@@ -914,7 +914,7 @@ p.room_twords+hr{
   width:200px;
   height:200px;
   border-radius:50%;
-  background:url(../images/hotel/set_meal_01.jpg) no-repeat ;
+  background:url(../images/lnn/set_meal_01.jpg) no-repeat ;
   position:absolute;
   left:100px;
   top:50px;

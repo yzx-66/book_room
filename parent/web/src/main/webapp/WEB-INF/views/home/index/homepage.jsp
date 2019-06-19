@@ -16,8 +16,8 @@
     <meta name="Keywords" content="">
     <meta name="Description" content="">
     <title>SSM房间预定</title>
-    <link href="/hotel/resource/home/css/reservation.css" type="text/css" rel="Stylesheet"/>
-    <link href="/hotel/resource/home/css/index.css" type="text/css" rel="Stylesheet"/>
+    <link href="/lnn/resource/home/css/reservation.css" type="text/css" rel="Stylesheet"/>
+    <link href="/lnn/resource/home/css/index.css" type="text/css" rel="Stylesheet"/>
 </head>
 <style>
     .threed{
@@ -27,14 +27,14 @@
         font-size: 40px;
     }
 </style>
-<body style="background-image:url(http://localhost:8080/hotel/resource/home/images/homeIndex1.jpg); ">
+<body style="background-image:url(http://localhost:8080/lnn/resource/home/images/homeIndex1.jpg); ">
 <!--头部-->
 <div>
 <c:if test="${account != null}">
-    <p style="float:right;height: 25px;color: black;margin-right: 165px;padding-top: 5px" ><font size="3px" color="white">嗨&nbsp;${account.name}！</font>&nbsp;&nbsp;<a href="/hotel/home/account/homepage?" style="text-decoration: underline;"><font size="2px" color="white">个人中心&nbsp</font></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="/hotel/home/index/loginOut" style="text-decoration: underline;"><font size="2px" color="white">注销登陆&nbsp</font></a></p>
+    <p style="float:right;height: 25px;color: black;margin-right: 165px;padding-top: 5px" ><font size="3px" color="white">嗨&nbsp;${account.name}！</font>&nbsp;&nbsp;<a href="/lnn/home/account/homepage?" style="text-decoration: underline;"><font size="2px" color="white">个人中心&nbsp</font></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="/lnn/home/index/loginOut" style="text-decoration: underline;"><font size="2px" color="white">注销登陆&nbsp</font></a></p>
 </c:if>
 <c:if test="${account == null}">
-<p style="float:right;height: 25px;margin-right: 165px;padding-top: 5px"><a href="/hotel/home/index/login" style="text-decoration: underline;"><font size="2px" color="white">登录</font></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="/hotel/home/index/regist"style="text-decoration: underline;" ><font size="2px"  color="white">注册</font></a>&nbsp;</p>
+    <p style="float:right;height: 25px;margin-right: 165px;padding-top: 5px"><a href="/lnn/home/index/login" style="text-decoration: underline;"><font size="2px" color="white">登录</font></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="/lnn/home/index/regist"style="text-decoration: underline;" ><font size="2px"  color="white">注册</font></a></p>
 </c:if>
 <h1 class="threed" style="padding-left: 160px">SSM房间预定系统</h1>
 </div>
@@ -43,9 +43,9 @@
 
     <!---->
     <!---预订菜单--->
-    <div id="due_menu" style="background-image:url(http://localhost:8080/hotel/resource/home/images/homeIndex.jpg);" >
+    <div id="due_menu" style="background-image:url(http://localhost:8080/lnn/resource/home/images/homeIndex.jpg);" >
         <!--关于-->
-        <form style="display:none;" action="/hotel/home/index/homepage" method="get" id="search-form"><input type="hidden" name="name" id="search-name"></form>
+        <form style="display:none;" action="/lnn/home/index/homepage" method="get" id="search-form"><input type="hidden" name="name" id="search-name"></form>
         <!--客房-->
         <div id="guest_rooms">
             <p class="booking_tab"><span></span>房型列表</p>
@@ -95,7 +95,7 @@
                                 <input type="button" class="disable" value="满房" >
                             </c:if>
                             <c:if test="${roomType.avilableNum > 0 }">
-                                <input type="button" value="预订" onclick="window.location.href='/hotel/home/account/bookOrder?showDoWhat=1&roomTypeId=${roomType.id }'" >
+                                <input type="button" value="预订" onclick="window.location.href='/lnn/home/account/bookOrder?showDoWhat=1&roomTypeId=${roomType.id }'" >
                             </c:if>
                         </td>
                     </tr>
@@ -111,8 +111,9 @@
 
 </section>
 </body>
+
 <!--底部-->
-<script src="/hotel/resource/home/js/jquery-1.11.3.js"></script>
+<script src="/lnn/resource/home/js/jquery-1.11.3.js"></script>
 <script>
 
     $(document).ready(function(){

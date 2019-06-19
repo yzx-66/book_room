@@ -55,7 +55,7 @@
     function add(){
     var data=$('#wu-form-2').serialize();
     $.ajax({
-    url:'/hotel/admin/role/add',
+    url:'/lnn/admin/role/add',
     type:'post',
     dataType:'json',
     data:data,
@@ -86,7 +86,7 @@
     }
     var data=$('#wu-form-2').serialize()+"&id="+id;
     $.ajax({
-    url:'/hotel/admin/role/update',
+    url:'/lnn/admin/role/update',
     type:'post',
     dataType:'json',
     data:data,
@@ -122,7 +122,7 @@
                 }
 
                 $.ajax({
-                url:'/hotel/admin/role/delete',
+                url:'/lnn/admin/role/delete',
                 data:ids,
                 success:function(data){
                 if(data.type=='success'){
@@ -161,7 +161,7 @@
         ids+="roleId="+selectRoleId;
         
         $.ajax({
-            url:'/hotel/admin/role/addAuthority',
+            url:'/lnn/admin/role/addAuthority',
             data:ids,
             dataType:'json',
             type:'post',
@@ -179,7 +179,7 @@
     function getAuthoritys(selectRoleId) {
         var authoritysList=[];
         $.ajax({
-            url:'/hotel/admin/role/getAuthoritys',
+            url:'/lnn/admin/role/getAuthoritys',
             dataType:'json',
             data:{roleId:selectRoleId},
             async:false,
@@ -252,7 +252,7 @@
         }
 
         $('#authority-tree').tree({
-            url:'/hotel/admin/menu/list',
+            url:'/lnn/admin/menu/list',
             type:'post',
             checkbox:true,
             loadFilter: function(data){
@@ -382,7 +382,7 @@
     * Name 载入数据
     */
     $('#wu-datagrid-2').datagrid({
-        url:'/hotel/admin/role/list',
+        url:'/lnn/admin/role/list',
         rownumbers:true,
         singleSelect:true,
         loadFilter:pagerFilter,
@@ -398,7 +398,7 @@
         { field:'name',title:'角色名',width:439,sortable:true},
         { field:'remark',title:'备注',width:439},
         { field:'icon',title:'编辑',width:441,formatter:function(value,row,index){
-        var img = "&nbsp;&nbsp;&nbsp;<img src=/hotel/resource/admin/easyui/css/icons/edit.gif onclick=selectAuthority("+row.id+")>&nbsp;&nbsp;&nbsp;<a href='#' onclick=selectAuthority("+row.id+")>编辑权限</a></img>";
+        var img = "&nbsp;&nbsp;&nbsp;<img src=/lnn/resource/admin/easyui/css/icons/edit.gif onclick=selectAuthority("+row.id+")>&nbsp;&nbsp;&nbsp;<a href='#' onclick=selectAuthority("+row.id+")>编辑权限</a></img>";
         return img;
         }},
         ]]

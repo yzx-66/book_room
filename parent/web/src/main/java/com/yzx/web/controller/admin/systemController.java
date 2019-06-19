@@ -81,12 +81,12 @@ public class systemController {
             logService.addLog(Log.SYSTEM,"后台登陆","用户名为："+username+" 输入验证码失效");
             return ret;
         }
-//        if(!cpacha.toUpperCase().equals(trueCpacha.toUpperCase())){
-//            ret.put("type","error");
-//            ret.put("msg","验证码错误");
-//            logService.addLog(Log.SYSTEM,"后台登陆","用户名为："+username+" 输入验证码错误");
-//            return ret;
-//        }
+        if(!cpacha.toUpperCase().equals(trueCpacha.toUpperCase())){
+            ret.put("type","error");
+            ret.put("msg","验证码错误");
+            logService.addLog(Log.SYSTEM,"后台登陆","用户名为："+username+" 输入验证码错误");
+            return ret;
+        }
 
         User user=userService.findUserByUsername(username);
         if(user==null){

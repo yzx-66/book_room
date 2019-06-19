@@ -13,7 +13,7 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>SSM房间预定</title>
-    <link rel="stylesheet" href="/hotel/resource/home/css/index.css"/>
+    <link rel="stylesheet" href="/lnn/resource/home/css/index.css"/>
 
     <!--<link rel="stylesheet" href="css/myOrder.css"/>-->
     <style>
@@ -179,15 +179,15 @@
 
     </style>
 </head>
-<body  style="background-image:url(http://localhost:8080/hotel/resource/home/images/ahomepage.jpg);">
+<body  style="background-image:url(http://localhost:8080/lnn/resource/home/images/ahomepage.jpg);">
 <!--头部-->
 <!--主体-->
-<link rel="stylesheet" href="/hotel/resource/home/css/jquery-ui.min.css">
+<link rel="stylesheet" href="/lnn/resource/home/css/jquery-ui.min.css">
 <div id="contain">
     <!--tab选项卡-->
     <ul class="tabs" style="background: #DACDBD">
 
-        <li><a href="/hotel/home/index/homepage">回到首页</a></li>
+        <li><a href="/lnn/home/index/homepage">回到首页</a></li>
         <li><a href="#order">我的订单</a></li>
         <li><a href="#info">我的资料</a></li>
         <li><a href="#pwd">修改密码</a></li>
@@ -196,7 +196,7 @@
 
     <div class="content">
 
-        <form id="search-from" method="post" style="display: none" action="/hotel/home/account/homepage">
+        <form id="search-from" method="post" style="display: none" action="/lnn/home/account/homepage">
             <input name="status" id="status_id" type="hidden">
             <input name="arriveTime" id="arriveTime_id" type="hidden">
             <input name="leaveTime" id="leaveTime_id" type="hidden">
@@ -245,7 +245,7 @@
                     <tr>
                         <c:forEach items="${allRoomTypes }" var="roomType">
                             <c:if test="${roomType.id == bookOrder.roomTypeId }">
-                                <td><img src="${roomType.photo }" width="100px" onclick="window.parent.location='/hotel/home/account/bookOrder?showDoWhat=1&roomTypeId=${roomType.id}'" style="cursor: pointer;"></td>
+                                <td><img src="${roomType.photo }" width="100px" onclick="window.parent.location='/lnn/home/account/bookOrder?showDoWhat=1&roomTypeId=${roomType.id}'" style="cursor: pointer;"></td>
                                 <td>${roomType.name }</td>
                                 <c:forEach items="${allFloors}" var="floor">
                                     <c:if test="${floor.id == roomType.floorId}">
@@ -351,19 +351,19 @@
 </style>
 <div id="c_footer" class="fixed">
     <p style="text-align: center;">
-        <a href="/hotel/home/index/homepage">首页</a>|
+        <a href="/lnn/home/index/homepage">首页</a>|
         <a href="">关于我们</a>|
-        <a href="/hotel/admin/system/index">登录后台</a>
+        <a href="/lnn/admin/system/index">登录后台</a>
     </p>
 </div>
-<%--<link rel="stylesheet" type="text/css" href="/hotel/resource/admin/easyui/easyui/1.3.4/themes/default/easyui.css" />--%>
-<script src="/hotel/resource/home/js/jquery-1.11.3.js"></script>
-<script src="/hotel/resource/home/js/jquery-ui.min.js"></script>
+<%--<link rel="stylesheet" type="text/css" href="/lnn/resource/admin/easyui/easyui/1.3.4/themes/default/easyui.css" />--%>
+<script src="/lnn/resource/home/js/jquery-1.11.3.js"></script>
+<script src="/lnn/resource/home/js/jquery-ui.min.js"></script>
 
 <link rel="stylesheet" href="//apps.bdimg.com/libs/jqueryui/1.10.4/css/jquery-ui.min.css">
 <script src="//apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src="//apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
-<script src="/hotel/resource/admin/easyui/js/jquery-form.js"></script>
+<script src="/lnn/resource/admin/easyui/js/jquery-form.js"></script>
 <script>
     $(".datepicker").datepicker({"dateFormat":"yy-mm-dd"});
     $(function() {
@@ -388,7 +388,7 @@
     function edit(item){
         var flag=1;
         $.ajax({
-            url:'/hotel/admin/bookOrder/findbookOrderById',
+            url:'/lnn/admin/bookOrder/findbookOrderById',
             data:{id:item},
             dataType:'json',
             type:'post',
@@ -414,14 +414,14 @@
         if(flag==0) {
             return;
         }
-        window.parent.location = "/hotel/home/account/bookOrder?showDoWhat=0&bookOrderId="+item;
+        window.parent.location = "/lnn/home/account/bookOrder?showDoWhat=0&bookOrderId="+item;
     }
 
     function remove(item){
         var flag=1;
         var id;
         $.ajax({
-            url:'/hotel/admin/bookOrder/findbookOrderById',
+            url:'/lnn/admin/bookOrder/findbookOrderById',
             data:{id:item},
             dataType:'json',
             type:'post',
@@ -445,12 +445,12 @@
             return;
         }
         $.ajax({
-            url:'/hotel/admin/bookOrder/delete',
+            url:'/lnn/admin/bookOrder/delete',
             data:{id:id},
             success:function(data){
                 if(data.type=='success'){
                     alert('删除成功！');
-                    window.parent.location='/hotel/home/account/homepage'
+                    window.parent.location='/lnn/home/account/homepage'
                 } else {
                     alert(data.msg);
                 }
@@ -460,7 +460,7 @@
 
     function subpic() {
         var options={
-            url:'/hotel/admin/account/subpic',
+            url:'/lnn/admin/account/subpic',
             type:'post',
             dataType:'json',
             success:function (data) {
@@ -492,14 +492,14 @@
         $('.sub').html(ret);
 
         if($('#photo_id').val()=="" || $('#photo_id').val()==''){
-          $('#img_id').attr('src','/hotel/resource/admin/easyui/images/user_photo.jpg');
+          $('#img_id').attr('src','/lnn/resource/admin/easyui/images/user_photo.jpg');
         }
     }
     window.onload=mark;
 
     function editInfo(){
         $.ajax({
-            url:'/hotel/home/account/editInfo',
+            url:'/lnn/home/account/editInfo',
             data:{photo:$('#photo_id').val(),name:$('#info_name').val(),realName:$('#info_realName').val(),idCard:$('#info_idCard').val(),address:$('#info_address').val()},
             dataType:'json',
             type:'post',
@@ -527,14 +527,14 @@
             return;
         }
         $.ajax({
-            url:'/hotel/home/account/editPassword',
+            url:'/lnn/home/account/editPassword',
             data:{old_password:$('#old_password').val(),new_password:$('#new_password1').val()},
             dataType:'json',
             type:'post',
             success:function (data) {
                 if(data.type=='success'){
                     alert('修改成功,请重新登陆');
-                    window.parent.location="/hotel/home/index/login";
+                    window.parent.location="/lnn/home/index/login";
                 }else {
                     alert(data.msg);
                 }

@@ -4,159 +4,159 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-
 public class CheckIn {
-	private int id;//Èë×¡id
-	private int roomId;//·¿¼äid
-	private Float checkinPrice;//Èë×¡¼Û¸ñ
-	private int liveDays;
-	private String name;//Èë×¡ÕßĞÕÃû
-	private String idCard;//Éí·İÖ¤ºÅÂë
-	private String phoneNum;//ÊÖ»úºÅ
-	private int status;//×´Ì¬£º0£ºÈë×¡ÖĞ£¬1£ºÒÑ½áËãÀëµê
-	private Date arriveDate;//Èë×¡ÈÕÆÚ
-	private Date leaveDate;//ÀëµêÈÕÆÚ
-	private Date createTime;//´´½¨Ê±¼ä
-	private Integer bookOrderId;//Ô¤¶¨¶©µ¥id£¬¿ÉÎª¿Õ
-	private String remark;
+    private int id;//å…¥ä½id
+    private int roomId;//æˆ¿é—´id
+    private Float checkinPrice;//å…¥ä½ä»·æ ¼
+    private int liveDays;
+    private String name;//å…¥ä½è€…å§“å
+    private String idCard;//èº«ä»½è¯å·ç 
+    private String phoneNum;//æ‰‹æœºå·
+    private int status;//çŠ¶æ€ï¼š0ï¼šå…¥ä½ä¸­ï¼Œ1ï¼šå·²ç»“ç®—ç¦»åº—
+    private Date arriveDate;//å…¥ä½æ—¥æœŸ
+    private Date leaveDate;//ç¦»åº—æ—¥æœŸ
+    private Date createTime;//åˆ›å»ºæ—¶é—´
+    private Integer bookOrderId;//é¢„å®šè®¢å•idï¼Œå¯ä¸ºç©º
+    private String remark;
 
-	public final static int IN_ARRIVED=0;
-	public final static int IN_LEAVE=1;
+    public final static int IN_ARRIVED=0;
+    public final static int IN_LEAVE=1;
 
-	public int getId() {
-		return id;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public int getRoomId() {
-		return roomId;
-	}
+    public int getRoomId() {
+        return roomId;
+    }
 
-	public void setRoomId(int roomId) {
-		this.roomId = roomId;
-	}
+    public void setRoomId(int roomId) {
+        this.roomId = roomId;
+    }
 
-	public Float getCheckinPrice() {
-		return checkinPrice;
-	}
+    public Float getCheckinPrice() {
+        return checkinPrice;
+    }
 
-	public void setCheckinPrice(Float checkinPrice) {
-		this.checkinPrice = checkinPrice;
-	}
+    public void setCheckinPrice(Float checkinPrice) {
+        this.checkinPrice = checkinPrice;
+    }
 
-	public int getLiveDays() {
-		//Ê±¼ä×ª»»Àà
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		Date date1 = arriveDate;
-		Date date2 = leaveDate;
-		//½«×ª»»µÄÁ½¸öÊ±¼ä¶ÔÏó×ª»»³ÉCalendard¶ÔÏó
-		Calendar can1 = Calendar.getInstance();
-		can1.setTime(date1);
-		Calendar can2 = Calendar.getInstance();
-		can2.setTime(date2);
-		//ÄÃ³öÁ½¸öÄê·İ
-		int year1 = can1.get(Calendar.YEAR);
-		int year2 = can2.get(Calendar.YEAR);
-		//ÌìÊı
-		int days = 0;
-		Calendar can = null;
-		//Èç¹ûcan1 < can2
-		//¼õÈ¥Ğ¡µÄÊ±¼äÔÚÕâÒ»ÄêÒÑ¾­¹ıÁËµÄÌìÊı
-		//¼ÓÉÏ´óµÄÊ±¼äÒÑ¹ıµÄÌìÊı
-		if(can1.before(can2)){
-			days -= can1.get(Calendar.DAY_OF_YEAR);
-			days += can2.get(Calendar.DAY_OF_YEAR);
-			can = can1;
-		}else{
-			days -= can2.get(Calendar.DAY_OF_YEAR);
-			days += can1.get(Calendar.DAY_OF_YEAR);
-			can = can2;
-		}
-		for (int i = 0; i < Math.abs(year2-year1); i++) {
-			//»ñÈ¡Ğ¡µÄÊ±¼äµ±Ç°ÄêµÄ×ÜÌìÊı
-			days += can.getActualMaximum(Calendar.DAY_OF_YEAR);
-			//ÔÙ¼ÆËãÏÂÒ»Äê¡£
-			can.add(Calendar.YEAR, 1);
-		}
-		return days;
-	}
+    public int getLiveDays() {
+        //æ—¶é—´è½¬æ¢ç±»
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date date1 = arriveDate;
+        Date date2 = leaveDate;
+        //å°†è½¬æ¢çš„ä¸¤ä¸ªæ—¶é—´å¯¹è±¡è½¬æ¢æˆCalendardå¯¹è±¡
+        Calendar can1 = Calendar.getInstance();
+        can1.setTime(date1);
+        Calendar can2 = Calendar.getInstance();
+        can2.setTime(date2);
+        //æ‹¿å‡ºä¸¤ä¸ªå¹´ä»½
+        int year1 = can1.get(Calendar.YEAR);
+        int year2 = can2.get(Calendar.YEAR);
+        //å¤©æ•°
+        int days = 0;
+        Calendar can = null;
+        //å¦‚æœcan1 < can2
+        //å‡å»å°çš„æ—¶é—´åœ¨è¿™ä¸€å¹´å·²ç»è¿‡äº†çš„å¤©æ•°
+        //åŠ ä¸Šå¤§çš„æ—¶é—´å·²è¿‡çš„å¤©æ•°
+        if(can1.before(can2)){
+            days -= can1.get(Calendar.DAY_OF_YEAR);
+            days += can2.get(Calendar.DAY_OF_YEAR);
+            can = can1;
+        }else{
+            days -= can2.get(Calendar.DAY_OF_YEAR);
+            days += can1.get(Calendar.DAY_OF_YEAR);
+            can = can2;
+        }
+        for (int i = 0; i < Math.abs(year2-year1); i++) {
+            //è·å–å°çš„æ—¶é—´å½“å‰å¹´çš„æ€»å¤©æ•°
+            days += can.getActualMaximum(Calendar.DAY_OF_YEAR);
+            //å†è®¡ç®—ä¸‹ä¸€å¹´ã€‚
+            can.add(Calendar.YEAR, 1);
+        }
+        return days;
+    }
 
-	public void setLiveDays(int liveDays) {
-		this.liveDays = liveDays;
-	}
+    public void setLiveDays(int liveDays) {
+        this.liveDays = liveDays;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getIdCard() {
-		return idCard;
-	}
+    public String getIdCard() {
+        return idCard;
+    }
 
-	public void setIdCard(String idCard) {
-		this.idCard = idCard;
-	}
+    public void setIdCard(String idCard) {
+        this.idCard = idCard;
+    }
 
-	public String getPhoneNum() {
-		return phoneNum;
-	}
+    public String getPhoneNum() {
+        return phoneNum;
+    }
 
-	public void setPhoneNum(String phoneNum) {
-		this.phoneNum = phoneNum;
-	}
+    public void setPhoneNum(String phoneNum) {
+        this.phoneNum = phoneNum;
+    }
 
-	public int getStatus() {
-		return status;
-	}
+    public int getStatus() {
+        return status;
+    }
 
-	public void setStatus(int status) {
-		this.status = status;
-	}
+    public void setStatus(int status) {
+        this.status = status;
+    }
 
-	public Date getArriveDate() {
-		return arriveDate;
-	}
+    public Date getArriveDate() {
+        return arriveDate;
+    }
 
-	public void setArriveDate(Date arriveDate) {
-		this.arriveDate = arriveDate;
-	}
+    public void setArriveDate(Date arriveDate) {
+        this.arriveDate = arriveDate;
+    }
 
-	public Date getLeaveDate() {
-		return leaveDate;
-	}
+    public Date getLeaveDate() {
+        return leaveDate;
+    }
 
-	public void setLeaveDate(Date leaveDate) {
-		this.leaveDate = leaveDate;
-	}
+    public void setLeaveDate(Date leaveDate) {
+        this.leaveDate = leaveDate;
+    }
 
-	public Date getCreateTime() {
-		return createTime;
-	}
+    public Date getCreateTime() {
+        return createTime;
+    }
 
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
-	}
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
 
-	public Integer getBookOrderId() {
-		return bookOrderId;
-	}
+    public Integer getBookOrderId() {
+        return bookOrderId;
+    }
 
-	public void setBookOrderId(Integer bookOrderId) {
-		this.bookOrderId = bookOrderId;
-	}
+    public void setBookOrderId(Integer bookOrderId) {
+        this.bookOrderId = bookOrderId;
+    }
 
-	public String getRemark() {
-		return remark;
-	}
+    public String getRemark() {
+        return remark;
+    }
 
-	public void setRemark(String remark) {
-		this.remark = remark;
-	}
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
 }
+
