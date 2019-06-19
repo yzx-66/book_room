@@ -17,6 +17,7 @@ public class CheckIn {
     private Date leaveDate;//离店日期
     private Date createTime;//创建时间
     private Integer bookOrderId;//预定订单id，可为空
+    private Integer accountId;
     private String remark;
 
     public final static int IN_ARRIVED=0;
@@ -149,6 +150,14 @@ public class CheckIn {
 
     public void setBookOrderId(Integer bookOrderId) {
         this.bookOrderId = bookOrderId;
+    }
+
+    public Integer getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(Integer accountId) {
+        this.accountId = accountId;
     }
 
     public String getRemark() {

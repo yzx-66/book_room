@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yzx.mapper.admin.CheckInMapper">
     <insert id="addCheckIn" parameterType="checkIn">
-         insert  into checkin(roomId, checkinPrice,liveDays ,name, idCard ,phoneNum, status, arriveDate, leaveDate, createTime,bookOrderId, remark) values(#{roomId},#{checkinPrice},#{liveDays},#{name},#{idCard},#{phoneNum},#{status},#{arriveDate},#{leaveDate},#{createTime},#{bookOrderId},#{remark});
+         insert  into checkin(roomId, checkinPrice,liveDays ,name, idCard ,phoneNum, status, arriveDate, leaveDate, createTime,bookOrderId,accountId, remark) values(#{roomId},#{checkinPrice},#{liveDays},#{name},#{idCard},#{phoneNum},#{status},#{arriveDate},#{leaveDate},#{createTime},#{bookOrderId},#{accountId},#{remark});
      </insert>
 
     <delete id="deleteCheckIn" parameterType="int">

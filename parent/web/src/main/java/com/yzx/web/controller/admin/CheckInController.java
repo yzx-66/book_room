@@ -211,6 +211,7 @@ public class CheckInController {
         roomService.eidtRoom(room);
 
         if(checkIn.getBookOrderId()!=null){
+            checkIn.setAccountId(bookOrderService.findBookOrderById(checkIn.getBookOrderId()).getAccountId());
             roomType.setBookNum(roomType.getBookNum()-1);
 
             BookOrder bookOrder=bookOrderService.findBookOrderById(checkIn.getBookOrderId());

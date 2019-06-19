@@ -509,14 +509,14 @@
         fit:true,
         fitColumns:true,
         columns:[[
-            { field:'bookOrderId',title:'入住账号',width:100,sortable:true,formatter:function (value) {
+            { field:'accountId',title:'入住账号',width:100,sortable:true,formatter:function (value) {
                     var ret="";
                     if(value==null || value=="")   {
                         ret="现场入住"
                     }
                     else{
                         $.ajax({
-                            url:'/lnn/admin/account/findaccountByBookOrderId',
+                            url:'/lnn/admin/account/findaccountById',
                             data:{id:value},
                             dataType:'json',
                             async:false,
