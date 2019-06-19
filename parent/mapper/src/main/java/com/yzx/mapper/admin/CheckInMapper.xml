@@ -59,4 +59,24 @@
         select * from checkin
     </select>
 
+    <select id="getStatsByMonth" resultType="map">
+       SELECT
+            SUM(checkinPrice) money,
+            DATE_FORMAT(createTime, '%Y-%m') stats_date
+        FROM
+            checkin
+        GROUP BY
+            DATE_FORMAT(createTime, '%Y-%m')
+    </select>
+
+    <select id="getStatsByDay" resultType="map">
+        SELECT
+            SUM(checkinPrice) money,
+            DATE_FORMAT(createTime, '%Y-%m-%d') stats_date
+        FROM
+            checkin
+        GROUP BY
+            DATE_FORMAT(createTime, '%Y-%m-%d')
+    </select>
+
 </mapper>

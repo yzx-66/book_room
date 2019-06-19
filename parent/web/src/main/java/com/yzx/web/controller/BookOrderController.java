@@ -4,12 +4,14 @@ import com.yzx.model.Account;
 import com.yzx.model.BlackList;
 import com.yzx.model.BookOrder;
 import com.yzx.model.RoomType;
+import com.yzx.model.admin.Log;
 import com.yzx.model.admin.Page;
 import com.yzx.model.admin.Room;
 import com.yzx.service.AccountService;
 import com.yzx.service.BlackListService;
 import com.yzx.service.BookOrderService;
 import com.yzx.service.RoomTypeService;
+import com.yzx.service.admin.LogService;
 import com.yzx.service.admin.RoomService;
 import com.yzx.util.CheckId;
 import org.apache.commons.lang.StringUtils;
@@ -39,6 +41,8 @@ public class BookOrderController {
     private AccountService accountService;
     @Autowired
     private BlackListService blackListService;
+    @Autowired
+    private LogService logService;
 
     @RequestMapping(value = "list",method = RequestMethod.GET)
     public String list(HttpServletRequest request){
@@ -64,7 +68,8 @@ public class BookOrderController {
         for(BlackList blackList:blackLists){
             if(account.getId()==blackList.getAccountId()){
                 ret.put("type","error");
-                ret.put("msg","添加失败，该用户现在处于冻结状态，可能由于违约次数超过上限，一月3次后冻结一个月，达20次将永久冻结，您现在月违约："+account.getMonthBreakTimes()+"，共违约："+account.getSumBreakTimes());
+                ret.put("msg","添加失败，下单账户现在处于冻结状态，可能由于违约次数超过上限，一月3次后冻结一个月，达20次将永久冻结，您现在月违约："+account.getMonthBreakTimes()+"，共违约："+account.getSumBreakTimes());
+                logService.addLog(Log.BUSSINESS,"预定失败","手机号为"+account.getPhoneNum()+"预定失败，因为已被加黑");
                 return ret;
             }
         }
@@ -87,11 +92,14 @@ public class BookOrderController {
         if(!makeRoom_0_to_1(roomType,ret,bookOrder)){
             return ret;
         }
+
         if(bookOrderService.addBookOrder(bookOrder)<=0){
             ret.put("type","error");
             ret.put("msg","添加失败 请联系管理员");
+            logService.addLog(Log.SYSTEM,"预定失败","手机号为"+account.getPhoneNum()+"预定时操作数小于1");
         }else {
             ret.put("type","success");
+            logService.addLog(Log.BUSSINESS,"预定成功","手机号为"+account.getPhoneNum()+"预定成功");
         }
         return ret;
     }
@@ -133,8 +141,11 @@ public class BookOrderController {
         if(bookOrderService.eidtBookOrder(bookOrder)<=0){
             ret.put("type","error");
             ret.put("msg","修改失败 请联系管理员");
+            logService.addLog(Log.SYSTEM,"预定修改失败","手机号为"+accountPhone+"预定修改操作数小于1");
+
         }else{
             ret.put("type","success");
+            logService.addLog(Log.BUSSINESS,"预定成功","手机号为"+accountPhone+"预定修改成功");
         }
         return ret;
     }
@@ -156,6 +167,7 @@ public class BookOrderController {
                 if(bookOrderService.deleteBookOrder(id[i])<=0) {
                     ret.put("type", "error");
                     ret.put("msg", "删除中出错 请联系管理员");
+                    logService.addLog(Log.SYSTEM,"预定删除失败","预定删除操作数小于1");
                     return ret;
                 }else {
                     RoomType roomType=roomTypeService.findRoomTypeById(roomTypeId);
@@ -167,7 +179,8 @@ public class BookOrderController {
         }catch (Exception e){
             e.printStackTrace();
             ret.put("type", "error");
-            ret.put("msg", "该条订单存在外键 请先检查！");
+            ret.put("msg", "该条订单正在入住 等入住结束才可以删除！");
+            logService.addLog(Log.BUSSINESS,"预定删除失败","房间正在入住");
             return ret;
         }
         ret.put("type","success");

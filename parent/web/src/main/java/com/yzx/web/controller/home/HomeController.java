@@ -2,9 +2,12 @@ package com.yzx.web.controller.home;
 
 import com.yzx.model.Account;
 import com.yzx.model.RoomType;
+import com.yzx.model.admin.Log;
 import com.yzx.service.AccountService;
+import com.yzx.service.BookOrderService;
 import com.yzx.service.RoomTypeService;
 import com.yzx.service.admin.FloorService;
+import com.yzx.service.admin.LogService;
 import com.yzx.util.CpachaUtil;
 import com.yzx.util.SendMsg;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +36,10 @@ public class HomeController {
     private AccountService accountService;
     @Autowired
     private FloorService floorService;
+    @Autowired
+    private BookOrderService bookOrderService;
+    @Autowired
+    private LogService logService;
 
      @RequestMapping("homepage")
      public String homepage(HttpServletRequest request,String name) throws ParseException {
@@ -81,7 +88,7 @@ public class HomeController {
         CpachaUtil util=new CpachaUtil(vcodeLen,width,hight);
         String generatorVCode = util.generatorVCode();
         HttpSession session = request.getSession();
-        session.setAttribute("generatorVCode",generatorVCode);
+        session.setAttribute("homeGeneratorVCode",generatorVCode);
 
         BufferedImage generatorRotateVCodeImage = util.generatorRotateVCodeImage(generatorVCode, true);
         try {
@@ -93,9 +100,9 @@ public class HomeController {
 
     @RequestMapping("loginUp")
     @ResponseBody
-    public Map<String,String> load(HttpServletRequest request,String phoneNum,String password,String cpacha){
+    public Map<String,String> load(HttpServletRequest request,String phoneNum,String password,String cpacha) throws ParseException {
         Map<String,String> ret=new HashMap<>();
-        String trueCpacha= (String) request.getSession().getAttribute("generatorVCode");
+        String trueCpacha= (String) request.getSession().getAttribute("homeGeneratorVCode");
         if(trueCpacha==null){
             ret.put("type","error");
             ret.put("msg","验证码失效");
@@ -116,6 +123,8 @@ public class HomeController {
             ret.put("msg","账号或密码错误");
         }else{
             request.getSession().setAttribute("account",account);
+            bookOrderService.refresh();
+            logService.addLog(Log.ACCOUNT,"登陆信息","手机号为"+account.getPhoneNum()+"登陆成功");
             ret.put("type","success");
         }
         return ret;
@@ -124,7 +133,10 @@ public class HomeController {
     @RequestMapping("loginOut")
     public String loginout(HttpServletRequest request){
         HttpSession session=request.getSession();
+        Account account= (Account) request.getSession().getAttribute("account");
         session.setAttribute("account",null);
+
+        logService.addLog(Log.ACCOUNT,"登陆信息","手机号为"+account.getPhoneNum()+"退出");
         return "redirect:/home/index/login";
     }
 
@@ -132,7 +144,7 @@ public class HomeController {
     @ResponseBody
     public Map<String,String> checkCpachaMsg(HttpServletRequest request,String cpacha){
         Map<String,String> ret=new HashMap<>();
-        String trueCpacha= (String) request.getSession().getAttribute("generatorVCode");
+        String trueCpacha= (String) request.getSession().getAttribute("homeGeneratorVCode");
         if(trueCpacha==null){
             ret.put("type","error");
             ret.put("msg","验证码失效");
@@ -167,7 +179,7 @@ public class HomeController {
     @ResponseBody
     public Map<String,String> registUp(HttpServletRequest request,String name,String phoneNum,String password,String cpacha_pic,String cpacha_msg){
         Map<String,String> ret=new HashMap<>();
-        String trueCpacha= (String) request.getSession().getAttribute("generatorVCode");
+        String trueCpacha= (String) request.getSession().getAttribute("homeGeneratorVCode");
         if(trueCpacha==null){
             ret.put("type","error");
             ret.put("msg","验证码失效");
@@ -199,6 +211,7 @@ public class HomeController {
          accountService.addAccount(account);
          ret.put("type","success");
 
+        logService.addLog(Log.ACCOUNT,"注册信息","手机号为"+account.getPhoneNum()+"注册成功");
          return ret;
     }
 }

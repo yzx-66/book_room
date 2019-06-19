@@ -7,7 +7,7 @@
     <div id="wu-toolbar-2">
     <div class="wu-toolbar-button">
     <c:forEach items="${button }" var="b">
-        <c:if test="${b.key== '日志管理'}">
+        <c:if test="${b.key== '客户记录'}">
             <c:forEach items="${b.value }" var="m">
                 <a href="#" class="easyui-linkbutton" iconCls="icon-${m.icon}"  onclick="${m.url}" plain="true">${m.name}</a>
             </c:forEach>
@@ -15,7 +15,10 @@
     </c:forEach>
     </div>
     <div class="wu-toolbar-search">
-    <label>日志内容：</label><input id="search-data" class="wu-text" style="width:100px">
+        <label>记录标题：</label><input id="search-tittle" class="wu-text" style="width:100px">
+        <label>记录内容：</label><input id="search-content" class="wu-text" style="width:100px">
+        <label>记录起始日期：</label><input type="text" id="search-startTime" style="width:100px" class="wu-text easyui-datebox">
+        <label>记录截至日期：</label><input id="search-endTime" type="text" class="easyui-datebox">
     <a href="#" id="search-btn" class="easyui-linkbutton" iconCls="icon-search">开始检索</a>
     </div>
     </div>
@@ -61,7 +64,7 @@
 
 
     $('#search-btn').click(function() {
-        $('#wu-datagrid').datagrid('reload',{content:$('#search-data').val()});
+        $('#wu-datagrid').datagrid('reload',{tittle:$('#search-tittle').val(),content:$('#search-content').val(),startTime:$('#search-startTime').datebox('getValue'),endTime:$('#search-endTime').datebox('getValue')});
     })
 
     /**
@@ -98,7 +101,7 @@
     * Name 载入数据
     */
     $('#wu-datagrid').datagrid({
-        url:'/hotel/admin/log/list',
+        url:'/hotel/admin/log/list?type=3',
         rownumbers:true,
         singleSelect:false,
         loadFilter:pagerFilter,
@@ -109,11 +112,12 @@
         fit:true,
         fitColumns:true,
         columns:[[
-        { field:'content',title:'内容',width:100},
-        { field:'creatTime',title:'创建时间',width:100,sortable:true,formatter:function (value) {
-                return new Date(value).toLocaleString();
-            }},
-        ]]
+            { field:'tittle',title:'标题',width:100},
+            { field:'content',title:'内容',width:100},
+            { field:'creatTime',title:'创建时间',width:100,sortable:true,formatter:function (value) {
+                    return new Date(value).toLocaleString();
+                }},
+            ]]
     });
     </script>
 </html>

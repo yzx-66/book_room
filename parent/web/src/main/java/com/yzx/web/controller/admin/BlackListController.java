@@ -3,9 +3,11 @@ package com.yzx.web.controller.admin;
 import com.yzx.model.Account;
 import com.yzx.model.BlackList;
 import com.yzx.model.BookOrder;
+import com.yzx.model.admin.Log;
 import com.yzx.service.AccountService;
 import com.yzx.service.BlackListService;
 import com.yzx.service.BookOrderService;
+import com.yzx.service.admin.LogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +28,8 @@ public class BlackListController {
     private AccountService accountService;
     @Autowired
     private BookOrderService bookOrderService;
+    @Autowired
+    private LogService logService;
 
     @RequestMapping(value = "list",method = RequestMethod.GET)
     public String list(){
@@ -44,10 +48,12 @@ public class BlackListController {
         }else if(bookOrders!=null && bookOrders.size()>0){
             ret.put("type","error");
             ret.put("msg","添加失败 该用户还有未完成的定单");
+            logService.addLog(Log.ACCOUNT,"黑名单","手机号"+account.getPhoneNum()+"被永久加入黑名单失败，该用户还有未完成的定单");
         }else{
             blackListService.doInBreakListBySumBreakTimes(accountId);
             account.setStatus(0);
             accountService.eidtAccount(account);
+            logService.addLog(Log.ACCOUNT,"黑名单","手机号"+account.getPhoneNum()+"被永久加入黑名单");
             ret.put("type","success");
         }
         return ret;
@@ -70,11 +76,13 @@ public class BlackListController {
             if(blackList.getOutTime().compareTo(not)==0){
                 ret.put("type", "error");
                 ret.put("msg", "删除停止 存在用户永久冻结");
+                logService.addLog(Log.ACCOUNT,"黑名单","手机号"+accountService.findAccountById(blackList.getAccountId()).getPhoneNum()+"被移出黑名单失败，已永久加黑");
                 return ret;
             }
             if(blackListService.deleteBlackList(blackList.getId())<=0) {
                 ret.put("type", "error");
                 ret.put("msg", "删除出错 请联系管理员");
+                logService.addLog(Log.SYSTEM,"删除失败","删除手机号"+accountService.findAccountById(blackList.getAccountId()).getPhoneNum()+"时，操作个数小于1");
                 return ret;
             }
             Account account=accountService.findAccountById(accountId[i]);

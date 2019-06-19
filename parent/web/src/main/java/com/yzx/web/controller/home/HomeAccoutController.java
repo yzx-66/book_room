@@ -5,10 +5,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yzx.model.Account;
 import com.yzx.model.BookOrder;
 import com.yzx.model.RoomType;
+import com.yzx.model.admin.Log;
 import com.yzx.service.AccountService;
 import com.yzx.service.BookOrderService;
 import com.yzx.service.RoomTypeService;
 import com.yzx.service.admin.FloorService;
+import com.yzx.service.admin.LogService;
 import com.yzx.util.CheckId;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +37,8 @@ public class HomeAccoutController {
     private BookOrderService bookOrderService;
     @Autowired
     private AccountService accountService;
+    @Autowired
+    private LogService logService;
 
     @RequestMapping("homepage")
     public String homepage(HttpServletRequest request,Integer status,String arriveTime,String leaveTime,
@@ -92,7 +96,7 @@ public class HomeAccoutController {
 
     @RequestMapping("editInfo")
     @ResponseBody
-    public Map<String,Object> editInfo(HttpServletRequest request,String name,String realName,String idCard,String address){
+    public Map<String,Object> editInfo(HttpServletRequest request,String name,String realName,String idCard,String address,String photo){
         Map<String,Object> ret=new HashMap<>();
         Account account= (Account) request.getSession().getAttribute("account");
         if(StringUtils.isEmpty(name)){
@@ -109,16 +113,24 @@ public class HomeAccoutController {
             if(StringUtils.isEmpty(account.getIdCard())){
                 Map<String,Object> res=CheckId.getRequest1(idCard,realName);
                 if(res.get("type").equals("error")){
+                    logService.addLog(Log.ACCOUNT,"实名认证","手机号为"+account.getPhoneNum()+"实名认证失败");
                     return res;
                 }
             }
+            logService.addLog(Log.ACCOUNT,"实名认证","手机号为"+account.getPhoneNum()+"实名认证成功");
         }
-        account.setRealName(realName);
+        if(StringUtils.isEmpty(account.getIdCard())){
+            account.setIdCard(idCard);
+        }
+        if(StringUtils.isEmpty(account.getRealName())){
+            account.setRealName(realName);
+        }
         account.setAddress(address);
-        account.setIdCard(idCard);
         account.setName(name);
+        account.setPhoto(photo);
         accountService.eidtAccount(account);
 
+        logService.addLog(Log.ACCOUNT,"修改信息","手机号为"+account.getPhoneNum()+"修改信息成功");
         ret.put("type","success");
         return ret;
     }
@@ -147,6 +159,7 @@ public class HomeAccoutController {
                 request.getSession().setAttribute("account",null);
             }
         }
+        logService.addLog(Log.ACCOUNT,"修改密码","手机号为"+account.getPhoneNum()+"修改密码成功");
         return ret;
     }
 

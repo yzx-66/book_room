@@ -57,7 +57,7 @@
             </tr>
             <tr id="edit-hide">
                 <td align="right">登陆密码:</td>
-                <td><input type="text" id="password_id" name="password" class="wu-text easyui-validatebox" data-options="required:true, missingMessage:'请填写登陆密码'"/></td>
+                <td><input type="text" id="password_id" name="password" class="wu-text" /></td>
             </tr>
             <tr>
                 <td align="right">真实姓名:</td>

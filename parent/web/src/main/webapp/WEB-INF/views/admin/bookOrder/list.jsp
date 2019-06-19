@@ -14,7 +14,7 @@
     <div id="wu-toolbar-2">
         <div class="wu-toolbar-button">
             <c:forEach items="${button }" var="b">
-                <c:if test="${b.key== '订单列表'}">
+                <c:if test="${b.key== '预定订单列表'}">
                     <c:forEach items="${b.value }" var="m">
                         <a href="#" class="easyui-linkbutton" iconCls="icon-${m.icon}"  onclick="${m.url}" plain="true">${m.name}</a>
                     </c:forEach>

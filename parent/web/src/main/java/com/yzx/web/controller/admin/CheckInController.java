@@ -1,17 +1,15 @@
 package com.yzx.web.controller.admin;
 
-import com.yzx.model.Account;
-import com.yzx.model.BlackList;
 import com.yzx.model.BookOrder;
 import com.yzx.model.RoomType;
 import com.yzx.model.admin.CheckIn;
+import com.yzx.model.admin.Log;
 import com.yzx.model.admin.Page;
 import com.yzx.model.admin.Room;
-import com.yzx.service.AccountService;
-import com.yzx.service.BlackListService;
 import com.yzx.service.BookOrderService;
 import com.yzx.service.RoomTypeService;
 import com.yzx.service.admin.CheckInService;
+import com.yzx.service.admin.LogService;
 import com.yzx.service.admin.RoomService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +36,8 @@ public class CheckInController {
     private RoomService roomService;
     @Autowired
     private CheckInService checkInService;
+    @Autowired
+    private LogService logService;
 
     @RequestMapping(value = "list",method = RequestMethod.GET)
     public String list(HttpServletRequest request){
@@ -55,7 +55,7 @@ public class CheckInController {
 
     @RequestMapping("add")
     @ResponseBody
-    public Map<String,Object> add(CheckIn checkIn, String arriveTime, String leaveTime){
+    public Map<String,Object> add(CheckIn checkIn, String arriveTime, String leaveTime,Integer chose){
         Map<String,Object> ret=new HashMap<>();
 
         if(!IsContinueByDateFormat(ret,arriveTime,leaveTime).get("type").equals("success")){
@@ -66,12 +66,17 @@ public class CheckInController {
         checkIn.setLeaveDate((Date)ret.get("leaveDate"));
         checkIn.setCreateTime(new Date());
         checkIn.setStatus(CheckIn.IN_ARRIVED);
+        setPrice(checkIn);
+
+        if(!makeRoom_0_to_2(checkIn,ret,chose)){
+            return ret;
+        }
 
         if(checkInService.addCheckIn(checkIn)<=0){
             ret.put("type","error");
             ret.put("msg","添加失败 请联系管理员");
+            logService.addLog(Log.SYSTEM,"添加失败","添加入住订单时，操作个数小于1");
         }else {
-            makeRoom_0_to_2(checkIn);
             ret.put("type","success");
         }
         return ret;
@@ -97,6 +102,7 @@ public class CheckInController {
         if(checkInService.deleteCheckIn(id)<=0) {
             ret.put("type", "error");
             ret.put("msg", "删除出错 请联系管理员");
+            logService.addLog(Log.SYSTEM,"添加失败","删除入住订单时，操作个数小于1");
             return ret;
         }else {
             makeRoom_2_to_0(checkIn,-1);
@@ -176,12 +182,31 @@ public class CheckInController {
         return ret;
     }
 
+    public void setPrice(CheckIn checkIn){
+        Calendar arriveTime=Calendar.getInstance();
+        Calendar leaveTime=Calendar.getInstance();
 
-    public void makeRoom_0_to_2(CheckIn checkIn){
+        arriveTime.setTime(checkIn.getArriveDate());
+        leaveTime.setTime(checkIn.getLeaveDate());
+
+        long arriveTimeTimeInMillis=arriveTime.getTimeInMillis();
+        long leaveTimeTimeInMillis=leaveTime.getTimeInMillis();
+        long days=(leaveTimeTimeInMillis-arriveTimeTimeInMillis)/(1000*60*60*24);//化为天
+
+        checkIn.setCheckinPrice(days*checkIn.getCheckinPrice());
+    }
+
+
+    public boolean makeRoom_0_to_2(CheckIn checkIn,Map<String,Object> ret,int chose){
         RoomType roomType=roomTypeService.findRoomTypeByRoomId(checkIn.getRoomId());
         roomType.setLivedNum(roomType.getLivedNum()+1);
 
         Room room=roomService.findRoomById(checkIn.getRoomId());
+        if((chose==0 && room.getStatus()!=Room.CAN_LIVE) || (chose==1 && room.getStatus()!=Room.ALEARY_BOOK) ){
+            ret.put("type","error");
+            ret.put("msg","来晚了，这间房被抢走了！");
+            return false;
+        }
         room.setStatus(Room.ALEARY_LIVE);
         roomService.eidtRoom(room);
 
@@ -193,6 +218,8 @@ public class CheckInController {
             bookOrderService.eidtBookOrder(bookOrder);
         }
         roomTypeService.eidtRoomType(roomType);
+        logService.addLog(Log.BUSSINESS,"入住记录","手机号为"+checkIn.getPhoneNum()+"入住成功");
+        return true;
     }
 
     public void makeRoom_2_to_0(CheckIn checkIn,int toRoomStatus){
@@ -204,25 +231,29 @@ public class CheckInController {
 
         if(toRoomStatus==Room.DO_CLEAN){//正常退房
             checkIn.setStatus(CheckIn.IN_LEAVE);
-            checkInService.eidtCheckIn(checkIn);
-
             room.setStatus(Room.DO_CLEAN);
             roomType.setcanNotLiveNum(roomType.getcanNotLiveNum()+1);
+
             if(checkIn.getBookOrderId()!=null) {
                 bookOrder = bookOrderService.findBookOrderById(checkIn.getBookOrderId());
                 bookOrder.setStatus(BookOrder.IN_LEAVE);
+                checkIn.setBookOrderId(null);
             }
+            logService.addLog(Log.BUSSINESS,"退房记录","手机号为"+checkIn.getPhoneNum()+"退房成功");
         }else {
             if(checkIn.getBookOrderId()!=null){//删除入住：删除现场订单 预定订单
                 roomType.setBookNum(roomType.getBookNum()+1);
                 bookOrder=bookOrderService.findBookOrderById(checkIn.getBookOrderId());
                 bookOrder.setStatus(BookOrder.IN_BOOK);
                 room.setStatus(Room.ALEARY_BOOK);
+                checkIn.setBookOrderId(null);
             }else {
                 room.setStatus(Room.CAN_LIVE);
             }
+            logService.addLog(Log.BUSSINESS,"删除入住","手机号为"+checkIn.getPhoneNum()+"入住记录被删除");
         }
 
+        checkInService.eidtCheckIn(checkIn);
         roomTypeService.eidtRoomType(roomType);
         if(bookOrder!=null){
             bookOrderService.eidtBookOrder(bookOrder);

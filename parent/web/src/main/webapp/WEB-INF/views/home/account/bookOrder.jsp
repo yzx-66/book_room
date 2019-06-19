@@ -20,7 +20,7 @@
 <body style="background-image:url(http://localhost:8080/hotel/resource/home/images/bookOrder.jpg);">
 <div style="display: none" id="showDoWhat">${showDoWhat}</div>
 <div style="display: none" id="choseBookOrder">${choseBookOrder}</div>
-<div style="display: none" id="checkIdCard">${accountId.idCard}</div>
+<div style="display: none" id="checkIdCard">${account.idCard}</div>
 <!--- 页头--->
 <!----主体-->
 <div id="section" style="padding-top: 70px">
@@ -75,7 +75,7 @@
                     <h3>入住信息</h3>
 
                     <div class="info_group">
-                        <label>姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：</label><input type="text" name="name" id="name" value="${account.name}" style="width: 163px"/><span class="msg"></span>
+                        <label>姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：</label><input type="text" name="name" id="name" value="${account.realName}" style="width: 163px"/><span class="msg"></span>
                     </div>
                     <div class="info_group">
                         <label>电&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;话：</label><input type="text" maxlength="11" name="phoneNum" id="phoneNum" value="${account.phoneNum}" style="width: 163px"/><span class="msg"></span>
@@ -169,7 +169,7 @@
             $('#arriveTime').val(formatDate(item.arriveDate,'YYYY-MM-DD'));
             $('#leaveTime').val(formatDate(item.leaveDate,'YYYY-MM-DD'));
             $('#remark').val(item.remark);
-            alert('若房型只可修改楼层 且各楼层剩余房间数为不含你目前预定的房间');
+            alert('前台系统房型不可改变，若想改变房型请删除订单重新下单，或者联系客服后台系统修改房型，且各楼层剩余房间数为不含你目前预定的房间');
         }
     }
     window.onload=fllowChangRoomType;
@@ -237,7 +237,7 @@
             $("#idCard").next("span.msg").text('请填写身份证号!');
             return;
         }
-        if($('#checkIdCard').val()==null || $('#checkIdCard').val()==''){
+        if($('#checkIdCard').html()==null || $('#checkIdCard').html()==''){
             var r=confirm("您还没有实名认证，无法进行预定，请先取个人中心完善资料，点击确定补全资料");
             if (r==true) {
                  window.parent.location='/hotel/home/account/homepage?#info';
@@ -264,12 +264,6 @@
             });
         }else if($('#showDoWhat').html()==0){
             var item=JSON.parse($('#choseBookOrder').html());
-            var now=new Date();
-            var arriveDate=new Date(item.arriveDate);
-            if(now.getTime()>arriveDate.getTime()){
-                alert('预定订单已经过了到店日期无法修改，请联系客服说明，否则增加一次违约次数');
-                return;
-            }
             var data=$('#wu-form-2').serialize()+"&id="+item.id+"&oldRoomTypeId="+item.roomTypeId;
             $.ajax({
                 url:'/hotel/admin/bookOrder/update',

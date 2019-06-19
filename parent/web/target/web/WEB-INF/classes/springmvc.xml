@@ -33,8 +33,6 @@
         </property>
     </bean>
 
-<!--    &lt;!&ndash; 启动定时任务 &ndash;&gt;-->
-<!--    <task:annotation-driven/>-->
 
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <!--设置字符编码防止文件名乱码-->
@@ -72,6 +70,7 @@
             <mvc:exclude-mapping path="/admin/bookOrder/update"/>
             <mvc:exclude-mapping path="/admin/bookOrder/findbookOrderById"/>
             <mvc:exclude-mapping path="/admin/bookOrder/delete"/>
+            <mvc:exclude-mapping path="/admin/account/subpic"/>
 
             <bean class="com.yzx.web.interceptor.admin.loginInterceptor"/>
         </mvc:interceptor>

@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface LogService {
-     int addLog(String content);
+     int addLog(int type,String tittle,String content);
      List<Log> findList(Map<String,Object> map);
      int getTotalNum(Map<String, Object> map);
      int delete(int id);

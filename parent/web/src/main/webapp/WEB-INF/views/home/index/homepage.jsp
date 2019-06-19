@@ -24,17 +24,17 @@
         color: #fafafa;
         letter-spacing: 0;
         text-shadow: 0px 1px 0px #999, 0px 2px 0px #888, 0px 3px 0px #777, 0px 4px 0px #666, 0px 5px 0px #555, 0px 6px 0px #444, 0px 7px 0px #333, 0px 8px 7px #001135 ;
-        font-size: 50px;
+        font-size: 40px;
     }
 </style>
 <body style="background-image:url(http://localhost:8080/hotel/resource/home/images/homeIndex1.jpg); ">
 <!--头部-->
 <div>
 <c:if test="${account != null}">
-    <p style="float:right;height: 25px;color: black;margin-right: 165px;padding-top: 5px" ><font size="3px" color="white">嗨&nbsp;${account.name}！</font>&nbsp;&nbsp;<a href="/hotel/home/account/homepage?"><font size="3px" color="white">个人中心&nbsp</font></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="/hotel/home/index/loginOut"><font size="3px" color="white">注销登陆&nbsp</font></a></p>
+    <p style="float:right;height: 25px;color: black;margin-right: 165px;padding-top: 5px" ><font size="3px" color="white">嗨&nbsp;${account.name}！</font>&nbsp;&nbsp;<a href="/hotel/home/account/homepage?" style="text-decoration: underline;"><font size="2px" color="white">个人中心&nbsp</font></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="/hotel/home/index/loginOut" style="text-decoration: underline;"><font size="2px" color="white">注销登陆&nbsp</font></a></p>
 </c:if>
 <c:if test="${account == null}">
-<p style="float:right;height: 25px;margin-right: 165px;padding-top: 5px"><a href="/hotel/home/index/login"><font size="3px" color="white">登录</font></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="/hotel/home/index/regist"><font size="3px" color="white">注册</font></a>&nbsp;</p>
+<p style="float:right;height: 25px;margin-right: 165px;padding-top: 5px"><a href="/hotel/home/index/login" style="text-decoration: underline;"><font size="2px" color="white">登录</font></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="/hotel/home/index/regist"style="text-decoration: underline;" ><font size="2px"  color="white">注册</font></a>&nbsp;</p>
 </c:if>
 <h1 class="threed" style="padding-left: 160px">SSM房间预定系统</h1>
 </div>

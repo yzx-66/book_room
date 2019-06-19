@@ -1,8 +1,10 @@
 package com.yzx.web.controller;
 
 import com.yzx.model.Account;
+import com.yzx.model.admin.Log;
 import com.yzx.model.admin.Page;
 import com.yzx.service.AccountService;
+import com.yzx.service.admin.LogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +25,8 @@ public class AccoutController {
 
     @Autowired
     private AccountService accountService;
+    @Autowired
+    private LogService logService;
 
     @RequestMapping(value = "list",method = RequestMethod.GET)
     public String list(HttpServletRequest request){
@@ -44,6 +48,7 @@ public class AccoutController {
                 ret.put("type","success");
             }
         }
+        logService.addLog(Log.ACCOUNT,"注册","手机号为"+account.getPhoneNum()+"被在后台注册成功");
         return ret;
     }
 
@@ -51,8 +56,10 @@ public class AccoutController {
     @ResponseBody
     public Map<String,String> update(Account account){
         Map<String,String> ret=new HashMap<>();
+        account.setPassword(accountService.findAccountById(account.getId()).getPassword());
         if(accountService.eidtAccount(account)>0){
             ret.put("type","success");
+            logService.addLog(Log.ACCOUNT,"修改信息","手机号为"+account.getPhoneNum()+"信息修改成功");
         }else{
             ret.put("type","error");
             ret.put("msg","修改失败 请联系管理员");

@@ -51,4 +51,14 @@ public class CheckInServiceImpl implements CheckInService {
     public List<CheckIn> findAll() {
         return checkInMapper.findAll();
     }
+
+    @Override
+    public List<Map> getStatsByMonth() {
+        return checkInMapper.getStatsByMonth();
+    }
+
+    @Override
+    public List<Map> getStatsByDay() {
+        return checkInMapper.getStatsByDay();
+    }
 }

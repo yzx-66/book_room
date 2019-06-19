@@ -12,6 +12,7 @@ import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.yzx.model.admin.Log;
 import com.yzx.service.admin.LogService;
 import net.sf.json.JSONObject;
 import org.junit.jupiter.api.Test;
@@ -66,12 +67,12 @@ public class CheckId {
             if (object.getInt("error_code") == 0) {
                 System.out.println(object.get("result"));
                 ret.put("type", "success");
-                logService.addLog("用户名："+name+"实名认证成功");
+                logService.addLog(Log.SYSTEM,"实名认证","用户名："+name+"实名认证成功");
             } else {
                 System.out.println(object.get("error_code") + ":" + object.get("reason"));
                 ret.put("type", "error");
                 ret.put("msg", (String) object.get("reason"));
-                logService.addLog("用户名："+name+"实名认证失败"+"，原因："+object.get("reason"));
+                logService.addLog(Log.SYSTEM,"实名认证","用户名："+name+"实名认证失败"+"，原因："+object.get("reason"));
             }
         } catch (Exception e) {
             e.printStackTrace();

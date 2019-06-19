@@ -256,7 +256,7 @@
                         </c:forEach>
                         <td>${bookOrder.name }</td>
                         <td>${bookOrder.phoneNum }</td>
-                        <td>${bookOrder.idCard }</td>
+                        <td class="sub">${bookOrder.idCard }</td>
                         <td>
                             <c:if test="${bookOrder.status == 0 }">
                                 <font color="red">预定中</font>
@@ -272,8 +272,8 @@
                             </c:if>
                         </td>
                         <td><fmt:formatDate value="${bookOrder.createTime }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-                        <td><fmt:formatDate value="${bookOrder.arriveDate }" pattern="yyyy-MM-dd"/></td>
-                        <td><fmt:formatDate value="${bookOrder.leaveDate }" pattern="yyyy-MM-dd"/></td>
+                        <td id="check_arriveDate"><fmt:formatDate value="${bookOrder.arriveDate }" pattern="yyyy-MM-dd"/></td>
+                        <td id="check_leaveDate"><fmt:formatDate value="${bookOrder.leaveDate }" pattern="yyyy-MM-dd"/></td>
                         <td>${bookOrder.remark }</td>
                         <td><a href="#" id="edit" class="but"  onclick="edit(${bookOrder.id})">修改</a><br>
                             <a href="#" id="remove" class="but"  onclick="remove(${bookOrder.id})">删除</a>
@@ -287,28 +287,37 @@
 
         </div>
         <div class="info" >
-            <table style="border:0px;cellspacing:0px;">
-                <tbody>
-                <tr>
-                    <td style="border:0px;">用户名：</td><td style="float:left;width:400px;max-width: 420px;border:0px;"><input class="form-control" type="text" name="name" id="info_name" value="${account.name}"/></td>
-                </tr>
-                <tr style="border:0px;">
-                    <td style="border:0px;">手机号：</td><td style="float:left;width:400px;max-width: 820px;border:0px;"><input class="form-control" type="text" readonly="readonly" value="${account.phoneNum}"/></td>
-                </tr>
-                <tr style="border:0px;">
-                    <td style="border:0px;">真实姓名：</td><td style="float:left;width:400px;max-width: 820px;border:0px;"><input class="form-control" type="text" name="realName" id="info_realName" value="${account.realName}" /></td>
-                </tr>
-                <tr>
-                    <td style="border:0px;">身份证号：</td><td style="float:left;width:400px;max-width: 820px;border:0px;"><input class="form-control" type="text" name="idCard" id="info_idCard"  value="${account.idCard}"/></td>
-                </tr>
-                <tr>
-                    <td style="border:0px;">联系地址：</td><td style="float:left;width:400px;max-width: 820px;border:0px;"><input class="form-control" type="text" name="address" id="info_address" value="${account.address}"/></td>
-                </tr>
-                <tr>
-                    <td style="float:right"></td><td><button type="button" id="info_btn" class="btn btn-success" style="width:100px;margin-left: 500px;margin-top: 20px" onclick="editInfo()">提交</button></td>
-                </tr>
-                </tbody>
-            </table>
+            <form id="info_form">
+                <table style="border:0px;cellspacing:0px;">
+                    <tbody>
+                    <tr>
+                        <td>头像预览:</td>
+                        <td><img src="${account.photo}" id="img_id" style="width: 150px;height:150px;padding-right: 435px">
+                            <input type="file" name="tempPhoto" onchange="subpic()"/>
+                            <input type="hidden" name="photo" id="photo_id" value="${account.photo}">
+                        </td>
+                    <tr>
+                    <tr>
+                        <td style="border:0px;">用户名：</td><td style="float:left;width:400px;max-width: 420px;border:0px;"><input class="form-control" type="text" name="name" id="info_name" value="${account.name}"/></td>
+                    </tr>
+                    <tr style="border:0px;">
+                        <td style="border:0px;">手机号：</td><td style="float:left;width:400px;max-width: 820px;border:0px;"><input class="form-control" type="text" readonly="readonly" value="${account.phoneNum}"/></td>
+                    </tr>
+                    <tr style="border:0px;">
+                        <td style="border:0px;">真实姓名：</td><td style="float:left;width:400px;max-width: 820px;border:0px;"><input class="form-control" type="text" name="realName" id="info_realName" value="${account.realName}" /></td>
+                    </tr>
+                    <tr>
+                        <td style="border:0px;">身份证号：</td><td style="float:left;width:400px;max-width: 820px;border:0px;"><input class="form-control" type="text" name="idCard" id="info_idCard"  value="${account.idCard}"/></td>
+                    </tr>
+                    <tr>
+                        <td style="border:0px;">联系地址：</td><td style="float:left;width:400px;max-width: 820px;border:0px;"><input class="form-control" type="text" name="address" id="info_address" value="${account.address}"/></td>
+                    </tr>
+                    <tr>
+                        <td style="float:right"></td><td><button type="button" id="info_btn" class="btn btn-success" style="width:100px;margin-left: 500px;margin-top: 20px" onclick="editInfo()">提交</button></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </form>
 
         </div>
         <div class="pwd" >
@@ -325,7 +334,7 @@
                 </tr>
 
                 <tr>
-                    <td style="border:0px;"></td><td style="float:left;margin-top:15px;width:400px;max-width: 820px;border:0px;"><button type="button" class="btn btn-success" style="width:100px;" onclick="editPassword()">提交</button></td>
+                    <td style="border:0px;"></td><td style="float:left;margin-top:15px;width:400px;max-width: 820px;border:0px;"><button type="button" class="btn btn-success" style="width:100px;margin-left: 620px;margin-top: 20px" onclick="editPassword()">提交</button></td>
                 </tr>
                 </tbody>
             </table>
@@ -354,7 +363,7 @@
 <link rel="stylesheet" href="//apps.bdimg.com/libs/jqueryui/1.10.4/css/jquery-ui.min.css">
 <script src="//apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src="//apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
-<link rel="stylesheet" href="jqueryui/style.css">
+<script src="/hotel/resource/admin/easyui/js/jquery-form.js"></script>
 <script>
     $(".datepicker").datepicker({"dateFormat":"yy-mm-dd"});
     $(function() {
@@ -377,6 +386,34 @@
     });
 
     function edit(item){
+        var flag=1;
+        $.ajax({
+            url:'/hotel/admin/bookOrder/findbookOrderById',
+            data:{id:item},
+            dataType:'json',
+            type:'post',
+            async:false,
+            success:function (data) {
+                if(data.status!=0){
+                    alert('只有预定中的订单可以修改！');
+                    flag=0;
+                    return;
+                }
+                var now=new Date();
+                var arriveDate=new Date(data.arriveDate);
+                var leaveDate=new Date(data.leaveDate);
+                var createDate=new Date(data.createTime);
+                if(now.getTime()>=arriveDate.getTime() && createDate.getTime()<arriveDate.getTime()){
+                    alert('订单在入住日期前下单，现在已经过了到了入住日期，不可以再修改！请联系客服删除或者修改，不然增加一次违约次数！');
+                    flag=0;
+                    return;
+                }
+                id=data.id;
+            }
+        })
+        if(flag==0) {
+            return;
+        }
         window.parent.location = "/hotel/home/account/bookOrder?showDoWhat=0&bookOrderId="+item;
     }
 
@@ -391,16 +428,20 @@
             async:false,
             success:function (data) {
                 var now=new Date();
-                var arriveDate=new Date(item.arriveDate);
-                if(now.getTime()>arriveDate.getTime()){
-                    alert('预定订单已经过了到店日期无法删除，请联系客服说明，否则增加一次违约次数');
+                var arriveDate=new Date(data.arriveDate);
+                var leaveDate=new Date(data.leaveDate);
+                var createDate=new Date(data.createTime);
+                console.log(arriveDate+' '+leaveDate+' '+createDate);
+                if(now.getTime()>=arriveDate.getTime() && now.getTime()<leaveDate.getTime() && createDate.getTime()<arriveDate.getTime()){
+                    console.log(111);
+                    alert('预定订单现处于预定日期无法删除，过了预定日期可以删除，请联系客服说明在预定结束前删除，否则增加一次违约次数');
                     flag=0;
                     return;
                 }
                 id=data.id;
             }
         })
-        if (flag=0) {
+        if (flag==0) {
             return;
         }
         $.ajax({
@@ -417,6 +458,23 @@
         });
     }
 
+    function subpic() {
+        var options={
+            url:'/hotel/admin/account/subpic',
+            type:'post',
+            dataType:'json',
+            success:function (data) {
+                if(data.type=='success'){
+                    $('#img_id').attr('src',data.filepath);
+                    $('#photo_id').val(data.filepath);
+                }else{
+                    alert(data.msg);
+                }
+            }
+        };
+        $('#info_form').ajaxSubmit(options);
+    }
+
     function mark(){
         if($('#info_idCard').val()!="" && $('#info_idCard').val()!=null){
             $('#info_idCard').attr('readonly','readonly');
@@ -427,13 +485,22 @@
             ret+=$('#info_idCard').val().substring(14,18)
             $('#info_idCard').val(ret);
         }
+        var ret="";
+        ret+=$(".sub").html().substring(0,3);
+        ret+="********";
+        ret+=$(".sub").html().substring(14,18)
+        $('.sub').html(ret);
+
+        if($('#photo_id').val()=="" || $('#photo_id').val()==''){
+          $('#img_id').attr('src','/hotel/resource/admin/easyui/images/user_photo.jpg');
+        }
     }
     window.onload=mark;
 
     function editInfo(){
         $.ajax({
             url:'/hotel/home/account/editInfo',
-            data:{name:$('#info_name').val(),realName:$('#info_realName').val(),idCard:$('#info_idCard').val(),address:$('#info_address').val()},
+            data:{photo:$('#photo_id').val(),name:$('#info_name').val(),realName:$('#info_realName').val(),idCard:$('#info_idCard').val(),address:$('#info_address').val()},
             dataType:'json',
             type:'post',
             success:function (data) {

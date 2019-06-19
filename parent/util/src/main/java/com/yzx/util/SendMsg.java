@@ -11,6 +11,7 @@ import com.aliyuncs.profile.DefaultProfile;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.yzx.model.admin.Log;
 import com.yzx.service.admin.Impl.LogServiceImpl;
 import com.yzx.util.model.SendBack;
 import com.yzx.service.admin.LogService;
@@ -49,7 +50,7 @@ public class SendMsg {
 
     public static Map<String,Object> sendmsg(String phoneNum){
         System.out.println(logService);
-        logService.addLog("发送短信验证码回调：");
+        logService.addLog(Log.SYSTEM,"发送验证码","发送短信验证码回调：");
 
         DefaultProfile profile = DefaultProfile.getProfile("default", "LTAIpmmNQtAZrp8p", "Hq5ozK5rQ9UjsFgJLDKpW4jhl8kop3");
         IAcsClient client = new DefaultAcsClient(profile);
@@ -73,7 +74,7 @@ public class SendMsg {
             ObjectMapper mapper=new ObjectMapper();
             SendBack back=mapper.readValue(response.getData(), SendBack.class);
             System.out.println(back);
-            logService.addLog("发送短信验证码回调："+back.toString());
+            logService.addLog(Log.SYSTEM,"发送验证码","发送短信验证码回调："+back.toString());
 
             if(back.getCode().equals(MOBILE_NUMBER_ILLEGAL)){
                 ret.put("type","error");
@@ -100,7 +101,11 @@ public class SendMsg {
                 ret.put("code",String.valueOf(code));
                    return ret;
             }
-        } catch (Exception e) {
+        } catch (ClientException e) {
+            ret.put("type","error");
+            ret.put("msg","请先联网！");
+            return ret;
+        }catch (Exception e){
             e.printStackTrace();
         }
         ret.put("type","error");

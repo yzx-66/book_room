@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yzx.mapper.admin.LogMapper">
     <insert id="addLog" parameterType="log">
-        insert into log(content,createTime) values(#{content},#{createTime});
+        insert into log(tittle,content,createTime,type) values(#{tittle},#{content},#{createTime},#{type});
     </insert>
 
     <delete id="delete" parameterType="int">
@@ -12,19 +12,24 @@
     </delete>
 
     <select id="findList" parameterType="map" resultType="log">
-       select * from log where 1=1
-       <if test="name != null">and content like '%${content}%'</if>
+       select * from log where type =#{type}
+       <if test="tittle != null">and tittle like '%${tittle}%'</if>
+       <if test="content != null">and content like '%${content}%'</if>
+       <if test="startDate != null">and createTime &gt;= #{startDate}</if>
+        <if test="endDate != null">and createTime &lt;= #{endDate}</if>
         <if test="pageSize!=null">limit #{pageSize} </if>
         <if test="offset!=null">offset #{offset}</if>
     </select>
 
     <select id="getTotalNum" parameterType="map" resultType="int">
-       select count(*) from log where 1=1
-       <if test="name != null">and content like '%${content}%'</if>
+        select count(*) from log where type =#{type}
+        <if test="tittle != null">and tittle like '%${tittle}%'</if>
+        <if test="content != null">and content like '%${content}%'</if>
+        <if test="startDate != null">and createTime &gt;= #{startDate}</if>
+        <if test="endDate != null">and createTime &lt;= #{endDate}</if>
+        <if test="pageSize!=null">limit #{pageSize} </if>
+        <if test="offset!=null">offset #{offset}</if>
     </select>
 
-    <select id="find" resultType="log" parameterType="date">
-        select * from log where createTime> #{date}
-    </select>
 
 </mapper>

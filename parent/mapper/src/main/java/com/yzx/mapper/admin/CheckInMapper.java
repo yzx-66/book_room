@@ -13,4 +13,6 @@ public interface CheckInMapper {
     List<CheckIn> findList(Map<String,Object> map);
     CheckIn findCheckInById(int id);
     List<CheckIn> findAll();
+    List<Map> getStatsByMonth();
+    List<Map> getStatsByDay();
 }

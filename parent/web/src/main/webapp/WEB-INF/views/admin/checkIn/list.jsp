@@ -14,7 +14,7 @@
     <div id="wu-toolbar-2">
         <div class="wu-toolbar-button">
             <c:forEach items="${button }" var="b">
-                <c:if test="${b.key== '入住列表'}">
+                <c:if test="${b.key== '入住与退房'}">
                     <c:forEach items="${b.value }" var="m">
                         <a href="#" class="easyui-linkbutton" iconCls="icon-${m.icon}"  onclick="${m.url}" plain="true">${m.name}</a>
                     </c:forEach>
@@ -182,7 +182,7 @@
         if(!check()){
             return;
         }
-        var data=$('#wu-form-2').serialize();
+        var data=$('#wu-form-2').serialize()+'&chose='+chose;
         $.ajax({
             url:'/hotel/admin/checkIn/add',
             type:'post',
@@ -245,7 +245,7 @@
                 data:{id:item.id},
                 success:function(data){
                     if(data.type=='success'){
-                        if(item.bookOrderId!=null || item.bookOrderId!=""){
+                        if(item.bookOrderId!=null || item.bookOrderId!=null){
                             $.messager.alert('信息提示','删除成功！该订单重新变为预定中','info');
                         }else{
                             $.messager.alert('信息提示','删除成功！','info');

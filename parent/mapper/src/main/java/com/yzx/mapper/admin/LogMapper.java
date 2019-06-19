@@ -12,5 +12,4 @@ public interface LogMapper {
      List<Log> findList(Map<String,Object> map);
      int getTotalNum(Map<String, Object> map);
      int delete(int id);
-     List<Log> find(Date date);
 }

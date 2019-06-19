@@ -17,10 +17,13 @@ public class LogServiceImpl implements LogService {
     @Autowired
     private LogMapper mapper;
 
+
     @Override
-    public int addLog(String content) {
-        Log log=new Log(content,new Date());
-        return mapper.addLog(log);
+    public int addLog(int type, String tittle, String content) {
+        Log log=new Log(type,tittle,content);
+        log.setCreateTime(new Date());
+        mapper.addLog(log);
+        return 0;
     }
 
     @Override

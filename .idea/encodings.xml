@@ -8,7 +8,10 @@
     <file url="file://$PROJECT_DIR$/parent/util" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/parent/util/src/main/java/com/yzx/util/CpachaUtil.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/parent/web" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/parent/web/src/main/java/com/yzx/web/controller/admin/StatsController.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/parent/web/src/main/webapp/WEB-INF/errors" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/parent/web/src/main/webapp/WEB-INF/views/admin/stats" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/parent/web/src/main/webapp/WEB-INF/views/admin/stats/list.jsp" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/parent/web/src/main/webapp/resource/admin" charset="GBK" />
     <file url="file://$PROJECT_DIR$/parent/web/src/main/webapp/resource/home" charset="GBK" />
     <file url="file://$PROJECT_DIR$/parent/web/src/main/webapp/resource/home/images/ahomepage.jpg" charset="UTF-8" />

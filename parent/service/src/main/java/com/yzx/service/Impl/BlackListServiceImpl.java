@@ -4,9 +4,11 @@ import com.yzx.mapper.AccountMapper;
 import com.yzx.mapper.BlackListMapper;
 import com.yzx.model.Account;
 import com.yzx.model.BlackList;
+import com.yzx.model.admin.Log;
 import com.yzx.service.AccountService;
 import com.yzx.service.BlackListService;
 import com.yzx.service.BlackListService;
+import com.yzx.service.admin.LogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +26,8 @@ public class BlackListServiceImpl implements BlackListService {
     private BlackListMapper blackListMapper;
     @Autowired
     private AccountMapper accountMapper;
+    @Autowired
+    private LogService logService;
 
     @Override
     public int addBlackList(BlackList blackList) {
@@ -61,6 +65,7 @@ public class BlackListServiceImpl implements BlackListService {
         blackList.setInTime(now);
         blackList.setOutTime(simpleDateFormat.parse("1970-01-01"));
 
+        logService.addLog(Log.ACCOUNT,"黑名单","手机号为"+accountMapper.findAccountById(accountId).getPhoneNum()+"的用户违约次数达总上限被永久加黑");
         blackListMapper.addBlackList(blackList);
     }
 
@@ -77,6 +82,7 @@ public class BlackListServiceImpl implements BlackListService {
         blackList.setInTime(now);
         blackList.setOutTime(calendar.getTime());
 
+        logService.addLog(Log.ACCOUNT,"黑名单","手机号为"+accountMapper.findAccountById(accountId).getPhoneNum()+"的用户违约次数达月上限被加黑一月");
         blackListMapper.addBlackList(blackList);
     }
 

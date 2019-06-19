@@ -1,6 +1,7 @@
 package com.yzx.web.controller.admin;
 
 import com.yzx.model.admin.Authority;
+import com.yzx.model.admin.Log;
 import com.yzx.model.admin.Menu;
 import com.yzx.model.admin.User;
 import com.yzx.service.admin.LogService;
@@ -77,13 +78,13 @@ public class systemController {
         if(trueCpacha==null){
             ret.put("type","error");
             ret.put("msg","验证码失效");
-            logService.addLog("用户名为："+username+" 输入验证码失效");
+            logService.addLog(Log.SYSTEM,"后台登陆","用户名为："+username+" 输入验证码失效");
             return ret;
         }
 //        if(!cpacha.toUpperCase().equals(trueCpacha.toUpperCase())){
 //            ret.put("type","error");
 //            ret.put("msg","验证码错误");
-//            logService.addLog("用户名为："+username+" 输入验证码错误");
+//            logService.addLog(Log.SYSTEM,"后台登陆","用户名为："+username+" 输入验证码错误");
 //            return ret;
 //        }
 
@@ -91,15 +92,15 @@ public class systemController {
         if(user==null){
             ret.put("type","error");
             ret.put("msg","用户名不存在");
-            logService.addLog("用户名为："+username+" 不存在");
+            logService.addLog(Log.SYSTEM,"后台登陆","用户名为："+username+" 不存在");
         }else if(!user.getPassword().equals(password)){
             ret.put("type","error");
             ret.put("msg","用户名或密码错误");
-            logService.addLog("用户名为："+username+" 用户名或密码错误");
+            logService.addLog(Log.SYSTEM,"后台登陆","用户名为："+username+" 用户名或密码错误");
         }else{
             request.getSession().setAttribute("user",user);
             ret.put("type","success");
-            logService.addLog("用户名为："+username+" 登陆成功");
+            logService.addLog(Log.SYSTEM,"后台登陆","用户名为："+username+" 登陆成功");
         }
         setSupperControllerId(request,ret,username);
         return ret;
@@ -120,7 +121,7 @@ public class systemController {
     public String loginout(HttpServletRequest request){
         HttpSession session=request.getSession();
         User user= (User)session.getAttribute("user");
-        logService.addLog("用户名为："+user.getName()+" 退出登陆");
+        logService.addLog(Log.SYSTEM,"后台登陆","用户名为："+user.getName()+" 退出登陆");
 
         session.setAttribute("user",null);
         session.setAttribute("menu",null);
@@ -141,16 +142,16 @@ public class systemController {
         if(!old_password.equals(user.getPassword())){
             ret.put("type","error");
             ret.put("msg","旧密码不正确");
-            logService.addLog("用户名为："+user.getName()+" 修改密码失败（新旧密码不一致）");
+            logService.addLog(Log.SYSTEM,"管理修改密码","用户名为："+user.getName()+" 修改密码失败（新旧密码不一致）");
         } else{
             if(userService.edit_password(user.getId(),new_password)<=0){
                 ret.put("type","error");
                 ret.put("msg","修改密码失败，请联系管理员");
-                logService.addLog("用户名为："+user.getName()+" 修改密码失败");
+                logService.addLog(Log.SYSTEM,"管理修改密码","用户名为："+user.getName()+" 修改密码失败");
             }else {
                 ret.put("type","success");
                 user.setPassword(new_password);
-                logService.addLog("用户名为："+user.getName()+" 修改密码成功");
+                logService.addLog(Log.SYSTEM,"管理修改密码","用户名为："+user.getName()+" 修改密码成功");
             }
         }
         return ret;
@@ -165,7 +166,7 @@ public class systemController {
         }catch (Exception e){
             ret.put("type","error");
             ret.put("msg","还不存在“超级管理员”角色，请在数据库添加，不然无法正确分配权限");
-            logService.addLog("用户名为："+username+" 还不存在“超级管理员”角色，请在数据库添加，不然无法正确分配权限");
+            logService.addLog(Log.SYSTEM,"后台登陆","用户名为："+username+" 还不存在“超级管理员”角色，请在数据库添加，不然无法正确分配权限");
         }
     }
 
