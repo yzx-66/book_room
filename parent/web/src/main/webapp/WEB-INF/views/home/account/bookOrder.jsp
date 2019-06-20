@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="/lnn/resource/home/css/jquery-ui.min.css">
     <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 </head>
-<body style="background-image:url(http://localhost:8080/lnn/resource/home/images/bookOrder.jpg);">
+<body style="background-image:url(http://106.14.125.136:80/lnn/resource/home/images/bookOrder.jpg);">
 <div style="display: none" id="showDoWhat">${showDoWhat}</div>
 <div style="display: none" id="choseBookOrder">${choseBookOrder}</div>
 <div style="display: none" id="checkIdCard">${account.idCard}</div>
@@ -48,7 +48,7 @@
         </div>
     </div>
     <!--预定信息-->
-    <div class="book_info" style="background-image:url(http://localhost:8080/lnn/resource/home/images/bookOrder1.jpg);">
+    <div class="book_info" style="background-image:url(http://106.14.125.136:80/lnn/resource/home/images/bookOrder1.jpg);">
         <form id="order_info">
             <ul>
                 <li>

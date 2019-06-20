@@ -27,7 +27,7 @@
         font-size: 40px;
     }
 </style>
-<body style="background-image:url(http://localhost:8080/lnn/resource/home/images/homeIndex1.jpg); ">
+<body style="background-image:url(http://106.14.125.136:80/lnn/resource/home/images/homeIndex1.jpg); ">
 <!--头部-->
 <div>
 <c:if test="${account != null}">
@@ -43,7 +43,7 @@
 
     <!---->
     <!---预订菜单--->
-    <div id="due_menu" style="background-image:url(http://localhost:8080/lnn/resource/home/images/homeIndex.jpg);" >
+    <div id="due_menu" style="background-image:url(http://106.14.125.136:80/lnn/resource/home/images/homeIndex.jpg);" >
         <!--关于-->
         <form style="display:none;" action="/lnn/home/index/homepage" method="get" id="search-form"><input type="hidden" name="name" id="search-name"></form>
         <!--客房-->

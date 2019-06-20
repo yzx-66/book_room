@@ -29,7 +29,7 @@ font-weight: bold;
 font-size: 30px;
 }
 </style>
-<body style="background-image:url(http://localhost:8080/lnn/resource/home/images/login.jpg);">
+<body style="background-image:url(http://106.14.125.136:80/lnn/resource/home/images/login.jpg);">
 
 <header>
     <div style="padding-top: 80px;" class="vintage">
@@ -41,7 +41,7 @@ font-size: 30px;
     <div class="left">
         <img src="/lnn/resource/home/images/index.jpg">
     </div>
-    <div class="login" style="background-image:url(http://localhost:8080/lnn/resource/home/images/login1.jpg);">
+    <div class="login" style="background-image:url(http://106.14.125.136:80/lnn/resource/home/images/login1.jpg);">
 
 
         <div id="normal">

@@ -179,7 +179,7 @@
 
     </style>
 </head>
-<body  style="background-image:url(http://localhost:8080/lnn/resource/home/images/ahomepage.jpg);">
+<body  style="background-image:url(http://106.14.125.136:80/lnn/resource/home/images/ahomepage.jpg);">
 <!--头部-->
 <!--主体-->
 <link rel="stylesheet" href="/lnn/resource/home/css/jquery-ui.min.css">

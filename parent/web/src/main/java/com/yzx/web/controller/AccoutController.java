@@ -90,11 +90,9 @@ public class AccoutController {
 
     @RequestMapping(value="list",method = RequestMethod.POST)//搜索的时候的参数名
     @ResponseBody
-    public Map<String,Object> findList(Page page,Integer status,
+    public Map<String,Object> findList(Page page,Integer status,String realName,String idCard,
                                        @RequestParam(value = "name",defaultValue = "",required = false)String name,
-                                       @RequestParam(value = "realName",defaultValue = "",required = false)String realName,
-                                       @RequestParam(value = "phoneNum",defaultValue = "",required = false)String phoneNum,
-                                       @RequestParam(value = "idCard",defaultValue = "",required = false)String idCard
+                                       @RequestParam(value = "phoneNum",defaultValue = "",required = false)String phoneNum
     ) throws ParseException {
         Map<String,Object> ret=new HashMap<>();
         Map<String,Object> queryMap=new HashMap<>();
