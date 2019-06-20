@@ -20,8 +20,6 @@
         <if test="name != null">and name like '%${name}%'</if>
         <if test="status != null">and status=#{status}</if>
         <if test="floorId != null">and floorId=#{floorId}</if>
-        <if test="pageSize != null">limit #{pageSize}</if>
-        <if test="offset != null">offset #{offset}</if>
     </select>
 
     <select id="findList" parameterType="map" resultType="roomType">

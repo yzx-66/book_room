@@ -387,77 +387,22 @@
 
 
     /**
-     * Name 分页过滤器
-     */
-    function pagerFilter(data){
-        if (typeof data.length == 'number' && typeof data.splice == 'function'){// is array
-            data = {
-                total: data.length,
-                rows: data
-            }
-        }
-        var dg = $(this);
-        var opts = dg.datagrid('options');
-        var pager = dg.datagrid('getPager');
-        pager.pagination({
-            onSelectPage:function(pageNum, pageSize){
-                opts.pageNumber = pageNum;
-                opts.pageSize = pageSize;
-                pager.pagination('refresh',{pageNumber:pageNum,pageSize:pageSize});
-                dg.datagrid('loadData',data);
-            }
-        });
-        if (!data.originalRows){
-            data.originalRows = (data.rows);
-        }
-        var start = (opts.pageNumber-1)*parseInt(opts.pageSize);
-        var end = start + parseInt(opts.pageSize);
-        data.rows = (data.originalRows.slice(start, end));
-        return data;
-    }
-
-    /**
      * Name 载入数据
      */
     $('#wu-datagrid-2').datagrid({
         url:'/lnn/admin/bookOrder/list',
         rownumbers:true,
         singleSelect:false,
-        loadFilter:pagerFilter,
-        pageSize:100,
-        pageList:[10,20,30,50,100],
+        pageSize:10,
+        pageList:[10,20,30,50],
         pagination:true,
         multiSort:true,
         fit:true,
         fitColumns:true,
         columns:[[
-            { field:'accountId',title:'账号所属手机',width:100,sortable:true,formatter:function (value) {
-                    var ret="";
-                    $.ajax({
-                        url:'/lnn/admin/account/findaccountById',
-                        data:{id:value},
-                        dataType:'json',
-                        async:false,
-                        success:function (data) {
-                            ret+="&nbsp;"+data.phoneNum;
-                        }
-                    })
-                    return ret;
-                }},
+            { field:'accountPhone',title:'账号所属手机',width:100,sortable:true},
             { field:'name',title:'入住者姓名',width:100,sortable:true},
-            { field:'roomTypeId',title:'房型',width:100,sortable:true,formatter:function (value,row,index) {
-                var ret="";
-                $.ajax({
-                    url:'/lnn/admin/room_type/findRoomTypeById',
-                    data:'id='+value,
-                    dataType:'json',
-                    async:false,
-                    success:function (data) {
-                        ret+="&nbsp;"+data.name;
-                    }
-                });
-                    return ret;
-            }},
+            { field:'roomTypeAndFloor',title:'房型',width:100,sortable:true},
             { field:'idCard',title:'入住者身份证号',width:100,sortable:true},
             { field:'phoneNum',title:'入住者手机号',width:100,sortable:true},
             { field:'arriveDate',title:'入住时间',width:100,sortable:true,formatter:function (value) {

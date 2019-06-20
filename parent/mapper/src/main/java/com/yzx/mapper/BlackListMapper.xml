@@ -26,8 +26,6 @@
         <if test="idCard != null">AND NAME LIKE '%${idCard}%'</if>
         ) a
         on a.id=blacklist.accountId
-        <if test="pageSize != null">limit #{pageSize}</if>
-        <if test="offset != null">offset #{offset}</if>
     </select>
 
     <select id="findList" parameterType="map" resultType="blackList">

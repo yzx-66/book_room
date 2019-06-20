@@ -16,18 +16,18 @@
     </update>
 
     <select id="getTotal" parameterType="map" resultType="int">
-        SELECT count(*) FROM bookorder b
+        SELECT COUNT(*) FROM(
+        SELECT * FROM bookorder b
         JOIN
-        (SELECT id FROM account WHERE phoneNum like '%${phoneNum}%')a
-        on b.accountId=a.id
+        (SELECT id aid FROM account WHERE phoneNum like '%${accountPhone}%')a
+        on b.accountId=a.aid
         WHERE 1=1
         AND name like '%${name}%'
         AND phoneNum like '%${phoneNum}%'
         <if test="arriveDate != null">AND arriveDate &gt;= #{arriveDate}</if>
         <if test="leaveDate != null">AND leaveDate &lt;= #{leaveDate}</if>
         <if test="status != null">AND status = #{status}</if>
-        <if test="pageSize != null">limit #{pageSize}</if>
-        <if test="offset != null">offset #{offset}</if>
+        )t
     </select>
 
     <select id="findList" parameterType="map" resultType="bookOrder">

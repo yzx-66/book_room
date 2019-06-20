@@ -1,5 +1,7 @@
 package com.yzx.service.admin.Impl;
 
+import com.yzx.mapper.RoomTypeMapper;
+import com.yzx.mapper.admin.FloorMapper;
 import com.yzx.mapper.admin.RoomMapper;
 import com.yzx.model.admin.Room;
 import com.yzx.service.admin.RoomService;
@@ -15,6 +17,10 @@ import java.util.Map;
 public class RoomServiceImpl implements RoomService {
     @Autowired
     private RoomMapper roomMapper;
+    @Autowired
+    private RoomTypeMapper roomTypeMapper;
+    @Autowired
+    private FloorMapper floorMapper;
 
     @Override
     public int addRoom(Room room) {
@@ -38,7 +44,12 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public List<Room> findList(Map<String, Object> map) {
-        return roomMapper.findList(map);
+        List<Room> roomList=roomMapper.findList(map);
+        for(Room room:roomList){
+            int roomTypeId=roomTypeMapper.findRoomTypeByRoomId(room.getId()).getId();
+            room.setRoomTypeAndFloor("&nbsp;&nbsp;&nbsp;"+floorMapper.findFloorByRoomTypeId(roomTypeId).getHight()+"&nbsp;F&nbsp;&nbsp;|&nbsp;&nbsp;"+roomTypeMapper.findRoomTypeById(roomTypeId).getName());
+        }
+        return roomList;
     }
 
     @Override

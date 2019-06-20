@@ -23,8 +23,6 @@
         <if test="phoneNum != null">and phoneNum like '%${phoneNum}%' </if>
         <if test="idCard != null">and idCard like '%${idCard}%'</if>
         <if test="status != null">and status=#{status}</if>
-        <if test="pageSize != null">limit #{pageSize}</if>
-        <if test="offset != null">offset #{offset}</if>
     </select>
 
     <select id="findList" parameterType="map" resultType="account">

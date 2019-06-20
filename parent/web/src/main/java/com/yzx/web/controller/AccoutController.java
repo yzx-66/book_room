@@ -5,6 +5,7 @@ import com.yzx.model.admin.Log;
 import com.yzx.model.admin.Page;
 import com.yzx.service.AccountService;
 import com.yzx.service.admin.LogService;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -98,9 +99,17 @@ public class AccoutController {
         Map<String,Object> queryMap=new HashMap<>();
 
         queryMap.put("name",name);
-        queryMap.put("realName",realName);
+        if(StringUtils.isEmpty(realName)){
+            queryMap.put("realName",null);
+        }else {
+            queryMap.put("realName",realName);
+        }
+        if(StringUtils.isEmpty(idCard)){
+            queryMap.put("idCard",null);
+        }else {
+            queryMap.put("idCard",idCard);
+        }
         queryMap.put("phoneNum",phoneNum);
-        queryMap.put("idCard",idCard);
         queryMap.put("status",status);
         queryMap.put("pageSize",page.getRows());
         queryMap.put("offset",page.getOffset());

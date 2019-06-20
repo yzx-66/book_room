@@ -7,6 +7,7 @@ public class BlackList {
     private int accountId;
     private Date inTime;
     private Date outTime;
+
     public final static int MONTH_MOST_BREAKTIMES=3;
     public final static int SUM_MOST_BREAKTIMES=20;
 

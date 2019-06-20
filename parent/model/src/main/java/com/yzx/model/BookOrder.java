@@ -15,6 +15,9 @@ public class BookOrder {
     private Date createTime;//预定日期
     private String remark;
 
+    private String roomTypeAndFloor;
+    private String accountPhone;
+
     public final static int IN_BOOK=0;
     public final static int IN_ARRIVED=1;
     public final static int IN_LEAVE=2;
@@ -106,5 +109,21 @@ public class BookOrder {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public String getRoomTypeAndFloor() {
+        return roomTypeAndFloor;
+    }
+
+    public void setRoomTypeAndFloor(String roomTypeAndFloor) {
+        this.roomTypeAndFloor = roomTypeAndFloor;
+    }
+
+    public String getAccountPhone() {
+        return accountPhone;
+    }
+
+    public void setAccountPhone(String accountPhone) {
+        this.accountPhone = accountPhone;
     }
 }

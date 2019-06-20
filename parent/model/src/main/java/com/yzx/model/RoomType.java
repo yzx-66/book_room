@@ -16,6 +16,8 @@ public class RoomType {
     private int status;//房型状态，0：房型已满,1:可预订可入住 2:不可住
     private String remark;//房型备注
 
+    private String floorName;
+
     public final static int FULL=0;
     public final static int CAN_LIVE=1;
     public final static int NOT_LIVE=2;
@@ -133,6 +135,14 @@ public class RoomType {
         this.remark = remark;
     }
 
+    public String getFloorName() {
+        return floorName;
+    }
+
+    public void setFloorName(String floorName) {
+        this.floorName = floorName;
+    }
+
     @Override
     public String toString() {
         return "RoomType{" +
@@ -151,4 +161,6 @@ public class RoomType {
                 ", remark='" + remark + '\'' +
                 '}';
     }
+
+
 }

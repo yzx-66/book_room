@@ -67,35 +67,6 @@
         $('#wu-datagrid').datagrid('reload',{tittle:$('#search-tittle').val(),content:$('#search-content').val(),startTime:$('#search-startTime').datebox('getValue'),endTime:$('#search-endTime').datebox('getValue')});
     })
 
-    /**
-    * Name 分页过滤器
-    */
-    function pagerFilter(data){
-    if (typeof data.length == 'number' && typeof data.splice == 'function'){// is array
-    data = {
-    total: data.length,
-    rows: data
-    }
-    }
-    var dg = $(this);
-    var opts = dg.datagrid('options');
-    var pager = dg.datagrid('getPager');
-    pager.pagination({
-    onSelectPage:function(pageNum, pageSize){
-    opts.pageNumber = pageNum;
-    opts.pageSize = pageSize;
-    pager.pagination('refresh',{pageNumber:pageNum,pageSize:pageSize});
-    dg.datagrid('loadData',data);
-    }
-    });
-    if (!data.originalRows){
-    data.originalRows = (data.rows);
-    }
-    var start = (opts.pageNumber-1)*parseInt(opts.pageSize);
-    var end = start + parseInt(opts.pageSize);
-    data.rows = (data.originalRows.slice(start, end));
-    return data;
-    }
 
     /**
     * Name 载入数据
@@ -104,9 +75,8 @@
         url:'/lnn/admin/log/list?type=1',
         rownumbers:true,
         singleSelect:false,
-        loadFilter:pagerFilter,
-        pageSize:1000,
-        pageList:[10,20,30,50,100,200,400,1000],
+        pageSize:50,
+        pageList:[10,20,30,50,100],
         pagination:true,
         multiSort:true,
         fit:true,

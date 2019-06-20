@@ -29,8 +29,6 @@
         <if test="arriveDate != null">AND arriveDate &gt;=  #{arriveDate}</if>
         <if test="leaveDate != null">AND leaveDate &lt;= #{leaveDate}</if>
         <if test="status != null">AND status = #{status}</if>
-        <if test="pageSize != null">limit #{pageSize}</if>
-        <if test="offset != null">offset #{offset}</if>
     </select>
 
     <select id="findList" parameterType="map" resultType="checkIn">

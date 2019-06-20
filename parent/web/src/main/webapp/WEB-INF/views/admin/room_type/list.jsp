@@ -343,46 +343,14 @@
         });
     }
 
-
-    /**
-     * Name 分页过滤器
-     */
-    function pagerFilter(data){
-        if (typeof data.length == 'number' && typeof data.splice == 'function'){// is array
-            data = {
-                total: data.length,
-                rows: data
-            }
-        }
-        var dg = $(this);
-        var opts = dg.datagrid('options');
-        var pager = dg.datagrid('getPager');
-        pager.pagination({
-            onSelectPage:function(pageNum, pageSize){
-                opts.pageNumber = pageNum;
-                opts.pageSize = pageSize;
-                pager.pagination('refresh',{pageNumber:pageNum,pageSize:pageSize});
-                dg.datagrid('loadData',data);
-            }
-        });
-        if (!data.originalRows){
-            data.originalRows = (data.rows);
-        }
-        var start = (opts.pageNumber-1)*parseInt(opts.pageSize);
-        var end = start + parseInt(opts.pageSize);
-        data.rows = (data.originalRows.slice(start, end));
-        return data;
-    }
-
     /**
      * Name 载入数据
      */
     $('#wu-datagrid-2').datagrid({
         rownumbers:true,
         singleSelect:true,
-        loadFilter:pagerFilter,
-        pageSize:100,
-        pageList:[10,20,30,50,100],
+        pageSize:10,
+        pageList:[10,20],
         pagination:true,
         multiSort:true,
         fit:true,
@@ -394,25 +362,7 @@
                     return img;
                 }},
             { field:'name',title:'房型名',width:100,sortable:true},
-            { field:'floorId',title:'层名',width:100,sortable:true,formatter:function (value,row,index) {
-                var ret="";
-                $.ajax({
-                    url:'/lnn/admin/floor/findFloorById',
-                    data:'id='+value,
-                    dataType:'json',
-                    async:false,
-                    success:function (data) {
-                        if(data.type=='success'){
-                            ret= "层高："+data.floor.hight+"&nbsp;&nbsp;F<br>"+data.floor.name;
-                        }
-                        else {
-                            $.messager.alert('信息提示',data.msg,'info');
-                            ret= "加载出错";
-                        }
-                    }
-                })
-                    return ret;
-                }},
+            { field:'floorName',title:'层名',width:100,sortable:true},
             { field:'price',title:'价格',width:100,sortable:true},
             { field:'liveNum',title:'可住人数',width:100,sortable:true},
             { field:'bedNum',title:'床数',width:100,sortable:true},

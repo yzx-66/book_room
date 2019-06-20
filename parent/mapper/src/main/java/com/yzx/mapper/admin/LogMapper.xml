@@ -27,8 +27,6 @@
         <if test="content != null">and content like '%${content}%'</if>
         <if test="startDate != null">and createTime &gt;= #{startDate}</if>
         <if test="endDate != null">and createTime &lt;= #{endDate}</if>
-        <if test="pageSize!=null">limit #{pageSize} </if>
-        <if test="offset!=null">offset #{offset}</if>
     </select>
 
 

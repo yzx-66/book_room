@@ -9,6 +9,7 @@ import com.yzx.model.admin.Room;
 import com.yzx.service.AccountService;
 import com.yzx.service.BookOrderService;
 import com.yzx.service.RoomTypeService;
+import com.yzx.service.admin.FloorService;
 import com.yzx.service.admin.RoomService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,8 @@ public class BookOrderServiceImpl implements BookOrderService {
     private AccountService accountService;
     @Autowired
     private RoomTypeService roomTypeService;
+    @Autowired
+    private FloorService floorService;
 
     @Override
     public int addBookOrder(BookOrder bookOrder) {
@@ -57,7 +60,12 @@ public class BookOrderServiceImpl implements BookOrderService {
     @Override
     public List<BookOrder> findList(Map<String, Object> map) throws ParseException {
         refresh();
-        return bookOrderMapper.findList(map);
+        List<BookOrder> bookOrderList=bookOrderMapper.findList(map);
+        for(BookOrder bookOrder:bookOrderList){
+            bookOrder.setAccountPhone(accountService.findAccountById(bookOrder.getAccountId()).getPhoneNum());
+            bookOrder.setRoomTypeAndFloor("&nbsp;&nbsp;&nbsp;"+floorService.findFloorByRoomTypeId(bookOrder.getRoomTypeId()).getHight()+"&nbsp;F&nbsp;&nbsp|&nbsp;&nbsp; "+roomTypeService.findRoomTypeById(bookOrder.getRoomTypeId()).getName());
+        }
+        return bookOrderList;
     }
 
     @Override

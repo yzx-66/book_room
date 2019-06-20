@@ -9,6 +9,8 @@ public class Room {
     private String remark;
     private int status;//房型状态，0：可入住,1:已预定,2:已入住,3:打扫中
 
+    private String roomTypeAndFloor;
+
     public final static int CAN_LIVE=0;
     public final static int ALEARY_BOOK=1;
     public final static int ALEARY_LIVE=2;
@@ -70,5 +72,13 @@ public class Room {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public String getRoomTypeAndFloor() {
+        return roomTypeAndFloor;
+    }
+
+    public void setRoomTypeAndFloor(String roomTypeAndFloor) {
+        this.roomTypeAndFloor = roomTypeAndFloor;
     }
 }

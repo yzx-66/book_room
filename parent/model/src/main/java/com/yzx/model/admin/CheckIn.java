@@ -20,6 +20,9 @@ public class CheckIn {
     private Integer accountId;
     private String remark;
 
+    private String roomTypeAndFloor;
+    private String accountPhone;
+
     public final static int IN_ARRIVED=0;
     public final static int IN_LEAVE=1;
 
@@ -184,6 +187,22 @@ public class CheckIn {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public String getRoomTypeAndFloor() {
+        return roomTypeAndFloor;
+    }
+
+    public void setRoomTypeAndFloor(String roomTypeAndFloor) {
+        this.roomTypeAndFloor = roomTypeAndFloor;
+    }
+
+    public String getAccountPhone() {
+        return accountPhone;
+    }
+
+    public void setAccountPhone(String accountPhone) {
+        this.accountPhone = accountPhone;
     }
 }
 

@@ -1,6 +1,7 @@
 package com.yzx.service.Impl;
 
 import com.yzx.mapper.RoomTypeMapper;
+import com.yzx.mapper.admin.FloorMapper;
 import com.yzx.model.RoomType;
 import com.yzx.service.BookOrderService;
 import com.yzx.service.RoomTypeService;
@@ -19,6 +20,8 @@ public class RoomTypeServiceImpl implements RoomTypeService {
     private RoomTypeMapper roomTypeMapper;
     @Autowired
     private BookOrderService bookOrderService;
+    @Autowired
+    private FloorMapper floorMapper;
 
     @Override
     public int addRoomType(RoomType roomType) {
@@ -43,7 +46,11 @@ public class RoomTypeServiceImpl implements RoomTypeService {
     @Override
     public List<RoomType> findList(Map<String, Object> map) throws ParseException {
         bookOrderService.refresh();
-        return roomTypeMapper.findList(map);
+        List<RoomType> roomTypeList=roomTypeMapper.findList(map);
+        for(RoomType roomType:roomTypeList){
+            roomType.setFloorName(floorMapper.findFloorById(roomType.getFloorId()).getName());
+        }
+        return roomTypeList;
     }
 
     @Override

@@ -331,53 +331,19 @@
 
     function showBookOrders() {
         $('#order_table_id').datagrid({
-            url:'/lnn/admin/bookOrder/list?status=0',
+            url:'/lnn/admin/bookOrder/list',
             rownumbers:true,
             singleSelect:false,
-            pageSize:100,
-            pageList:[10,20,30,50,100],
+            pageSize:10,
+            pageList:[10,20,30,50],
             pagination:true,
             multiSort:true,
             fit:true,
             fitColumns:true,
             columns:[[
-                { field:'chk',checkbox:true},
-                { field:'accountId',title:'账号所属手机',width:100,sortable:true,formatter:function (value) {
-                        var ret="";
-                        $.ajax({
-                            url:'/lnn/admin/account/findaccountById',
-                            data:{id:value},
-                            dataType:'json',
-                            async:false,
-                            success:function (data) {
-                                ret+="&nbsp;"+data.phoneNum;
-                            }
-                        })
-                        return ret;
-                    }},
+                { field:'accountPhone',title:'账号所属手机',width:100,sortable:true},
                 { field:'name',title:'入住者姓名',width:100,sortable:true},
-                { field:'roomTypeId',title:'房型',width:100,sortable:true,formatter:function (value,row,index) {
-                        var ret="";
-                        $.ajax({
-                            url:'/lnn/admin/floor/findFloorByRoomTypeId',
-                            data:'id='+value,
-                            dataType:'json',
-                            async:false,
-                            success:function (data) {
-                                ret+="&nbsp;&nbsp;"+data.hight+"&nbsp;F：";
-                            }
-                        });
-                        $.ajax({
-                            url:'/lnn/admin/room_type/findRoomTypeById',
-                            data:'id='+value,
-                            dataType:'json',
-                            async:false,
-                            success:function (data) {
-                                ret+="&nbsp;"+data.name;
-                            }
-                        });
-                        return ret;
-                    }},
+                { field:'roomTypeAndFloor',title:'房型',width:100,sortable:true},
                 { field:'idCard',title:'入住者身份证号',width:100,sortable:true},
                 { field:'phoneNum',title:'入住者手机号',width:100,sortable:true},
                 { field:'arriveDate',title:'入住时间',width:100,sortable:true,formatter:function (value) {
@@ -502,47 +468,21 @@
         url:'/lnn/admin/checkIn/list',
         rownumbers:true,
         singleSelect:true,
-        pageSize:100,
-        pageList:[10,20,30,50,100],
+        pageSize:10,
+        pageList:[10,20,30],
         pagination:true,
         multiSort:true,
         fit:true,
         fitColumns:true,
         columns:[[
-            { field:'accountId',title:'入住账号',width:100,sortable:true,formatter:function (value) {
-                    var ret="";
+            { field:'accountPhone',title:'入住方式',width:100,sortable:true,formatter:function (value) {
                     if(value==null || value=="")   {
-                        ret="现场入住"
+                        value="现场入住"
                     }
-                    else{
-                        $.ajax({
-                            url:'/lnn/admin/account/findaccountById',
-                            data:{id:value},
-                            dataType:'json',
-                            async:false,
-                            success:function (data) {
-                                ret+="&nbsp;"+data.phoneNum;
-                            }
-                        })
-                    }
-                    return ret;
+                    return value;
                 }},
             { field:'name',title:'入住者姓名',width:100,sortable:true},
-            { field:'roomId',title:'房型',width:100,sortable:true,formatter:function (value,row,index) {
-                var ret="";
-                var floor="";
-                    $.ajax({
-                        url:'/lnn/admin/room_type/findRoomTypeByRoomId',
-                        data:'id='+value,
-                        dataType:'json',
-                        async:false,
-                        success:function (data) {
-                            value=data.id;
-                            ret+="&nbsp;"+data.name;
-                        }
-                    });
-                    return ret;
-            }},
+            { field:'roomTypeAndFloor',title:'房型',width:100,sortable:true},
             { field:'idCard',title:'入住者身份证号',width:100,sortable:true},
             { field:'phoneNum',title:'入住者手机号',width:100,sortable:true},
             { field:'liveDays',title:'入住者天数',width:100,sortable:true},
