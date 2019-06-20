@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.yzx.AppTest" time="0.053" tests="3" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.yzx.AppTest" time="0.073" tests="3" errors="0" skipped="0" failures="0">
   <properties>
     <property name="sun.desktop" value="windows"/>
     <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
@@ -18,7 +18,7 @@
     <property name="user.country" value="CN"/>
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="sun.boot.library.path" value="C:\Java\jdk1.8.0_11\jre\bin"/>
-    <property name="sun.java.command" value="C:\Users\霉偷煤南\AppData\Local\Temp\surefire1428346148773427583\surefirebooter8456958649529042554.jar C:\Users\霉偷煤南\AppData\Local\Temp\surefire1428346148773427583 2019-06-20T09-23-15_926-jvmRun1 surefire8042821475464840382tmp surefire_06005222981522996559tmp"/>
+    <property name="sun.java.command" value="C:\Users\霉偷煤南\AppData\Local\Temp\surefire2416213210077878472\surefirebooter4119922720411098303.jar C:\Users\霉偷煤南\AppData\Local\Temp\surefire2416213210077878472 2019-06-20T10-12-05_977-jvmRun1 surefire6180531058614778610tmp surefire_04681358182572285420tmp"/>
     <property name="surefire.test.class.path" value="C:\EXCS\IDEA_exc\SSM_Hotel\parent\model\target\test-classes;C:\EXCS\IDEA_exc\SSM_Hotel\parent\model\target\classes;C:\Users\霉偷煤南\.m2\repository\junit\junit\4.11\junit-4.11.jar;C:\Users\霉偷煤南\.m2\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
     <property name="user.home" value="C:\Users\霉偷煤南"/>
@@ -31,7 +31,7 @@
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"/>
-    <property name="surefire.real.class.path" value="C:\Users\霉偷煤南\AppData\Local\Temp\surefire1428346148773427583\surefirebooter8456958649529042554.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\霉偷煤南\AppData\Local\Temp\surefire2416213210077878472\surefirebooter4119922720411098303.jar"/>
     <property name="sun.boot.class.path" value="C:\Java\jdk1.8.0_11\jre\lib\resources.jar;C:\Java\jdk1.8.0_11\jre\lib\rt.jar;C:\Java\jdk1.8.0_11\jre\lib\sunrsasign.jar;C:\Java\jdk1.8.0_11\jre\lib\jsse.jar;C:\Java\jdk1.8.0_11\jre\lib\jce.jar;C:\Java\jdk1.8.0_11\jre\lib\charsets.jar;C:\Java\jdk1.8.0_11\jre\lib\jfr.jar;C:\Java\jdk1.8.0_11\jre\classes"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>

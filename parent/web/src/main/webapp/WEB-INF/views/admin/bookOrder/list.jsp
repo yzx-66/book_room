@@ -447,15 +447,6 @@
             { field:'name',title:'入住者姓名',width:100,sortable:true},
             { field:'roomTypeId',title:'房型',width:100,sortable:true,formatter:function (value,row,index) {
                 var ret="";
-                    $.ajax({
-                        url:'/lnn/admin/floor/findFloorByRoomTypeId',
-                        data:'id='+value,
-                        dataType:'json',
-                        async:false,
-                        success:function (data) {
-                            ret+="&nbsp;&nbsp;"+data.hight+"&nbsp;F：";
-                        }
-                    });
                 $.ajax({
                     url:'/lnn/admin/room_type/findRoomTypeById',
                     data:'id='+value,
