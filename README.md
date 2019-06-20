@@ -1,4 +1,4 @@
-# SSM酒店预订系统
+# SSM房间管理
 
 #### 介绍
 {**以下是码云平台说明，您可以替换此简介**
@@ -7,6 +7,7 @@
 
 #### 软件架构
 软件架构说明
+使用 spring+spingmvc+mybatis+easyui+jquery+ajax+echarts
 
 
 #### 安装教程
