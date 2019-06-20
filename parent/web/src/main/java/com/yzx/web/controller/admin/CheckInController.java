@@ -56,29 +56,29 @@ public class CheckInController {
     @RequestMapping("add")
     @ResponseBody
     public Map<String,Object> add(CheckIn checkIn, String arriveTime, String leaveTime,Integer chose){
-        Map<String,Object> ret=new HashMap<>();
+            Map<String, Object> ret = new HashMap<>();
 
-        if(!IsContinueByDateFormat(ret,arriveTime,leaveTime).get("type").equals("success")){
-            return ret;
-        }
+            if (!IsContinueByDateFormat(ret, arriveTime, leaveTime).get("type").equals("success")) {
+                return ret;
+            }
 
-        checkIn.setArriveDate((Date)ret.get("arriveDate"));
-        checkIn.setLeaveDate((Date)ret.get("leaveDate"));
-        checkIn.setCreateTime(new Date());
-        checkIn.setStatus(CheckIn.IN_ARRIVED);
-        setPrice(checkIn);
+            checkIn.setArriveDate((Date) ret.get("arriveDate"));
+            checkIn.setLeaveDate((Date) ret.get("leaveDate"));
+            checkIn.setCreateTime(new Date());
+            checkIn.setStatus(CheckIn.IN_ARRIVED);
+            setPrice(checkIn);
 
-        if(!makeRoom_0_to_2(checkIn,ret,chose)){
-            return ret;
-        }
+            if (!makeRoom_0_to_2(checkIn, ret, chose)) {
+                return ret;
+            }
 
-        if(checkInService.addCheckIn(checkIn)<=0){
-            ret.put("type","error");
-            ret.put("msg","添加失败 请联系管理员");
-            logService.addLog(Log.SYSTEM,"添加失败","添加入住订单时，操作个数小于1");
-        }else {
-            ret.put("type","success");
-        }
+            if (checkInService.addCheckIn(checkIn) <= 0) {
+                ret.put("type", "error");
+                ret.put("msg", "添加失败 请联系管理员");
+                logService.addLog(Log.SYSTEM, "添加失败", "添加入住订单时，操作个数小于1");
+            } else {
+                ret.put("type", "success");
+            }
         return ret;
     }
 
@@ -111,7 +111,7 @@ public class CheckInController {
         return ret;
     }
 
-    @RequestMapping(value="list",method = RequestMethod.POST)//搜索的时候的参数名
+    @RequestMapping(value="list",method = RequestMethod.POST)
     @ResponseBody
     public Map<String,Object> findList(Page page,Integer status,String arriveTime,String leaveTime,
                                        @RequestParam(value = "accountPhone",defaultValue = "",required = false)String accountName,
@@ -208,18 +208,20 @@ public class CheckInController {
             return false;
         }
         room.setStatus(Room.ALEARY_LIVE);
+        logService.addLog(Log.SYSTEM,"test","0");
         roomService.eidtRoom(room);
+
 
         if(checkIn.getBookOrderId()!=null){
             checkIn.setAccountId(bookOrderService.findBookOrderById(checkIn.getBookOrderId()).getAccountId());
             roomType.setBookNum(roomType.getBookNum()-1);
-
             BookOrder bookOrder=bookOrderService.findBookOrderById(checkIn.getBookOrderId());
             bookOrder.setStatus(BookOrder.IN_ARRIVED);
             bookOrderService.eidtBookOrder(bookOrder);
+        }else {
+            checkIn.setAccountId(null);
         }
         roomTypeService.eidtRoomType(roomType);
-        logService.addLog(Log.BUSSINESS,"入住记录","手机号为"+checkIn.getPhoneNum()+"入住成功");
         return true;
     }
 
@@ -244,7 +246,7 @@ public class CheckInController {
         }else {
             if(checkIn.getBookOrderId()!=null){//删除入住：删除现场订单 预定订单
                 roomType.setBookNum(roomType.getBookNum()+1);
-                bookOrder=bookOrderService.findBookOrderById(checkIn.getBookOrderId());
+                bookOrder=bookOrderService.findBookOrderById(checkIn.getBookOrderId().intValue());
                 bookOrder.setStatus(BookOrder.IN_BOOK);
                 room.setStatus(Room.ALEARY_BOOK);
                 checkIn.setBookOrderId(null);

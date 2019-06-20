@@ -160,6 +160,24 @@ public class CheckIn {
         this.accountId = accountId;
     }
 
+    @Override
+    public String toString() {
+        return "CheckIn{" +
+                ", roomId=" + roomId +
+                ", checkinPrice=" + checkinPrice +
+                ", liveDays=" + liveDays +
+                ", name='" + name + '\'' +
+                ", idCard='" + idCard + '\'' +
+                ", phoneNum='" + phoneNum + '\'' +
+                ", status=" + status +
+                ", arriveDate=" + arriveDate +
+                ", leaveDate=" + leaveDate +
+                ", createTime=" + createTime +
+                ", bookOrderId=" + bookOrderId +
+                ", remark='" + remark + '\'' +
+                '}';
+    }
+
     public String getRemark() {
         return remark;
     }

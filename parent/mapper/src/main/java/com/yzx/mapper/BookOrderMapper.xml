@@ -46,7 +46,7 @@
     </select>
 
     <select id="findBookOrderById" parameterType="int" resultType="bookOrder">
-        select * from bookOrder where id=#{id}
+        select * from bookorder where id=#{id}
     </select>
 
     <select id="findAll" resultType="bookOrder">
