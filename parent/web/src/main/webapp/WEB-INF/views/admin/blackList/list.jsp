@@ -30,7 +30,7 @@
         </div>
     </div>
     <!-- End of toolbar -->
-    <table id="wu-datagrid-2" class="easyui-datagrid" toolbar="#wu-toolbar-2"></table>
+    <table id="wu-datagrid-2" toolbar="#wu-toolbar-2"></table>
 </div>
 <!-- Begin of easyui-dialog -->
 <%@include file="/WEB-INF/views/admin/commen/footer.jsp" %>
@@ -85,7 +85,7 @@
 
     init();
     function init() {
-        setTimeout(refreshDic, 100);
+        setTimeout(refreshDic, 1);
     }
 
     function refreshDic(){

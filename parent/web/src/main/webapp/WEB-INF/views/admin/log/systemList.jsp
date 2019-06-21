@@ -23,7 +23,7 @@
     </div>
     </div>
     <!-- End of toolbar -->
-    <table id="wu-datagrid" class="easyui-datagrid" toolbar="#wu-toolbar-2"></table>
+    <table id="wu-datagrid" toolbar="#wu-toolbar-2"></table>
     </div>
 
     <%@include file="/WEB-INF/views/admin/commen/footer.jsp" %>
@@ -68,26 +68,31 @@
     })
 
 
-    /**
-    * Name 载入数据
-    */
-    $('#wu-datagrid').datagrid({
-        url:'/lnn/admin/log/list?type=1',
-        rownumbers:true,
-        singleSelect:false,
-        pageSize:50,
-        pageList:[10,20,30,50,100],
-        pagination:true,
-        multiSort:true,
-        fit:true,
-        fitColumns:true,
-        columns:[[
-            { field:'tittle',title:'标题',width:100},
-            { field:'content',title:'内容',width:100},
-            { field:'creatTime',title:'创建时间',width:100,sortable:true,formatter:function (value) {
-                    return new Date(value).toLocaleString();
-                }},
+    init();
+    function init() {
+        setTimeout(refreshDic, 1);
+    }
+    function refreshDic() {
+        $('#wu-datagrid').datagrid({
+            url: '/lnn/admin/log/list?type=1',
+            rownumbers: true,
+            singleSelect: false,
+            pageSize: 50,
+            pageList: [10, 20, 30, 50, 100],
+            pagination: true,
+            multiSort: true,
+            fit: true,
+            fitColumns: false,
+            columns: [[
+                {field: 'tittle', title: '标题', width: 300},
+                {field: 'content', title: '内容', width: 700},
+                {
+                    field: 'creatTime', title: '创建时间', width: 300, sortable: true, formatter: function (value) {
+                        return new Date(value).toLocaleString();
+                    }
+                },
             ]]
-    });
+        });
+    }
     </script>
 </html>

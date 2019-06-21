@@ -38,7 +38,7 @@
         </div>
     </div>
     <!-- End of toolbar -->
-    <table id="wu-datagrid-2" class="easyui-datagrid" toolbar="#wu-toolbar-2"></table>
+    <table id="wu-datagrid-2" toolbar="#wu-toolbar-2"></table>
 </div>
 <!-- Begin of easyui-dialog -->
 <div id="wu-dialog-2" class="easyui-dialog" data-options="closed:true,iconCls:'icon-save'" style="width:400px; padding:10px;">
@@ -386,41 +386,54 @@
     }
 
 
-    /**
-     * Name 载入数据
-     */
-    $('#wu-datagrid-2').datagrid({
-        url:'/lnn/admin/bookOrder/list',
-        rownumbers:true,
-        singleSelect:false,
-        pageSize:10,
-        pageList:[10,20,30,50],
-        pagination:true,
-        multiSort:true,
-        fit:true,
-        fitColumns:true,
-        columns:[[
-            { field:'accountPhone',title:'账号所属手机',width:100,sortable:true},
-            { field:'name',title:'入住者姓名',width:100,sortable:true},
-            { field:'roomTypeAndFloor',title:'房型',width:100,sortable:true},
-            { field:'idCard',title:'入住者身份证号',width:100,sortable:true},
-            { field:'phoneNum',title:'入住者手机号',width:100,sortable:true},
-            { field:'arriveDate',title:'入住时间',width:100,sortable:true,formatter:function (value) {
-                    return new Date(value).toLocaleDateString();
-                }},
-            { field:'leaveDate',title:'退房时间',width:100,sortable:true,formatter:function (value) {
-                    return new Date(value).toLocaleDateString();
-                }},
-            { field:'status',title:'状态',width:100,sortable:true,formatter:function (value) {
-                    switch (value) {
-                        case 0:return "预定中";
-                        case 1:return "已入住";
-                        case 2:return "已结算离店";
-                        case 3:return "已违约";
+    init();
+    function init() {
+        setTimeout(refreshDic, 1);
+    }
+    function refreshDic() {
+        $('#wu-datagrid-2').datagrid({
+            url: '/lnn/admin/bookOrder/list',
+            rownumbers: true,
+            singleSelect: false,
+            pageSize: 10,
+            pageList: [10, 20, 30, 50],
+            pagination: true,
+            multiSort: true,
+            fit: true,
+            fitColumns: true,
+            columns: [[
+                {field: 'accountPhone', title: '账号所属手机', width: 143, sortable: true},
+                {field: 'name', title: '入住者姓名', width: 143, sortable: true},
+                {field: 'roomTypeAndFloor', title: '房型', width: 143, sortable: true},
+                {field: 'idCard', title: '入住者身份证号', width: 143, sortable: true},
+                {field: 'phoneNum', title: '入住者手机号', width: 143, sortable: true},
+                {
+                    field: 'arriveDate', title: '入住时间', width: 143, sortable: true, formatter: function (value) {
+                        return new Date(value).toLocaleDateString();
                     }
-                }},
-            { field:'remark',title:'备注',width:100},
-        ]]
-    });
+                },
+                {
+                    field: 'leaveDate', title: '退房时间', width: 143, sortable: true, formatter: function (value) {
+                        return new Date(value).toLocaleDateString();
+                    }
+                },
+                {
+                    field: 'status', title: '状态', width: 143, sortable: true, formatter: function (value) {
+                        switch (value) {
+                            case 0:
+                                return "预定中";
+                            case 1:
+                                return "已入住";
+                            case 2:
+                                return "已结算离店";
+                            case 3:
+                                return "已违约";
+                        }
+                    }
+                },
+                {field: 'remark', title: '备注', width: 143},
+            ]]
+        });
+    }
 </script>
 </html>

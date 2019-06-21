@@ -46,7 +46,7 @@
         </div>
     </div>
     <!-- End of toolbar -->
-    <table id="wu-datagrid-2" class="easyui-datagrid" toolbar="#wu-toolbar-2"></table>
+    <table id="wu-datagrid-2" toolbar="#wu-toolbar-2"></table>
 </div>
 <!-- Begin of easyui-dialog -->
 <div id="wu-dialog-2" class="easyui-dialog" data-options="closed:true,iconCls:'icon-save'" style="width:400px; padding:10px;">
@@ -343,54 +343,74 @@
         });
     }
 
-    /**
-     * Name 载入数据
-     */
-    $('#wu-datagrid-2').datagrid({
-        rownumbers:true,
-        singleSelect:true,
-        pageSize:10,
-        pageList:[10,20],
-        pagination:true,
-        multiSort:true,
-        fit:true,
-        fitColumns:true,
-        url:'/lnn/admin/room_type/list',
-        columns:[[
-            { field:'photo',title:'房型预览',width:100,formatter:function (value,row,index) {
-                    var img = "&nbsp;&nbsp;&nbsp;<img style='width: 50px;height: 50px' src="+value+"/>";
-                    return img;
-                }},
-            { field:'name',title:'房型名',width:100,sortable:true},
-            { field:'floorName',title:'层名',width:100,sortable:true},
-            { field:'price',title:'价格',width:100,sortable:true},
-            { field:'liveNum',title:'可住人数',width:100,sortable:true},
-            { field:'bedNum',title:'床数',width:100,sortable:true},
-            { field:'roomNum',title:'该型房数',width:100,sortable:true,formatter:function (value) {
-                    return "<span style=\"color:orange;font-size:17px\" >"+value+"</span>";
-                }},
-            { field:'avilableNum',title:'可使用房数',width:100,sortable:true,formatter:function (value) {
-                    return "<span style=\"color:blue;font-size:20px\" >"+value+"</span>";
-                }},
-            { field:'bookNum',title:'已预定房数',width:100,sortable:true,formatter:function (value) {
-                    return "<span style=\"color:green;font-size:17px\" >"+value+"</span>";
-                }},
-            { field:'livedNum',title:'已入住房数',width:100,sortable:true,formatter:function (value) {
-                    return "<span style=\"color:red;font-size:17px\" >"+value+"</span>";
-                }},
-            { field:'canNotLiveNum',title:'不可用房数',width:100,sortable:true,formatter:function (value) {
-                    return "<span style=\"color:grey;font-size:17px\" >"+value+"</span>";
-                }},
-            { field:'status',title:'状态',width:100,sortable:true,formatter:function (value) {
-                    switch (value) {
-                        case 0:return "住满";
-                        case 1:return "可入住";
-                        case 2:return "不可住";
+    init();
+    function init() {
+        setTimeout(refreshDic, 1);
+    }
+    function refreshDic() {
+        $('#wu-datagrid-2').datagrid({
+            rownumbers: true,
+            singleSelect: true,
+            pageSize: 10,
+            pageList: [10, 20],
+            pagination: true,
+            multiSort: true,
+            fit: true,
+            fitColumns: true,
+            url: '/lnn/admin/room_type/list',
+            columns: [[
+                {
+                    field: 'photo', title: '房型预览', width: 100, formatter: function (value, row, index) {
+                        var img = "&nbsp;&nbsp;&nbsp;<img style='width: 50px;height: 50px' src=" + value + "/>";
+                        return img;
                     }
-                }},
-            { field:'remark',title:'备注',width:100},
-        ]]
-    });
+                },
+                {field: 'name', title: '房型名', width: 100, sortable: true},
+                {field: 'floorName', title: '层名', width: 100, sortable: true},
+                {field: 'price', title: '价格', width: 100, sortable: true},
+                {field: 'liveNum', title: '可住人数', width: 100, sortable: true},
+                {field: 'bedNum', title: '床数', width: 100, sortable: true},
+                {
+                    field: 'roomNum', title: '该型房数', width: 100, sortable: true, formatter: function (value) {
+                        return "<span style=\"color:orange;font-size:17px\" >" + value + "</span>";
+                    }
+                },
+                {
+                    field: 'avilableNum', title: '可使用房数', width: 100, sortable: true, formatter: function (value) {
+                        return "<span style=\"color:blue;font-size:20px\" >" + value + "</span>";
+                    }
+                },
+                {
+                    field: 'bookNum', title: '已预定房数', width: 100, sortable: true, formatter: function (value) {
+                        return "<span style=\"color:green;font-size:17px\" >" + value + "</span>";
+                    }
+                },
+                {
+                    field: 'livedNum', title: '已入住房数', width: 100, sortable: true, formatter: function (value) {
+                        return "<span style=\"color:red;font-size:17px\" >" + value + "</span>";
+                    }
+                },
+                {
+                    field: 'canNotLiveNum', title: '不可用房数', width: 100, sortable: true, formatter: function (value) {
+                        return "<span style=\"color:grey;font-size:17px\" >" + value + "</span>";
+                    }
+                },
+                {
+                    field: 'status', title: '状态', width: 100, sortable: true, formatter: function (value) {
+                        switch (value) {
+                            case 0:
+                                return "住满";
+                            case 1:
+                                return "可入住";
+                            case 2:
+                                return "不可住";
+                        }
+                    }
+                },
+                {field: 'remark', title: '备注', width: 100},
+            ]]
+        });
+    }
 
     if($('#dowhat').html()!=null){
         if($('#dowhat').html()=='add'){

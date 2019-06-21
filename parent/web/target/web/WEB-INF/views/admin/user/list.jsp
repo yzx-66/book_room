@@ -21,7 +21,7 @@
     <a href="#" id="search-btn" class="easyui-linkbutton" iconCls="icon-search">开始检索</a>
     </div>
     </div>
-        <table id="wu-datagrid-2" class="easyui-datagrid" toolbar="#wu-toolbar-2"></table>
+        <table id="wu-datagrid-2"  toolbar="#wu-toolbar-2"></table>
     </div>
     <!-- Begin of easyui-dialog -->
     <div id="wu-dialog-2" class="easyui-dialog" data-options="closed:true,iconCls:'icon-save'" style="width:400px; padding:10px;">
@@ -271,47 +271,58 @@
         });
     }
 
-
-    /**
-    * Name 载入数据
-    */
-    $('#wu-datagrid-2').datagrid({
-        url:'/lnn/admin/user/list',
-        rownumbers:true,
-        singleSelect:false,
-        pageSize:20,
-        pageList:[10,20,30,50],
-        pagination:true,
-        multiSort:true,
-        fit:true,
-        fitColumns:true,
-        idField:'id',
-        treeField:'name',
-        columns:[[
-            { field:'photo',title:'头像',width:100,formatter:function (value,row,index) {
-                    var img = "&nbsp;&nbsp;&nbsp;<img style='width: 50px;height: 50px' src="+value+"/>";
-                    return img;
-                }},
-            { field:'name',title:'用户名',width:100,sortable:true},
-         //   { field:'password',title:'密码',width:100},
-            { field:'roleId',title:'角色名',width:100,formatter:function (value) {
-                var roleList=$('#roleId_id').combobox('getData');
-                for(var i=0;i<roleList.length;i++){
-                    if(value==roleList[i].value){
-                        return roleList[i].text;
+    init();
+    function init() {
+        setTimeout(refreshDic, 1);
+    }
+    function refreshDic() {
+        $('#wu-datagrid-2').datagrid({
+            url: '/lnn/admin/user/list',
+            rownumbers: true,
+            singleSelect: false,
+            pageSize: 20,
+            pageList: [10, 20, 30, 50],
+            pagination: true,
+            multiSort: true,
+            fit: true,
+            fitColumns: true,
+            idField: 'id',
+            treeField: 'name',
+            columns: [[
+                {
+                    field: 'photo', title: '头像', width: 100, formatter: function (value, row, index) {
+                        var img = "&nbsp;&nbsp;&nbsp;<img style='width: 50px;height: 50px' src=" + value + "/>";
+                        return img;
                     }
-                }
-                }},
-            { field:'sex',title:'性别',width:100,formatter:function (value) {
-                    switch (value) {
-                        case 0:return '未知';
-                        case 1:return '男';
-                        case 2:return '女';
+                },
+                {field: 'name', title: '用户名', width: 100, sortable: true},
+                //   { field:'password',title:'密码',width:100},
+                {
+                    field: 'roleId', title: '角色名', width: 100, formatter: function (value) {
+                        var roleList = $('#roleId_id').combobox('getData');
+                        for (var i = 0; i < roleList.length; i++) {
+                            if (value == roleList[i].value) {
+                                return roleList[i].text;
+                            }
+                        }
                     }
-                }},
-            { field:'age',title:'年龄',width:100},
-            { field:'address',title:'地址',width:100},
-        ]]
-    });
+                },
+                {
+                    field: 'sex', title: '性别', width: 100, formatter: function (value) {
+                        switch (value) {
+                            case 0:
+                                return '未知';
+                            case 1:
+                                return '男';
+                            case 2:
+                                return '女';
+                        }
+                    }
+                },
+                {field: 'age', title: '年龄', width: 100},
+                {field: 'address', title: '地址', width: 100},
+            ]]
+        });
+    }
     </script>
 </html>

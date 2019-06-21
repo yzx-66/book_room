@@ -36,7 +36,7 @@
         </div>
     </div>
     <!-- End of toolbar -->
-    <table id="wu-datagrid-2" class="easyui-datagrid" toolbar="#wu-toolbar-2"></table>
+    <table id="wu-datagrid-2" toolbar="#wu-toolbar-2"></table>
 </div>
 <!-- Begin of easyui-dialog -->
 <div id="wu-dialog-2" class="easyui-dialog" data-options="closed:true,iconCls:'icon-save'" style="width:400px; padding:10px;">
@@ -461,45 +461,58 @@
         });
     }
 
-    /**
-     * Name 载入数据
-     */
-    $('#wu-datagrid-2').datagrid({
-        url:'/lnn/admin/checkIn/list',
-        rownumbers:true,
-        singleSelect:true,
-        pageSize:10,
-        pageList:[10,20,30],
-        pagination:true,
-        multiSort:true,
-        fit:true,
-        fitColumns:true,
-        columns:[[
-            { field:'accountPhone',title:'入住方式',width:100,sortable:true,formatter:function (value) {
-                    if(value==null || value=="")   {
-                        value="现场入住"
+    init();
+    function init() {
+        setTimeout(refreshDic, 1);
+    }
+    function refreshDic() {
+        $('#wu-datagrid-2').datagrid({
+            url: '/lnn/admin/checkIn/list',
+            rownumbers: true,
+            singleSelect: true,
+            pageSize: 10,
+            pageList: [10, 20, 30],
+            pagination: true,
+            multiSort: true,
+            fit: true,
+            fitColumns: true,
+            columns: [[
+                {
+                    field: 'accountPhone', title: '入住方式', width: 129, sortable: true, formatter: function (value) {
+                        if (value == null || value == "") {
+                            value = "现场入住"
+                        }
+                        return value;
                     }
-                    return value;
-                }},
-            { field:'name',title:'入住者姓名',width:100,sortable:true},
-            { field:'roomTypeAndFloor',title:'房型',width:100,sortable:true},
-            { field:'idCard',title:'入住者身份证号',width:100,sortable:true},
-            { field:'phoneNum',title:'入住者手机号',width:100,sortable:true},
-            { field:'liveDays',title:'入住者天数',width:100,sortable:true},
-            { field:'arriveDate',title:'入住时间',width:100,sortable:true,formatter:function (value) {
-                    return new Date(value).toLocaleDateString();
-                }},
-            { field:'leaveDate',title:'退房时间',width:100,sortable:true,formatter:function (value) {
-                    return new Date(value).toLocaleDateString();
-                }},
-            { field:'status',title:'状态',width:100,sortable:true,formatter:function (value) {
-                    switch (value) {
-                        case 0:return "入住中";
-                        case 1:return "已结算离店";
+                },
+                {field: 'name', title: '入住者姓名', width: 129, sortable: true},
+                {field: 'roomTypeAndFloor', title: '房型', width: 129, sortable: true},
+                {field: 'idCard', title: '入住者身份证号', width: 129, sortable: true},
+                {field: 'phoneNum', title: '入住者手机号', width: 129, sortable: true},
+                {field: 'liveDays', title: '入住者天数', width: 129, sortable: true},
+                {
+                    field: 'arriveDate', title: '入住时间', width: 129, sortable: true, formatter: function (value) {
+                        return new Date(value).toLocaleDateString();
                     }
-                }},
-            { field:'remark',title:'备注',width:100},
-        ]]
-    });
+                },
+                {
+                    field: 'leaveDate', title: '退房时间', width: 129, sortable: true, formatter: function (value) {
+                        return new Date(value).toLocaleDateString();
+                    }
+                },
+                {
+                    field: 'status', title: '状态', width: 129, sortable: true, formatter: function (value) {
+                        switch (value) {
+                            case 0:
+                                return "入住中";
+                            case 1:
+                                return "已结算离店";
+                        }
+                    }
+                },
+                {field: 'remark', title: '备注', width: 129},
+            ]]
+        });
+    }
 </script>
 </html>

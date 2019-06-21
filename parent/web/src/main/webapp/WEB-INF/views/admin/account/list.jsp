@@ -304,7 +304,7 @@
 
     init();
     function init() {
-        setTimeout(refreshDic, 100);
+        setTimeout(refreshDic, 1);
     }
     function refreshDic() {
         $('#wu-datagrid-2').datagrid({

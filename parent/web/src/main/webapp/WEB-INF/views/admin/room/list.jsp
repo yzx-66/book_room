@@ -47,7 +47,7 @@
         </div>
     </div>
     <!-- End of toolbar -->
-    <table id="wu-datagrid-2" class="easyui-datagrid" toolbar="#wu-toolbar-2"></table>
+    <table id="wu-datagrid-2" toolbar="#wu-toolbar-2"></table>
 </div>
 <!-- Begin of easyui-dialog -->
 <div id="wu-dialog-2" class="easyui-dialog" data-options="closed:true,iconCls:'icon-save'" style="width:400px; padding:10px;">
@@ -376,38 +376,50 @@
         });
     }
 
-    /**
-     * Name 载入数据
-     */
-    $('#wu-datagrid-2').datagrid({
-        url:'/lnn/admin/room/list',
-        rownumbers:true,
-        singleSelect:false,
-        pageSize:10,
-        pageList:[10,20],
-        pagination:true,
-        multiSort:true,
-        fit:true,
-        fitColumns:true,
-        columns:[[
-            { field:'photo',title:'房间预览',width:100,formatter:function (value,row,index) {
-                    var img = "&nbsp;&nbsp;&nbsp;<img style='width: 50px;height: 50px' src="+value+"/>";
-                    return img;
-                }},
-            { field:'name',title:'房间名',width:100,sortable:true},
-            { field:'sn',title:'房间编号',width:100,sortable:true},
-            { field:'roomTypeAndFloor',title:'房型',width:100,sortable:true},
-            { field:'status',title:'状态',width:100,sortable:true,formatter:function (value) {
-                    switch (value) {
-                        case 0:return "可入住";
-                        case 1:return "已预定";
-                        case 2:return "已入住";
-                        case 3:return "打扫中";
-                        case 4:return "不可住";
+    init();
+    function init() {
+        setTimeout(refreshDic, 1);
+    }
+    function refreshDic() {
+        $('#wu-datagrid-2').datagrid({
+            url: '/lnn/admin/room/list',
+            rownumbers: true,
+            singleSelect: false,
+            pageSize: 10,
+            pageList: [10, 20],
+            pagination: true,
+            multiSort: true,
+            fit: true,
+            fitColumns: false,
+            columns: [[
+                {
+                    field: 'photo', title: '房间预览', width: 216, formatter: function (value, row, index) {
+                        var img = "&nbsp;&nbsp;&nbsp;<img style='width: 50px;height: 50px' src=" + value + "/>";
+                        return img;
                     }
-                }},
-            { field:'remark',title:'备注',width:100},
-        ]]
-    });
+                },
+                {field: 'name', title: '房间名', width: 216, sortable: true},
+                {field: 'sn', title: '房间编号', width: 216, sortable: true},
+                {field: 'roomTypeAndFloor', title: '房型', width: 216, sortable: true},
+                {
+                    field: 'status', title: '状态', width: 216, sortable: true, formatter: function (value) {
+                        switch (value) {
+                            case 0:
+                                return "可入住";
+                            case 1:
+                                return "已预定";
+                            case 2:
+                                return "已入住";
+                            case 3:
+                                return "打扫中";
+                            case 4:
+                                return "不可住";
+                        }
+                    }
+                },
+                {field: 'remark', title: '备注', width: 216},
+            ]]
+        });
+    }
 </script>
 </html>
