@@ -63,7 +63,7 @@ public class SendMsg {
         request.setVersion("2017-05-25");
         request.setAction("SendSms");
         request.putQueryParameter("PhoneNumbers", phoneNum);
-        request.putQueryParameter("SignName", "SSMInn");
+        request.putQueryParameter("SignName", "FrameExc");
         request.putQueryParameter("TemplateCode", "SMS_167527459");
         request.putQueryParameter("TemplateParam", "{\"code\":"+code+"}");
 

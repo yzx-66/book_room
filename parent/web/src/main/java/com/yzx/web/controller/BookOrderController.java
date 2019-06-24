@@ -63,16 +63,7 @@ public class BookOrderController {
     public Map<String,Object> add(BookOrder bookOrder,String arriveTime,String leaveTime,String roomTypeName,Integer hight,String accountPhone){
         Map<String,Object> ret=new HashMap<>();
 
-        List<BlackList> blackLists=blackListService.findAll();
         Account account=accountService.findAccountByPhoneNum(accountPhone);
-        for(BlackList blackList:blackLists){
-            if(account.getId()==blackList.getAccountId()){
-                ret.put("type","error");
-                ret.put("msg","添加失败，下单账户现在处于冻结状态，可能由于违约次数超过上限，一月3次后冻结一个月，达20次将永久冻结，您现在月违约："+account.getMonthBreakTimes()+"，共违约："+account.getSumBreakTimes());
-                logService.addLog(Log.BUSSINESS,"预定失败","手机号为"+account.getPhoneNum()+"预定失败，因为已被加黑");
-                return ret;
-            }
-        }
 
         Map<String,Object> res=CheckId.getRequest1(bookOrder.getIdCard(),bookOrder.getName());
         if(res.get("type").equals("error")){
@@ -82,6 +73,7 @@ public class BookOrderController {
         if(!bindAccountPhone(accountPhone,bookOrder,ret)){
             return ret;
         }
+
         if(!IsContinueByDateFormat(ret,arriveTime,leaveTime).get("type").equals("success")){
             return ret;
         }
@@ -244,6 +236,16 @@ public class BookOrderController {
         try{
             Account account=accountService.findAccountByPhoneNum(accountPhone);
             bookOrder.setAccountId(account.getId());
+
+            List<BlackList> blackLists=blackListService.findAll();
+            for(BlackList blackList:blackLists){
+                if(account.getId()==blackList.getAccountId()){
+                    ret.put("type","error");
+                    ret.put("msg","添加失败，下单账户现在处于冻结状态，可能由于违约次数超过上限，一月3次后冻结一个月，达20次将永久冻结，您现在月违约："+account.getMonthBreakTimes()+"，共违约："+account.getSumBreakTimes());
+                    logService.addLog(Log.BUSSINESS,"预定失败","手机号为"+account.getPhoneNum()+"预定失败，因为已被加黑");
+                    return false;
+                }
+            }
         }catch (Exception e){
             ret.put("type","error");
             ret.put("msg","不存在改手机号绑定的账号");
@@ -297,7 +299,7 @@ public class BookOrderController {
         bookOrder.setRoomTypeId(roomType.getId());
     }
 
-    public boolean makeRoom_0_to_1(RoomType roomType,Map<String,Object>ret,BookOrder bookOrder){
+    public synchronized boolean makeRoom_0_to_1(RoomType roomType,Map<String,Object>ret,BookOrder bookOrder){
         List<Room> rooms=roomService.findRoomByTypeIdAndStatus(roomType.getId(),0);
 
         int size=rooms.size();

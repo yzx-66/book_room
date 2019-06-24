@@ -285,20 +285,20 @@
             pagination: true,
             multiSort: true,
             fit: true,
-            fitColumns: true,
+            fitColumns: false,
             idField: 'id',
             treeField: 'name',
             columns: [[
                 {
-                    field: 'photo', title: '头像', width: 100, formatter: function (value, row, index) {
+                    field: 'photo', title: '头像', width: 150, formatter: function (value, row, index) {
                         var img = "&nbsp;&nbsp;&nbsp;<img style='width: 50px;height: 50px' src=" + value + "/>";
                         return img;
                     }
                 },
-                {field: 'name', title: '用户名', width: 100, sortable: true},
-                //   { field:'password',title:'密码',width:100},
+                {field: 'name', title: '用户名', width: 200, sortable: true},
+                //   { field:'password',title:'密码',width:233},
                 {
-                    field: 'roleId', title: '角色名', width: 100, formatter: function (value) {
+                    field: 'roleId', title: '角色名', width: 200, formatter: function (value) {
                         var roleList = $('#roleId_id').combobox('getData');
                         for (var i = 0; i < roleList.length; i++) {
                             if (value == roleList[i].value) {
@@ -308,7 +308,7 @@
                     }
                 },
                 {
-                    field: 'sex', title: '性别', width: 100, formatter: function (value) {
+                    field: 'sex', title: '性别', width: 150, formatter: function (value) {
                         switch (value) {
                             case 0:
                                 return '未知';
@@ -319,8 +319,8 @@
                         }
                     }
                 },
-                {field: 'age', title: '年龄', width: 100},
-                {field: 'address', title: '地址', width: 100},
+                {field: 'age', title: '年龄', width: 150},
+                {field: 'address', title: '地址', width: 550},
             ]]
         });
     }

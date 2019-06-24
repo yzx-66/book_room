@@ -356,7 +356,7 @@
             pagination: true,
             multiSort: true,
             fit: true,
-            fitColumns: true,
+            fitColumns: false,
             url: '/lnn/admin/room_type/list',
             columns: [[
                 {

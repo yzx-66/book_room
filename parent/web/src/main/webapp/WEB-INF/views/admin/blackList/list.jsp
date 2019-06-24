@@ -98,19 +98,19 @@
             pagination:true,
             multiSort:true,
             fit:true,
-            fitColumns:true,
+            fitColumns:false,
             columns:[[
-                { field:'photo',title:'头像预览',width:5,formatter:function (value,row,index) {
+                { field:'photo',title:'头像预览',width:100,formatter:function (value,row,index) {
                         var img = "&nbsp;&nbsp;&nbsp;<img style='width: 50px;height: 50px' src="+value+"/>";
                         return img;
                     }},
-                { field:'name',title:'用户名',width:3,sortable:true},
-                { field:'phoneNum',title:'手机号',width:5,sortable:true},
-                { field:'realName',title:'真实姓名',width:3,sortable:true},
-                { field:'idCard',title:'身份证吗',width:5,sortable:true},
-                { field:'monthBreakTimes',title:'本月违约次数',width:3,sortable:true},
-                { field:'sumBreakTimes',title:'总违约次数',width:3,sortable:true},
-                { field:'id',title:'解除时间',width:9,sortable:true,formatter:function (value){
+                { field:'name',title:'用户名',width:100,sortable:true},
+                { field:'phoneNum',title:'手机号',width:200,sortable:true},
+                { field:'realName',title:'真实姓名',width:100,sortable:true},
+                { field:'idCard',title:'身份证吗',width:300,sortable:true},
+                { field:'monthBreakTimes',title:'本月违约次数',width:100,sortable:true},
+                { field:'sumBreakTimes',title:'总违约次数',width:100,sortable:true},
+                { field:'id',title:'解除时间',width:3000,sortable:true,formatter:function (value){
                         var ret="";
                         $.ajax({
                             url:'/lnn/admin/blackList/findBlackListByAccountId?accountId='+value,

@@ -248,7 +248,7 @@
             pagination: true,
             multiSort: true,
             fit: true,
-            fitColumns: true,
+            fitColumns: false,
             idField: 'id',
             treeField: 'name',
             columns: [[

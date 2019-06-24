@@ -395,7 +395,7 @@
             url: '/lnn/admin/bookOrder/list',
             rownumbers: true,
             singleSelect: false,
-            pageSize: 10,
+            pageSize: 20,
             pageList: [10, 20, 30, 50],
             pagination: true,
             multiSort: true,

@@ -77,6 +77,7 @@ public class CheckInController {
                 ret.put("msg", "添加失败 请联系管理员");
                 logService.addLog(Log.SYSTEM, "添加失败", "添加入住订单时，操作个数小于1");
             } else {
+                logService.addLog(Log.BUSSINESS, "入住", "手机号为"+checkIn.getPhoneNum()+"入住成功");
                 ret.put("type", "success");
             }
         return ret;
@@ -197,7 +198,7 @@ public class CheckInController {
     }
 
 
-    public boolean makeRoom_0_to_2(CheckIn checkIn,Map<String,Object> ret,int chose){
+    public synchronized boolean makeRoom_0_to_2(CheckIn checkIn,Map<String,Object> ret,int chose){
         RoomType roomType=roomTypeService.findRoomTypeByRoomId(checkIn.getRoomId());
         roomType.setLivedNum(roomType.getLivedNum()+1);
 
