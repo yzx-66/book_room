@@ -4,11 +4,11 @@
 
 ![输入图片说明](https://github.com/yzx66-net/ssm_lnn/blob/master/2.jpg "屏幕截图.png")
 
-![输入图片说明](https://github.com/yzx66-net/ssm_lnn/blob/master/3.jpg "屏幕截图.png")
+![输入图片说明](https://github.com/yzx66-net/ssm_lnn/blob/master/3.png "屏幕截图.png")
 
-![输入图片说明](https://github.com/yzx66-net/ssm_lnn/blob/master/4.jpg "屏幕截图.png")
+![输入图片说明](https://github.com/yzx66-net/ssm_lnn/blob/master/4.PNG "屏幕截图.png")
 
-![输入图片说明](https://github.com/yzx66-net/ssm_lnn/blob/master/5.jpg "屏幕截图.png")
+![输入图片说明](https://github.com/yzx66-net/ssm_lnn/blob/master/5.PNG "屏幕截图.png")
 
 #### 介绍
 一个完整的项目 并且附加了一些教程上没有的功能和页面
