@@ -13,7 +13,7 @@
 
 ![输入图片说明](https://github.com/yzx66-net/ssm_lnn/blob/master/5.PNG "屏幕截图.png")
 
-![输入图片说明](https://github.com/yzx66-net/ssm_lnn/blob/master/6.PNG "屏幕截图.png")
+![输入图片说明](https://github.com/yzx66-net/ssm_lnn/blob/master/7.PNG "屏幕截图.png")
 
 ![输入图片说明](https://github.com/yzx66-net/ssm_lnn/blob/master/4.png "屏幕截图.png")
 
